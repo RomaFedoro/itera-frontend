@@ -1,0 +1,132 @@
+@import 'fonts.css';
+
+:root {
+    /* --main-color: #4241dd; */
+    --main-color: #111111;
+    --font-color: #f1f1f1;
+    --inactive-color: #acacac;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: none;
+    background: none;
+    box-sizing: border-box;
+}
+    
+  
+html {
+    height: 100%;
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+body {
+    position: relative;
+    height: 100%;
+    color: var(--font-color);
+    background-color: var(--main-color);
+    font-family: 'SF Pro Display';
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    position: relative;
+}
+
+.menu {
+    height: 100%;
+    width: 30vw;
+    padding: 2vw;
+    border-right: 1px solid var(--font-color);
+}
+
+.workspace {
+    flex: 1;
+    padding: 2vw 3vw;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.title-block {
+    display: flex;
+    user-select: none;
+    margin-bottom: 8rem;
+}
+
+.title {
+    font-size: 24rem;
+    line-height: 0.8em;
+    vertical-align: top;
+    letter-spacing: -0.05em;
+}
+
+.title-description {
+    font-size: 2.4rem;
+    font-weight: 300;
+    margin-left: 1em;
+    margin-top: 0.2em;
+}
+
+.list {
+    display: grid;
+    grid-template-columns: repeat(3, 20vw);
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+    padding: 3rem 0;
+}
+
+.list:last-child {
+    padding-bottom: 0;
+}
+
+.habit-block {
+    height: 15vw;
+    padding: 2.8rem;
+    font-size: 1.6rem;
+    color: var(--main-color);
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.habit-block_title {
+    flex: 1;
+    font-size: 1.6em;
+    overflow-wrap: break-word;
+    line-height: 1.3em;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.habit-block_count {
+    font-size: 1em;
+    padding-top: 0.6em;
+    font-weight: bold;
+    line-height: 1em;
+    user-select: none;
+    letter-spacing: 0.01em;
+}
+
+.habit-block_done {
+    background-color: var(--font-color);
+}
+
+.habit-block_done .habit-block_title{
+    text-decoration: line-through;
+}
+
+.habit-block_done .habit-block_count {
+    opacity: .25;
+    cursor: default;
+}
