@@ -7,6 +7,11 @@
     --inactive-color: rgb(255 255 255 / 16%);
 }
 
+::placeholder {
+    color: var(--inactive-color);
+    font-family: 'SF Pro Display';
+}
+
 ::-webkit-scrollbar {
     width: 6px;
 }
@@ -121,10 +126,20 @@ button {
 
 .workspace {
     flex: 1;
-    padding: 2vw 3vw;
     overflow: auto;
     display: flex;
     flex-direction: column;
+}
+
+.workspace-block {
+    padding: 2vw 3vw;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--font-color);
+}
+
+.workspace-block:last-child {
+    border-bottom: none;
 }
 
 .title-block {
@@ -159,7 +174,7 @@ button {
     padding-bottom: 0;
 }
 
-.habit-block {
+.habit-block, .statistic-block {
     height: 15vw;
     padding: 2.8rem;
     font-size: 1.6rem;
@@ -173,12 +188,11 @@ button {
 }
 
 .habit-block:hover {
-    background-color: #ff8437;
+    background-color: #4241dd;
     border-color: transparent;
-    color: var(--main-color);
 }
 
-.habit-block_title {
+.habit-block_title, .statistic-block_title {
     font-size: 1.4em;
     overflow-wrap: break-word;
     line-height: 1.3em;
@@ -242,6 +256,7 @@ button {
 
 .habit-block_done:hover {
     background-color: var(--font-color);
+    color: var(--main-color);
 }
 
 .habit-block_done:hover .habit-block_count {
@@ -261,7 +276,7 @@ button {
 }
 
 .habit-title-block {
-    margin-bottom: 8rem;
+    margin-bottom: 10rem;
 }
 
 
@@ -279,7 +294,7 @@ button {
     margin-top: 2.2em;
 }
 
-.today-habit-block {
+.today-habit-block, .input-block {
     padding: 2em 3em;
     border-radius: 10em;
     width: max-content;
@@ -287,9 +302,11 @@ button {
     display: flex;
     align-items: center;
     grid-gap: 2em;
+    margin-bottom: 1.2rem;
+    user-select: none;
 }
 
-.today-habit_step-container {
+.today-habit_step-container, .checkbox-container {
     display: flex;
     grid-gap: 1em;
     align-content: center;
@@ -308,4 +325,223 @@ button {
 
 .today-habit_step:hover {
     opacity: 1;
+}
+
+#workspace-block_habit-statistic {
+    --main-color: #111111;
+    --font-color: #f1f1f1;
+    background-color: var(--main-color);
+    color: var(--font-color);
+    flex: 1;
+}
+
+.statistic-block {
+    height: auto;
+    cursor: default;
+    user-select: none;
+}
+
+.statistic-block_title {
+    font-weight: bold;
+    margin-bottom: 0.68em;
+}
+
+.statistic-block_description {
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    font-size: 0.72em;
+    line-height: 0.8em;
+}
+
+#history-container {
+    width: 42vw;
+    height: 42vw;
+}
+
+.index-container {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 2.4rem;
+}
+
+.input-row {
+    display: flex;
+    grid-gap: 1.6rem;
+}
+
+.input-block {
+    padding: 0 3em;
+    border-radius: 10em;
+    margin-bottom: 0;
+    max-width: 100%;
+    transition: opacity .2s, border-color .2s;
+}
+
+.input-block_active {
+    border-color: var(--font-color);
+}
+
+.input-block_active .input-name {
+    opacity: 1;
+}
+
+.input-name {
+    padding: 2.1em 0 2em;
+    opacity: .6;
+}
+
+input {
+    flex: 1;
+    height: 3.2rem;
+    padding: 1.9rem 0;
+    font-size: 1.8rem;
+    box-sizing: content-box;
+    font-family: 'SF Pro Display';
+    color: var(--font-color);
+    vertical-align: middle;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#units-input {
+    width: 4.4em;
+    text-transform: none;
+}
+
+#step-input {
+    width: 1.4em;
+}
+
+#name-habit-input {
+    width: 20vw;
+    text-transform: none;
+}
+
+#description-input {
+    width: 40vw;
+    text-transform: none;
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    height: 3.2rem;
+    background-color: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    background: transparent;
+    border: 1px solid var(--inactive-color);
+    border-radius: 100%;
+    cursor: pointer;
+    width: 3.2rem;
+    height: 3.2rem;
+    -webkit-appearance: none;
+    transition: border-color .2s;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+    border-color: var(--font-color);
+}
+
+input[type=range]::-webkit-slider-thumb:active {
+    background-color: var(--font-color);
+}
+
+#color-input {
+    width: 22vw;
+}
+
+.checkbox-container {
+    padding: 1.9rem 0;
+}
+
+.checkbox-block {
+    position: relative;
+    width: 3.2rem;
+    height: 3.2rem;
+}
+
+.checkbox-block input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.checkbox_name {
+    border: 1px solid var(--inactive-color);
+    color: var(--inactive-color);
+    border-radius: 100%;
+    display: flex;
+    cursor: pointer;
+    width: 3.2rem;
+    height: 3.2rem;
+    letter-spacing: 0.04em;
+    align-items: center;
+    justify-content: center;
+    transition: .2s;
+    font-family: 'SF Pro Display';
+}
+
+.checkbox-block:hover .checkbox_name {
+    border-color: var(--font-color);
+    color: var(--font-color);
+}
+
+input:checked+.checkbox_name {
+    background-color: var(--font-color);
+    border-color: var(--font-color);
+    color: var(--main-color);
+}
+
+.checkbox-block:hover input:checked + .checkbox_name {
+    color: var(--main-color);
+}
+
+svg#checkbox_mark{
+    width: 40%;
+    height: 40%;
+    transition: .2s;
+}
+
+#checkbox_mark path{
+    stroke: var(--inactive-color);
+}
+
+.checkbox-block:hover #checkbox_mark path{
+    stroke: var(--font-color);
+}
+
+input:checked + .checkbox_name #checkbox_mark path{
+    stroke: var(--main-color);
+}
+
+.input_button {
+    background-color: var(--font-color);
+    transition: opacity .2s;
+    margin-top: 2em;
+}
+
+.input_button input {
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    border-color: transparent;
+    color: var(--main-color);
+    font-weight: bold;
+}
+
+.input_button:hover {
+    opacity: .6;
 }
