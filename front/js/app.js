@@ -1,3 +1,4 @@
+// Generate Habit History
 function clearBlock(selector) {
     let element = document.querySelector(selector);
     while (element.firstChild) {
@@ -41,4 +42,8 @@ function generateHistoryBlock() {
     generateWeeks()
 }
 
-generateHistoryBlock()
+
+function defaultState() {
+    return
+}
+
