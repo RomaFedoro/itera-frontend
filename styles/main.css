@@ -49,6 +49,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.15em;
     font-family: 'SF Pro Display';
+    transition: background-color .2s;
 }
 
 button {
