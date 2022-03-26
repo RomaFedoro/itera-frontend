@@ -8,7 +8,7 @@ connection = sqlite3.connect(url_db)
 
 create_habits_table = """
 CREATE TABLE IF NOT EXISTS habits (
-    id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    habit_id INTEGER PRIMARY KEY AUTOINCREMENT, 
     name TEXT NOT NULL, 
     description TEXT DEFAULT '', 
     color INTEGER DEFAULT 180,

@@ -82,8 +82,10 @@ function generateHistoryBlock() {
   generateWeeks();
 }
 
-function defaultState() {
-  return;
+function defaultState(id_menu_btn, color_body = '#111111') {
+    document.getElementsByClassName('menu-btn_active')[0].classList.remove('menu-btn_active');
+    document.querySelector(id_menu_btn).classList.add('menu-btn_active');
+    body.setAttribute("style", `--main-color: ${color_body};`);
 }
 
 function templateHabitBlock(data, mode = "show") {
@@ -107,8 +109,8 @@ function templateHabitBlock(data, mode = "show") {
     count.innerHTML = countText * data.repeat;
     isLastStep = countText <= 1;
   } else {
-    countText = data.step * data.repeat;
-    count.innerHTML = countText;
+    countText = data.step;
+    count.innerHTML = data.step * data.repeat;
   }
   if (!isLastStep) count_container.append(count);
 
@@ -200,12 +202,11 @@ let titleBlock = document.querySelector(".title");
 let titleDescriptBlock = document.querySelector(".title-description");
 let today_habits_keys = '["habit_id", "done_step", "total_step"]';
 let info_today_habits_keys = '["name", "repeat", "units", "color"]';
+let info_all_habits_keys = '["habit_id", "name", "step", "repeat", "units", "color"]';
 let listContainer = document.querySelector("#list-container");
 
 async function todayPage() {
-  defaultState();
-  document.querySelector("#menu-btn_today").classList.add("menu-btn_active");
-  body.setAttribute("style", "--main-color: #111111;");
+    defaultState("#menu-btn_today");
 
   today = new Date();
   let month = today.getMonth() + 1;
@@ -232,7 +233,7 @@ async function todayPage() {
     let habit_info = await eel.get_notes(
       "habits",
       info_today_habits_keys,
-      `id=${habit.habit_id}`
+      `habit_id=${habit.habit_id}`
     )();
     habit_info = JSON.parse(habit_info);
     if (Object.keys(habit_info).length == 0) continue;
@@ -246,15 +247,34 @@ async function todayPage() {
     let habit_id = done_today_habits[i];
     let habit_info = await eel.get_notes(
       "habits",
-      '["name"]',
-      `id=${habit_id}`
+      '["habit_id", "name"]',
+      `habit_id=${habit_id}`
     )();
     habit_info = JSON.parse(habit_info)[0];
     if (habit_info === undefined) continue;
-    habit_info["habit_id"] = habit_id;
     list_habits.append(templateHabitBlock(habit_info, (mode = "done")));
   }
   if (list_habits.firstChild) listContainer.append(list_habits);
+}
+
+async function allHabitsPage() {
+    defaultState("#menu-btn_all");
+    let all_habits = await eel.get_notes(
+        "habits", 
+        info_all_habits_keys
+    )();
+    all_habits = JSON.parse(all_habits);
+    titleBlock.innerHTML = Object.keys(all_habits).length;
+    titleDescriptBlock.innerHTML = '';
+
+    clearBlock("#list-container");
+    let list_habits = elClass("list");
+
+    for (i in all_habits) {
+      let habit = all_habits[i];
+      list_habits.append(templateHabitBlock(habit));
+    }
+    if (list_habits.firstChild) listContainer.append(list_habits);
 }
 
 async function habitPage(id) {

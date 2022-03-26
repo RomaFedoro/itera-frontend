@@ -118,7 +118,6 @@ button {
 .menu-btn_active {
     background-color: var(--font-color);
     color: var(--main-color);
-    cursor: default;
 }
 
 .menu-btn_active:hover {
