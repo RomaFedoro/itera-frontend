@@ -1,7 +1,10 @@
 import sqlite3
 from json import loads, dumps
+from os import path
+import eel
 
-connection = sqlite3.connect("habits.db")
+url_db = path.dirname(path.abspath(__file__)) + r'\habits.db'
+connection = sqlite3.connect(url_db)
 
 create_habits_table = """
 CREATE TABLE IF NOT EXISTS habits (
@@ -12,7 +15,7 @@ CREATE TABLE IF NOT EXISTS habits (
     days_week TEXT DEFAULT '',
     step INTEGER DEFAULT 1,
     repeat INTEGER DEFAULT 1,
-    units TEXT DEFAULT '',
+    units TEXT DEFAULT 'once',
     remind INTEGER DEFAULT 1,
     date_creation TEXT,
     date_check TEXT
@@ -60,6 +63,7 @@ def execute_read_query(query):
     return dumps(format_res, ensure_ascii=False)
 
 
+@eel.expose
 def add_notes(name_table, params):
     def format_to_str(array):
         res = ""
@@ -77,6 +81,7 @@ def add_notes(name_table, params):
     execute_query(query)
 
 
+@eel.expose
 def get_notes(name_table, params="*", condition=""):
     if params != "*":
         params = loads(params)
@@ -87,6 +92,7 @@ def get_notes(name_table, params="*", condition=""):
     return execute_read_query(query)
 
 
+@eel.expose
 def update_notes(name_table, params, condition):
     def format_to_str(el):
         if str(el).isdecimal():
@@ -99,11 +105,13 @@ def update_notes(name_table, params, condition):
     return execute_query(query)
 
 
+@eel.expose
 def delete_notes(name_table, condition):
     query = """DELETE FROM {} WHERE {};""".format(name_table, condition)
     return execute_query(query)
 
 
-execute_query(create_habits_table)
-execute_query(create_date_table)
-execute_query(create_setting_table)
+def launch_preparation():
+    execute_query(create_habits_table)
+    execute_query(create_date_table)
+    execute_query(create_setting_table)

@@ -202,7 +202,7 @@ button {
 
 .habit-block_count-container {
     font-size: 1em;
-    flex: 1;
+    flex: 1; 
     padding-top: 2em;
     font-weight: bold;
     display: inline-flex;
@@ -213,6 +213,7 @@ button {
     line-height: 1em;
     user-select: none;
     letter-spacing: 0.01em;
+    text-transform: none;
 }
 
 .habit-block_count-brn {
@@ -238,7 +239,7 @@ button {
 }
 
 .habit-block_count-container:hover .habit-block_count {
-    display: none;
+    display: none !important;
 }
 
 
