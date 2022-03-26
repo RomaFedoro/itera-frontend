@@ -270,7 +270,7 @@ button {
 }
 
 .habit-block_done .habit-block_count-container:hover .habit-block_count {
-    display: block;
+    display: block !important;
 }
 
 .show-count .habit-block_count-container:hover .habit-block_count {
