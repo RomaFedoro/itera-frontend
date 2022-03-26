@@ -1,3 +1,16 @@
+const DAYSWEEK = {
+    0: "вс",
+    1: "пн",
+    2: "вт",
+    3: "ср",
+    4: "чт",
+    5: "пт",
+    6: "сб",
+};
+
+let body = document.body;
+let today = new Date();
+
 // Generate Habit History
 function clearBlock(selector) {
     let element = document.querySelector(selector);
@@ -47,3 +60,19 @@ function defaultState() {
     return
 }
 
+
+let titleBlock = document.querySelector('.title');
+let titleDescriptBlock = document.querySelector('.title-description');
+
+function todayPage() {
+    defaultState();
+    document.querySelector('#menu-btn_today').classList.add('menu-btn_active');
+    body.setAttribute("style", "--main-color: #111111;");
+    let month = today.getMonth() + 1;
+    month = (month < 10) ? `0${month}`: month; 
+    titleBlock.innerHTML = `${today.getDate()}.${month}`;
+    titleDescriptBlock.innerHTML = DAYSWEEK[today.getDay()];
+}
+
+
+todayPage();
