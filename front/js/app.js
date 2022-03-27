@@ -403,9 +403,14 @@ async function habitPage(habit_id) {
     let end_perform = 0;
     let total = 0;
     let done_total = 0;
+    let history_data = {};
     
     for(let i = 0; i < total_perform; ++i) {
         let date = date_habit_data[i];
+        history_data[date.date] = {
+            'done_step': date.done_step,
+            'total_step': date.total_step
+        }
         if (date.date == formatDate(today)) {
             done_today = date.done_step;
             isToday = true;
@@ -417,21 +422,32 @@ async function habitPage(habit_id) {
         if (date.done_step > 0) start_perform += 1;
         if (date.done_step == date.total_step) end_perform += 1; 
     }
+    delete date_habit_data;
 
     let statistic_data = {
-        'всего дней': total_perform,
-        'начато выполнение': start_perform,
-        'полностью выполнено': end_perform
-    }
+        'total_fact': {
+            'text': 'всего дней',
+            'value': total_perform
+        },
+        'start_done_fact': {
+            'text': 'начато выполнение',
+            'value': start_perform
+        },
+        'end_done_fact': {
+            'text': 'полностью выполнено',
+            'value': end_perform
+        },
+    };
 
     let statisticList = document.getElementById("statistic-list");
     clearBlock('#statistic-list');
     function generateStatistic(key) {
         let block = elClass("statistic-block");
+            block.id = key;
         let num = elClass("statistic-block_title");
-            num.innerHTML = statistic_data[key];
+            num.innerHTML = statistic_data[key].value;
         let text = elClass("statistic-block_description");
-            text.innerHTML = key;
+            text.innerHTML = statistic_data[key].text;
         block.append(num);
         block.append(text);
         return block;
@@ -440,6 +456,20 @@ async function habitPage(habit_id) {
     for (key in statistic_data){
         statisticList.append(generateStatistic(key));
     }
+
+    function updateStatisticBlock(id, new_value) {
+        let factBlock = document.getElementById(id);
+            factBlock.getElementsByClassName("statistic-block_title")[0].innerHTML = new_value;
+    }
+
+    function newValue(id, condition) {
+        let new_value = (condition) ? 1 : 0;
+            new_value += statistic_data[id].value;
+        updateStatisticBlock(id, new_value);
+    }
+
+    newValue('start_done_fact', done_today > 0);
+    newValue('end_done_fact', done_today == habit_data.step);
 
     // Generate Today Habit
     document.getElementById('today-habit-block_title').innerHTML = beautiToday();
@@ -473,6 +503,8 @@ async function habitPage(habit_id) {
             }
             if (done_today > habit_data.step) done_today = habit_data.step;
             showDoneToday();
+            newValue('start_done_fact', done_today > 0);
+            newValue('end_done_fact', done_today == habit_data.step);
             if (isToday) {
                 await eel.update_notes(
                     "date_habits",
@@ -491,6 +523,7 @@ async function habitPage(habit_id) {
                     "date_habits",
                     JSON.stringify(date)
                 )();
+                newValue('total_fact', isToday);
             }
         }
 
