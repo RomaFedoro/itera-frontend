@@ -1,11 +1,5 @@
 const DAYSWEEK = {
-  0: "вс",
-  1: "пн",
-  2: "вт",
-  3: "ср",
-  4: "чт",
-  5: "пт",
-  6: "сб",
+  0: "вс", 1: "пн", 2: "вт", 3: "ср", 4: "чт", 5: "пт", 6: "сб",
 };
 
 let body = document.body;
@@ -25,7 +19,7 @@ function clearBlock(selector) {
 }
 
 function getColor(value) {
-  return `hsl(${value}deg 70% 56%)`;
+  return `hsl(${value}deg 60% 50%)`;
 }
 
 function elClass(className, tag = "div") {
@@ -33,6 +27,7 @@ function elClass(className, tag = "div") {
   res.className = className;
   return res;
 }
+
 
 // Generate Habit History
 function clearBlock(selector) {
@@ -82,11 +77,23 @@ function generateHistoryBlock() {
   generateWeeks();
 }
 
-function defaultState(id_menu_btn, color_body = '#111111') {
+
+let workspaces = document.getElementsByClassName('workspace');
+
+function defaultState(id_menu_btn, id_workspace, color_body = '#111111') {
+    let workspace = document.getElementById(id_workspace);
+    if (workspace.style.display == 'none') {
+        for (let i = 0; i < workspaces.length; ++i ) {
+            workspaces[i].style.display = 'none';
+            
+        }
+        workspace.style.display = '';
+    }
     document.getElementsByClassName('menu-btn_active')[0].classList.remove('menu-btn_active');
-    document.querySelector(id_menu_btn).classList.add('menu-btn_active');
+    document.getElementById(id_menu_btn).classList.add('menu-btn_active');
     body.setAttribute("style", `--main-color: ${color_body};`);
 }
+
 
 function templateHabitBlock(data, mode = "show") {
   let container = elClass("habit-block");
@@ -174,7 +181,7 @@ function templateHabitBlock(data, mode = "show") {
     let blocks = container.getElementsByClassName("habit-block_count");
     for (let i = 0; i < blocks.length; ++i) {
         blocks[i].style.display =
-            blocks[i].style.display == "none" ? "inline-flex" : "none";
+            blocks[i].style.display == "none" ? "" : "none";
     }
   }
 
@@ -196,7 +203,8 @@ function templateHabitBlock(data, mode = "show") {
   return container;
 }
 
-//Load Today Page
+
+//Load Today Habit
 
 let titleBlock = document.querySelector(".title");
 let titleDescriptBlock = document.querySelector(".title-description");
@@ -206,59 +214,59 @@ let info_all_habits_keys = '["habit_id", "name", "step", "repeat", "units", "col
 let listContainer = document.querySelector("#list-container");
 
 async function todayPage() {
-    defaultState("#menu-btn_today");
+    defaultState("menu-btn_today","dashboard-workspace");
 
-  today = new Date();
-  let month = today.getMonth() + 1;
-  month = month < 10 ? `0${month}` : month;
-  titleBlock.innerHTML = `${today.getDate()}.${month}`;
-  titleDescriptBlock.innerHTML = DAYSWEEK[today.getDay()];
-  let today_habits = await eel.get_notes(
-    "date_habits",
-    today_habits_keys,
-    `date="${formatDate(today)}"`
-  )();
-  today_habits = JSON.parse(today_habits);
-
-  let done_today_habits = [];
-  clearBlock("#list-container");
-  let list_habits = elClass("list");
-
-  for (i in today_habits) {
-    let habit = today_habits[i];
-    if (habit.done_step == habit.total_step) {
-      done_today_habits.push(habit.habit_id);
-      continue;
+    today = new Date();
+    let month = today.getMonth() + 1;
+    month = month < 10 ? `0${month}` : month;
+    titleBlock.innerHTML = `${today.getDate()}.${month}`;
+    titleDescriptBlock.innerHTML = DAYSWEEK[today.getDay()];
+    let today_habits = await eel.get_notes(
+      "date_habits",
+      today_habits_keys,
+      `date="${formatDate(today)}"`
+    )();
+    today_habits = JSON.parse(today_habits);    
+    let done_today_habits = [];
+    clearBlock("#list-container");
+    let list_habits = elClass("list");  
+    for (i in today_habits) {
+        let habit = today_habits[i];
+        if (habit.done_step == habit.total_step) {
+          done_today_habits.push(habit.habit_id);
+          continue;
+        }
+        let habit_info = await eel.get_notes(
+          "habits",
+          info_today_habits_keys,
+          `habit_id=${habit.habit_id}`
+        )();
+        habit_info = JSON.parse(habit_info);
+        if (Object.keys(habit_info).length == 0) continue;
+        habit_info = Object.assign({}, habit_info[0], habit);
+        list_habits.append(templateHabitBlock(habit_info, (mode = "perform")));
     }
-    let habit_info = await eel.get_notes(
-      "habits",
-      info_today_habits_keys,
-      `habit_id=${habit.habit_id}`
-    )();
-    habit_info = JSON.parse(habit_info);
-    if (Object.keys(habit_info).length == 0) continue;
-    habit_info = Object.assign({}, habit_info[0], habit);
-    list_habits.append(templateHabitBlock(habit_info, (mode = "perform")));
-  }
-  if (list_habits.firstChild) listContainer.append(list_habits);
-
-  list_habits = elClass("list");
-  for (let i = 0; i < done_today_habits.length; ++i) {
-    let habit_id = done_today_habits[i];
-    let habit_info = await eel.get_notes(
-      "habits",
-      '["habit_id", "name"]',
-      `habit_id=${habit_id}`
-    )();
-    habit_info = JSON.parse(habit_info)[0];
-    if (habit_info === undefined) continue;
-    list_habits.append(templateHabitBlock(habit_info, (mode = "done")));
-  }
-  if (list_habits.firstChild) listContainer.append(list_habits);
+    if (list_habits.firstChild) listContainer.append(list_habits);  
+    list_habits = elClass("list");
+    for (let i = 0; i < done_today_habits.length; ++i) {
+        let habit_id = done_today_habits[i];
+        let habit_info = await eel.get_notes(
+          "habits",
+          '["habit_id", "name"]',
+          `habit_id=${habit_id}`
+        )();
+        habit_info = JSON.parse(habit_info)[0];
+        if (habit_info === undefined) continue;
+        list_habits.append(templateHabitBlock(habit_info, (mode = "done")));
+    }
+    if (list_habits.firstChild) listContainer.append(list_habits);
 }
 
+
+//Load All Habits
+
 async function allHabitsPage() {
-    defaultState("#menu-btn_all");
+    defaultState("menu-btn_all","dashboard-workspace");
     let all_habits = await eel.get_notes(
         "habits", 
         info_all_habits_keys
@@ -277,8 +285,124 @@ async function allHabitsPage() {
     if (list_habits.firstChild) listContainer.append(list_habits);
 }
 
+
+//Add Habit
+
+let daysweekInput = document.getElementById('daysweek-input');
+let daysweekArr = [];
+
+function generateDaysweekInput(maskChecked='all') {
+    clearBlock('#daysweek-input');
+    daysweekArr = [];
+    for (let i=1; i <= 7; ++i) {
+        if (i == 7) i = 0;
+
+        let block = elClass('checkbox-block', 'label');
+        let input = document.createElement('input');
+            input.type = 'checkbox';
+            input.value = i;
+            input.checked = (maskChecked === 'all') ? true : maskChecked.indexOf(i) != -1;
+            
+        inputState();
+
+        function inputState() {
+            pos = daysweekArr.indexOf(i);
+            console.log(pos, i);
+            if (input.checked) {
+                if (pos != -1) return;
+                daysweekArr.push(i);
+            } else {
+                if (pos == -1) return;
+                daysweekArr.splice(pos, 1); 
+            }
+            console.log(daysweekArr);
+        }
+
+        input.oninput = () => inputState();
+        let input_name = elClass('checkbox_name');
+            input_name.innerHTML = DAYSWEEK[i];
+
+        block.append(input);
+        block.append(input_name);
+        daysweekInput.append(block);
+
+        if (i == 0) break;
+    }
+}
+
+generateDaysweekInput();
+
+
+let nameInput = document.getElementById('name-habit-input');
+let descriptInput = document.getElementById('description-input');
+let colorInput = document.getElementById('color-input');
+let stepInput = document.getElementById('step-input');
+let repeatInput = document.getElementById('repeat-input');
+let unitsInput = document.getElementById('units-input');
+let remindInput = document.getElementById('remind-input');
+let buttonHabitInput = document.getElementById('load-button');
+
+function getDataHabit() {
+    today = new Date();
+    let habit_data = {};
+    habit_data['name'] = nameInput.value;
+    habit_data['description'] = descriptInput.value;
+    habit_data['color'] = colorInput.value;
+    habit_data['days_week'] = daysweekArr;
+    if (stepInput.value) habit_data['step'] = stepInput.value;
+    if (repeatInput.value) habit_data['repeat'] = repeatInput.value;
+    if (unitsInput.value) habit_data['units'] = unitsInput.value;
+    if (!remindInput.checked) habit_data['remind'] = 0;
+    habit_data['date_creation'] = formatDate(today);
+    habit_data['date_check'] = formatDate(today);
+    return habit_data;
+}
+
+async function addHabitsPage() {
+    function clear() {
+        nameInput.value = '';
+        descriptInput.value = '';
+        colorInput.value = 240;
+        stepInput.value = 1;
+        repeatInput.value = 1;
+        unitsInput.value = '';
+        remindInput.checked = true;
+        generateDaysweekInput();
+    }
+    defaultState("menu-btn_add", "setting-workspace", getColor(colorInput.value));
+    buttonHabitInput.value = 'Создать привычку';
+    buttonHabitInput.onclick = () => {
+        addHabits();
+        clear();
+    }
+    colorInput.oninput = () => {
+        body.setAttribute("style", `--main-color: ${getColor(colorInput.value)};`);
+    }
+}
+
+async function addHabits() {
+    if (!nameInput.value) return;
+    let habit_data = getDataHabit();
+    let habit_id = await eel.add_note(
+        "habits",
+        JSON.stringify(habit_data)
+    )();
+    if (daysweekArr.indexOf(today.getDay()) != -1) {
+        let date = {
+            'habit_id': habit_id,
+            'date': formatDate(today),
+            'total_step': habit_data['step']
+        }
+        await eel.add_note(
+            "date_habits",
+            JSON.stringify(date)
+        )();
+    }
+}
+
+
 async function habitPage(id) {
-  console.log(id);
+    console.log(id);
 }
 
 todayPage();

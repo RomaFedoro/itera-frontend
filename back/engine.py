@@ -64,7 +64,7 @@ def execute_read_query(query):
 
 
 @eel.expose
-def add_notes(name_table, params):
+def add_note(name_table, params):
     def format_to_str(array):
         res = ""
         for el in array:
@@ -79,6 +79,10 @@ def add_notes(name_table, params):
     values = [str(params[el]) for el in keys]
     query = """ INSERT INTO {} ({}) VALUES ({}); """.format(name_table, ', '.join(keys), format_to_str(values))
     execute_query(query)
+    id_query = "max(habit_id)"
+    id = execute_read_query("""SELECT {} FROM {};""".format(id_query, name_table))
+    id = loads(id)[0][id_query]
+    return id
 
 
 @eel.expose

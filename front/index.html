@@ -18,7 +18,7 @@
           <button id="menu-btn_all" class="menu-btn" onclick="allHabitsPage()">Все привычки</button>
         </div>
         <div class="menu-section">
-          <button class="menu-btn small-menu-btn">Создать привычку</button>
+          <button id="menu-btn_add" class="menu-btn small-menu-btn" onclick="addHabitsPage()">Создать привычку</button>
         </div>
         <div class="menu-section habit-menu-section" style="display: none;">
             <button class="menu-btn small-menu-btn">Редактировать привычку</button>
@@ -67,36 +67,7 @@
                 </label>
                 <div class="input-block">
                   <div class="input-name">Дни недели</div>
-                  <div class="checkbox-container">
-                    <label class="checkbox-block">
-                      <input type="checkbox" value="1" checked>
-                      <div class="checkbox_name">пн</div>
-                    </label>
-                    <label class="checkbox-block">
-                      <input type="checkbox" value="2" checked>
-                      <div class="checkbox_name">вт</div>
-                    </label>
-                    <label class="checkbox-block">
-                      <input type="checkbox" value="3" checked>
-                      <div class="checkbox_name">ср</div>
-                    </label>
-                    <label class="checkbox-block">
-                      <input type="checkbox" value="4" checked>
-                      <div class="checkbox_name">чт</div>
-                    </label>
-                    <label class="checkbox-block">
-                      <input type="checkbox" value="5" checked>
-                      <div class="checkbox_name">пт</div>
-                    </label>
-                    <label class="checkbox-block">
-                      <input type="checkbox" value="6" checked>
-                      <div class="checkbox_name">сб</div>
-                    </label>
-                    <label class="checkbox-block">
-                      <input type="checkbox" value="7" checked>
-                      <div class="checkbox_name">вс</div>
-                    </label>
-                  </div>
+                  <div id="daysweek-input" class="checkbox-container"></div>
                 </div>
                 <label class="input-block">
                   <div class="input-name">Цвет</div>
@@ -110,7 +81,7 @@
                 </label>
                 <label class="input-block">
                   <div class="input-name">Кол-во повторов</div>
-                  <input type="number" step="1" min="1" max="9999" value="1">
+                  <input id="repeat-input" type="number" step="1" min="1" max="9999" value="1">
                 </label>
                 <label class="input-block">
                   <input id="units-input" type="text" maxlength="5" placeholder="шт">
@@ -120,7 +91,7 @@
                 <div class="input-name">Напоминания</div>
                 <div class="checkbox-container">
                   <label class="checkbox-block">
-                    <input type="checkbox" value="reminders" checked>
+                    <input id="remind-input" type="checkbox" value="reminders" checked>
                     <div class="checkbox_name">
                       <svg id="checkbox_mark" width="80" height="59" viewBox="0 0 80 59" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4.4,32.7l20.5,19.6L75.6,3.8" stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
@@ -130,7 +101,7 @@
                 </div>
               </div>
               <label class="input-block input_button">
-                <input type="button" value="Создать привычку">
+                <input id="load-button" type="button" value="Создать привычку">
               </label>
             </div>
           </div>
