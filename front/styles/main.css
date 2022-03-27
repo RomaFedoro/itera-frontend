@@ -320,7 +320,7 @@ button {
     user-select: none;
 }
 
-.today-habit_step-container, .checkbox-container {
+#today-habit_step-container, .checkbox-container {
     display: flex;
     grid-gap: 1em;
     align-content: center;
@@ -527,6 +527,7 @@ svg#checkbox_mark{
     width: 40%;
     height: 40%;
     transition: .2s;
+    margin-top: 2%;
 }
 
 #checkbox_mark path{
@@ -538,6 +539,16 @@ svg#checkbox_mark{
 }
 
 input:checked + .checkbox_name #checkbox_mark path{
+    stroke: var(--main-color);
+}
+
+.done_today .checkbox_name {
+    background-color: var(--font-color);
+    border-color: var(--font-color);
+    color: var(--main-color);
+}
+
+.done_today .checkbox_name #checkbox_mark path{
     stroke: var(--main-color);
 }
 

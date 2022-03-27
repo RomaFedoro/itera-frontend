@@ -19,13 +19,12 @@ function isDateChanged() {
     return true;
 }
 
-function clearBlock(selector) {
-  let element = document.queryCommandValue(selector);
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
+function beautiToday() {
+    let month = today.getMonth() + 1;
+    month = month < 10 ? `0${month}` : month;
+    return `${today.getDate()}.${month}`;
 }
-
+  
 function getColor(value) {
   return `hsl(${value}deg 60% 50%)`;
 }
@@ -36,53 +35,11 @@ function elClass(className, tag = "div") {
   return res;
 }
 
-
-// Generate Habit History
 function clearBlock(selector) {
   let element = document.querySelector(selector);
   while (element.firstChild) {
     element.removeChild(element.firstChild);
   }
-}
-
-function generateHistoryBlock() {
-  clearBlock("#history-container");
-  let draw = SVG().addTo("#history-container").size("100%", "100%");
-
-  let size = document.querySelector("#history-container").clientHeight;
-  let weeks = 53;
-  let intervalDayWeek = 0.6;
-  let intervalWeek = 0.3;
-  let degree = -90;
-
-  let sizeDay = (2 * Math.PI) / (weeks * (1 + intervalWeek));
-  let widthWeek = sizeDay * (7 + 6 * intervalDayWeek);
-  let radius = size / (2 * (1 + widthWeek));
-  widthWeek *= radius;
-  sizeDay *= radius;
-
-  function generateWeeks() {
-    for (let i = 0; i < weeks; i++) {
-      let group = draw.group();
-      let posDay = 0;
-      for (let j = 0; j < 7; j++) {
-        let circle = group.circle(sizeDay).move(posDay, 0);
-        circle.attr({ fill: "var(--inactive-color)" });
-        posDay = posDay + intervalDayWeek * sizeDay + sizeDay;
-      }
-      let degreeRadian = (degree * Math.PI) / 180;
-      let x = radius * Math.cos(degreeRadian) + size / 2 - sizeDay / 2;
-      let y = radius * Math.sin(degreeRadian) + size / 2 - sizeDay / 2;
-      group.attr({
-        transform: `translate(${x}, ${y}) rotate(${degree} ${sizeDay / 2} ${
-          sizeDay / 2
-        })`,
-      });
-      degree -= 360 / weeks;
-    }
-  }
-
-  generateWeeks();
 }
 
 
@@ -228,9 +185,7 @@ async function todayPage() {
     defaultState("menu-btn_today","dashboard-workspace");
 
     today = new Date();
-    let month = today.getMonth() + 1;
-    month = month < 10 ? `0${month}` : month;
-    titleBlock.innerHTML = `${today.getDate()}.${month}`;
+    titleBlock.innerHTML = beautiToday();
     titleDescriptBlock.innerHTML = DAYSWEEK[today.getDay()];
     if (isDateChanged()) return todayPage();
     let today_habits = await eel.get_notes(
@@ -381,8 +336,8 @@ async function addHabitsPage() {
     }
     defaultState("menu-btn_add", "setting-workspace", getColor(colorInput.value));
     buttonHabitInput.value = 'Создать привычку';
-    buttonHabitInput.onclick = () => {
-        addHabits();
+    buttonHabitInput.onclick = async function() {
+        await addHabits();
         clear();
     }
     colorInput.oninput = () => {
@@ -433,26 +388,38 @@ async function habitPage(habit_id) {
     document.getElementById('habit-title').innerHTML = habit_data.name;
     document.getElementById('habit-title_description').innerHTML = habit_data.description;
 
-    // Здесь будет дневная привычка
-
     let date_habit_data = await eel.get_notes(
         "date_habits",
         date_habit_keys,
         `habit_id=${habit_id}`
     )();
     date_habit_data = JSON.parse(date_habit_data);
+    let done_today = 0;
+    let isToday= false;
 
     // Generate Statistic
-    let total = date_habit_data.length;
+    let total_perform = date_habit_data.length;
     let start_perform = 0;
     let end_perform = 0;
-    for(let i = 0; i < total; ++i) {
+    let total = 0;
+    let done_total = 0;
+    
+    for(let i = 0; i < total_perform; ++i) {
         let date = date_habit_data[i];
+        if (date.date == formatDate(today)) {
+            done_today = date.done_step;
+            isToday = true;
+            continue;
+        }
+        total += date.total_step;
+        done_total += date.done_step;
+
         if (date.done_step > 0) start_perform += 1;
         if (date.done_step == date.total_step) end_perform += 1; 
     }
+
     let statistic_data = {
-        'всего дней': total,
+        'всего дней': total_perform,
         'начато выполнение': start_perform,
         'полностью выполнено': end_perform
     }
@@ -472,6 +439,115 @@ async function habitPage(habit_id) {
 
     for (key in statistic_data){
         statisticList.append(generateStatistic(key));
+    }
+
+    // Generate Today Habit
+    document.getElementById('today-habit-block_title').innerHTML = beautiToday();
+    let today_step_cont = document.getElementById('today-habit_step-container');
+    clearBlock('#today-habit_step-container');
+
+    function showDoneToday() {
+        for (i = 1; i <= habit_data.step; ++i) {
+            block = today_step_cont.childNodes[i-1];
+            (i <= done_today) ? block.classList.add('done_today') : block.classList.remove('done_today');
+        }
+    }
+
+    let firstRadioState;
+    function generateTodayStep(i) {     
+        let block = elClass('checkbox-block', 'label');
+        let input = document.createElement('input');
+            input.type = 'radio';
+            input.name = 'today_habit';
+        if (i == 1) firstRadioState = i == done_today;
+
+        input.onclick = async function() {
+            if (isDateChanged()) return habitPage(habit_id);
+            if (i == 1) {
+                done_today = (firstRadioState) ? 0 : 1;
+                firstRadioState = !firstRadioState;
+                input.checked = firstRadioState;
+            } else {
+                firstRadioState = false;
+                done_today = i;
+            }
+            if (done_today > habit_data.step) done_today = habit_data.step;
+            showDoneToday();
+            if (isToday) {
+                await eel.update_notes(
+                    "date_habits",
+                    `{"done_step": ${done_today}}`,
+                    `habit_id=${habit_id} AND date="${formatDate(today)}"`
+                )();
+            } else {
+                isToday = true;
+                let date = {
+                    'habit_id': habit_id,
+                    'date': formatDate(today),
+                    'done_step': done_today,
+                    'total_step': habit_data.step
+                }
+                await eel.add_note(
+                    "date_habits",
+                    JSON.stringify(date)
+                )();
+            }
+        }
+
+        let icon = elClass('checkbox_name');
+            icon.innerHTML = '<svg id="checkbox_mark" width="80" height="59" viewBox="0 0 80 59" fill="none" \
+            xmlns="http://www.w3.org/2000/svg">  <path d="M4.4,32.7l20.5,19.6L75.6,3.8" \
+            stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+
+        if (i <= done_today) block.classList.add('done_today');
+        block.append(input);
+        block.append(icon);
+        return block;
+    }
+
+    for (i = 1; i <= habit_data.step; ++i) {
+        today_step_cont.append(generateTodayStep(i));
+    }
+
+    // Generate Habit History
+    function generateHistoryBlock() {
+        clearBlock("#history-container");
+        let draw = SVG().addTo("#history-container").size("100%", "100%");
+      
+        let size = document.querySelector("#history-container").clientHeight;
+        let weeks = 53;
+        let intervalDayWeek = 0.6;
+        let intervalWeek = 0.3;
+        let degree = -90;
+      
+        let sizeDay = (2 * Math.PI) / (weeks * (1 + intervalWeek));
+        let widthWeek = sizeDay * (7 + 6 * intervalDayWeek);
+        let radius = size / (2 * (1 + widthWeek));
+        widthWeek *= radius;
+        sizeDay *= radius;
+      
+        function generateWeeks() {
+          for (let i = 0; i < weeks; i++) {
+            let group = draw.group();
+            let posDay = 0;
+            for (let j = 0; j < 7; j++) {
+              let circle = group.circle(sizeDay).move(posDay, 0);
+              circle.attr({ fill: "var(--inactive-color)" });
+              posDay = posDay + intervalDayWeek * sizeDay + sizeDay;
+            }
+            let degreeRadian = (degree * Math.PI) / 180;
+            let x = radius * Math.cos(degreeRadian) + size / 2 - sizeDay / 2;
+            let y = radius * Math.sin(degreeRadian) + size / 2 - sizeDay / 2;
+            group.attr({
+              transform: `translate(${x}, ${y}) rotate(${degree} ${sizeDay / 2} ${
+                sizeDay / 2
+              })`,
+            });
+            degree -= 360 / weeks;
+          }
+        }
+      
+        generateWeeks();
     }
 }
 
