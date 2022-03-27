@@ -11,6 +11,14 @@ function formatDate(time) {
   return time.toISOString().split("T")[0];
 }
 
+function isDateChanged() {
+    let last_date = formatDate(today);
+    today = new Date();
+    let this_date = formatDate(today);
+    if (last_date === this_date) return false;
+    return true;
+}
+
 function clearBlock(selector) {
   let element = document.queryCommandValue(selector);
   while (element.firstChild) {
@@ -79,9 +87,11 @@ function generateHistoryBlock() {
 
 
 let workspaces = document.getElementsByClassName('workspace');
+let menu = document.getElementsByClassName('menu')[0];
 
-function defaultState(id_menu_btn, id_workspace, color_body = '#111111') {
+function defaultState(id_menu_btn, id_workspace, color_body = '#111111', isHabitPages = false) {
     let workspace = document.getElementById(id_workspace);
+    (isHabitPages) ? menu.classList.add("habit-menu") : menu.classList.remove("habit-menu");
     if (workspace.style.display == 'none') {
         for (let i = 0; i < workspaces.length; ++i ) {
             workspaces[i].style.display = 'none';
@@ -144,6 +154,7 @@ function templateHabitBlock(data, mode = "show") {
     count_container.append(button);
 
     button.onclick = async function () {
+        if (isDateChanged()) return todayPage();
         let info_step = await eel.get_notes(
           "date_habits",
           '["done_step", "total_step"]',
@@ -221,6 +232,7 @@ async function todayPage() {
     month = month < 10 ? `0${month}` : month;
     titleBlock.innerHTML = `${today.getDate()}.${month}`;
     titleDescriptBlock.innerHTML = DAYSWEEK[today.getDay()];
+    if (isDateChanged()) return todayPage();
     let today_habits = await eel.get_notes(
       "date_habits",
       today_habits_keys,
@@ -307,7 +319,6 @@ function generateDaysweekInput(maskChecked='all') {
 
         function inputState() {
             pos = daysweekArr.indexOf(i);
-            console.log(pos, i);
             if (input.checked) {
                 if (pos != -1) return;
                 daysweekArr.push(i);
@@ -315,7 +326,6 @@ function generateDaysweekInput(maskChecked='all') {
                 if (pos == -1) return;
                 daysweekArr.splice(pos, 1); 
             }
-            console.log(daysweekArr);
         }
 
         input.oninput = () => inputState();
@@ -401,7 +411,75 @@ async function addHabits() {
 }
 
 
-async function habitPage(id) {
+//Page Habit
+
+let habit_keys = '["name", "description", "step", "color"]';
+let date_habit_keys = '["date", "done_step", "total_step"]';
+let menuHabit = document.getElementById('menu-btn_habit');
+let menuHabitEdit = document.getElementById('menu-btn_edit-habit');
+let menuHabitDelete = document.getElementById('menu-btn_delete-habit');
+
+async function habitPage(habit_id) {
+    let habit_data = await eel.get_notes(
+        "habits",
+        habit_keys,
+        `habit_id=${habit_id}`
+    )();
+    habit_data = JSON.parse(habit_data)[0];
+    menuHabit.innerHTML = habit_data.name;
+    menuHabitEdit.onclick = () => editHabitPage(habit_id);
+    menuHabitDelete.onclick = () => deleteHabitPage(habit_id);
+    defaultState("menu-btn_habit", "habit-workspace", getColor(habit_data.color), true);
+    document.getElementById('habit-title').innerHTML = habit_data.name;
+    document.getElementById('habit-title_description').innerHTML = habit_data.description;
+
+    // Здесь будет дневная привычка
+
+    let date_habit_data = await eel.get_notes(
+        "date_habits",
+        date_habit_keys,
+        `habit_id=${habit_id}`
+    )();
+    date_habit_data = JSON.parse(date_habit_data);
+
+    // Generate Statistic
+    let total = date_habit_data.length;
+    let start_perform = 0;
+    let end_perform = 0;
+    for(let i = 0; i < total; ++i) {
+        let date = date_habit_data[i];
+        if (date.done_step > 0) start_perform += 1;
+        if (date.done_step == date.total_step) end_perform += 1; 
+    }
+    let statistic_data = {
+        'всего дней': total,
+        'начато выполнение': start_perform,
+        'полностью выполнено': end_perform
+    }
+
+    let statisticList = document.getElementById("statistic-list");
+    clearBlock('#statistic-list');
+    function generateStatistic(key) {
+        let block = elClass("statistic-block");
+        let num = elClass("statistic-block_title");
+            num.innerHTML = statistic_data[key];
+        let text = elClass("statistic-block_description");
+            text.innerHTML = key;
+        block.append(num);
+        block.append(text);
+        return block;
+    }
+
+    for (key in statistic_data){
+        statisticList.append(generateStatistic(key));
+    }
+}
+
+async function editHabitPage(id) {
+    console.log(id);
+}
+
+async function deleteHabitPage(id) {
     console.log(id);
 }
 

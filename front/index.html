@@ -10,8 +10,8 @@
     <main class="wrapper">
       <div class="menu">
         <div class="logo"></div>
-        <div class="menu-section habit-menu-section" style="display: none;">
-            <button class="menu-btn"></button>
+        <div class="menu-section habit-menu-section">
+            <button id="menu-btn_habit" class="menu-btn"></button>
         </div>
         <div class="menu-section">
           <button id="menu-btn_today" class="menu-btn menu-btn_active" onclick="todayPage()">Сегодня</button>
@@ -20,9 +20,9 @@
         <div class="menu-section">
           <button id="menu-btn_add" class="menu-btn small-menu-btn" onclick="addHabitsPage()">Создать привычку</button>
         </div>
-        <div class="menu-section habit-menu-section" style="display: none;">
-            <button class="menu-btn small-menu-btn">Редактировать привычку</button>
-            <button class="menu-btn small-menu-btn">Удалить привычку</button>
+        <div class="menu-section habit-menu-section">
+            <button id="menu-btn_edit-habit" class="menu-btn small-menu-btn">Редактировать привычку</button>
+            <button id="menu-btn_delete-habit" class="menu-btn small-menu-btn">Удалить привычку</button>
         </div>
       </div>
       <div class="workspace" id="dashboard-workspace">
@@ -31,16 +31,14 @@
             <div class="title"></div>
             <div class="title-description"></div>
           </header>
-          <div id="list-container">
-
-          </div>
+          <div id="list-container"></div>
         </section>
       </div>
       <div class="workspace" id="habit-workspace" style="display: none;">
         <section class="workspace-block">
           <header class="habit-title-block">
-            <div class="habit-title"></div>
-            <div class="habit-title_description"></div>
+            <div id="habit-title"></div>
+            <div id="habit-title_description"></div>
           </header>
           <div class="today-habit-block">
             <div class="today-habit-block_title"></div>
@@ -48,7 +46,7 @@
           </div>
         </section>
         <section class="workspace-block" id="workspace-block_habit-statistic">
-          <div class="list"></div>
+          <div id="statistic-list" class="list"></div>
           <div id="history-container"></div>
         </section>
       </div>

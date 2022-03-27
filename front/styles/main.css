@@ -53,7 +53,7 @@ body {
 }
 
 button {
-    transition: opacity .2s;
+    transition: opacity .2s, color .2s;
     outline: none;
     color: var(--font-color);
     font-family: 'SF Pro Display';
@@ -61,6 +61,7 @@ button {
     letter-spacing: 0.1em;
     user-select: none;
     cursor: pointer;
+    transition: color .2s, opacity .2s;
 }
 
 .wrapper {
@@ -97,6 +98,18 @@ button {
     margin-left: 30%;
     grid-template-rows: auto;
     grid-row-gap: 0.4em;
+}
+
+.habit-menu-section {
+    display: none;
+}
+
+.habit-menu #menu-btn_add{
+    display: none;
+}
+
+.habit-menu .habit-menu-section {
+    display: grid;
 }
 
 .menu-btn {
@@ -252,7 +265,7 @@ button {
 }
 
 .habit-block_done .habit-block_count {
-    transition: .2s;
+    transition: .05s;
 }
 
 .habit-block_done:hover {
@@ -281,14 +294,14 @@ button {
 }
 
 
-.habit-title {
+#habit-title {
     font-size: 8rem;
     line-height: 1.05em;
     min-width: 42vw;
     max-width: 100%;
 }
 
-.habit-title_description {
+#habit-title_description {
     font-size: 1.2rem;
     max-width: 42vw;
     line-height: 1.6em;
