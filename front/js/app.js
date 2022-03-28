@@ -11,11 +11,12 @@ function formatDate(time) {
   return time.toISOString().split("T")[0];
 }
 
-function isDateChanged() {
+async function isDateChanged() {
     let last_date = formatDate(today);
     today = new Date();
     let this_date = formatDate(today);
     if (last_date === this_date) return false;
+    await eel.check_tomorrow()();
     return true;
 }
 
@@ -111,7 +112,7 @@ function templateHabitBlock(data, mode = "show") {
     count_container.append(button);
 
     button.onclick = async function () {
-        if (isDateChanged()) return todayPage();
+        if (await isDateChanged()) return todayPage();
         let info_step = await eel.get_notes(
           "date_habits",
           '["done_step", "total_step"]',
@@ -187,7 +188,7 @@ async function todayPage() {
     today = new Date();
     titleBlock.innerHTML = beautiToday();
     titleDescriptBlock.innerHTML = DAYSWEEK[today.getDay()];
-    if (isDateChanged()) return todayPage();
+    if (await isDateChanged()) return todayPage();
     let today_habits = await eel.get_notes(
       "date_habits",
       today_habits_keys,
@@ -492,7 +493,7 @@ async function habitPage(habit_id) {
         if (i == 1) firstRadioState = i == done_today;
 
         input.onclick = async function() {
-            if (isDateChanged()) return habitPage(habit_id);
+            if (await isDateChanged()) return habitPage(habit_id);
             if (i == 1) {
                 done_today = (firstRadioState) ? 0 : 1;
                 firstRadioState = !firstRadioState;
@@ -522,6 +523,11 @@ async function habitPage(habit_id) {
                 await eel.add_note(
                     "date_habits",
                     JSON.stringify(date)
+                )();
+                await eel.update_notes(
+                    "habits",
+                    JSON.stringify({"date_check": formatDate(today)}),
+                    `habit_id=${habit_id}`
                 )();
                 newValue('total_fact', isToday);
             }
