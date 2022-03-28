@@ -155,7 +155,6 @@ def update_dateHabits(date):
 
 @eel.expose
 def check_tomorrow():
-    print('Start')
     date_launce = date.today()
     last_date_launce = loads(get_notes('setting', '["value"]', '"param"="last_launch"'))
     if not last_date_launce:

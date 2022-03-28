@@ -15,8 +15,8 @@ async function isDateChanged() {
     let last_date = formatDate(today);
     today = new Date();
     let this_date = formatDate(today);
-    if (last_date === this_date) return false;
     await eel.check_tomorrow()();
+    if (last_date === this_date) return false;
     return true;
 }
 

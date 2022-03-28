@@ -84,11 +84,14 @@ button {
 }
 
 .logo {
-    height: 4.2rem;
-    width: 10rem;
+    height: 2rem;
+    width: 5rem;
     margin-bottom: 2.8rem;
-    background-color: var(--inactive-color);
-    border-radius: .6rem;
+    background-image: url('../icons/logo.svg');
+    background-size: contain;
+    background-repeat: none;
+    background-position: top left;
+    background-repeat: no-repeat;
 }
 
 .menu-section {
@@ -112,20 +115,24 @@ button {
     display: grid;
 }
 
-.menu-btn {
+.menu-btn, #cancel {
     font-size: 1.6rem;
     padding: 0.4em 0.8em;
     border-radius: 3em;
     text-align: right;
 }
 
-.small-menu-btn {
+.small-menu-btn, #cancel {
     font-size: 1.2rem;
     padding: 0.533em 1.067em;
 }
 
-.menu-btn:hover {
+.menu-btn:hover, #cancel {
     opacity: .4;
+}
+
+#cancel:active {
+    opacity: 1;
 }
 
 .menu-btn_active {
@@ -380,6 +387,7 @@ button {
 
 .input-row {
     display: flex;
+    align-items: center;
     grid-gap: 1.6rem;
 }
 
@@ -555,7 +563,6 @@ input:checked + .checkbox_name #checkbox_mark path{
 .input_button {
     background-color: var(--font-color);
     transition: opacity .2s;
-    margin-top: 2em;
 }
 
 .input_button input {
@@ -569,4 +576,12 @@ input:checked + .checkbox_name #checkbox_mark path{
 
 .input_button:hover {
     opacity: .6;
+}
+
+.btn-container {
+    margin-top: 5.2rem;
+}
+
+#cancel {
+    height: max-content;
 }

@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/main.css" />
+    <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
   </head>
   <body>
     <main class="wrapper">
@@ -27,7 +28,7 @@
       </div>
       <div class="workspace" id="dashboard-workspace">
         <section class="workspace-block">
-          <header class="title-block" >
+          <header class="title-block">
             <div class="title"></div>
             <div class="title-description"></div>
           </header>
@@ -52,12 +53,12 @@
       </div>
       <div class="workspace" id="setting-workspace" style="display: none;">
         <section class="workspace-block">
-          <div class="index-container">
+          <div class="index-container" id="form">
             <label class="input-block">
               <div class="input-name">Название</div>
               <input id="name-habit-input" type="text" maxlength="40">
             </label>
-            <div class="index-container">
+            <div class="index-container" id="extra_options">
               <div class="index-container">
                 <label class="input-block">
                   <div class="input-name">Описание</div>
@@ -98,10 +99,13 @@
                   </label>
                 </div>
               </div>
-              <label class="input-block input_button">
-                <input id="load-button" type="button" value="Создать привычку">
-              </label>
             </div>
+          </div>
+          <div class="input-row btn-container" id="control-buttons">
+            <label class="input-block input_button">
+              <input id="load-button" type="button" value="Создать привычку">
+            </label>
+            <button id="cancel">Отменить</button>
           </div>
         </section>
       </div>
