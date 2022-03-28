@@ -307,6 +307,25 @@ let repeatInput = document.getElementById('repeat-input');
 let unitsInput = document.getElementById('units-input');
 let remindInput = document.getElementById('remind-input');
 let buttonHabitInput = document.getElementById('load-button');
+let buttonHabitContainer = document.getElementsByClassName('input_button')[0];
+
+let messageBlock = document.getElementById('message');
+let form = document.getElementById('form');
+let extraOptionsBlock = document.getElementById('extra_options');
+let controlBtns = document.getElementById('control-buttons');
+
+
+function visibilityExtraOptions() {
+    extraOptionsBlock.style.display = (nameInput.value) ? 'flex' : 'none';
+    (nameInput.value) ? buttonHabitContainer.classList.remove('disactive-btn') : buttonHabitContainer.classList.add('disactive-btn');
+}
+
+visibilityExtraOptions();
+
+nameInput.oninput = () => {
+    visibilityExtraOptions();
+}
+
 
 function getDataHabit() {
     today = new Date();

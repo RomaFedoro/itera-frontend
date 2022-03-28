@@ -156,6 +156,7 @@ button {
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid var(--font-color);
+    transition: opacity .2s;
 }
 
 .workspace-block:last-child {
@@ -301,14 +302,14 @@ button {
 }
 
 
-#habit-title {
+#habit-title, #message-title {
     font-size: 8rem;
     line-height: 1.05em;
     min-width: 42vw;
     max-width: 100%;
 }
 
-#habit-title_description {
+#habit-title_description, #message-title_description {
     font-size: 1.2rem;
     max-width: 42vw;
     line-height: 1.6em;
@@ -585,3 +586,47 @@ input:checked + .checkbox_name #checkbox_mark path{
 #cancel {
     height: max-content;
 }
+
+.disactive-btn {
+    opacity: 0.4;
+}
+
+.disactive-btn #load-button{
+    opacity: 0.4;
+    cursor: default;
+}
+
+.disactive-btn:hover {
+    opacity: 0.4;
+}
+
+.disactive-btn:active  #load-button{
+    animation: swing .4s;
+}
+
+@keyframes swing {
+    15% {
+        -webkit-transform: translateX(9px);
+        transform: translateX(9px);
+    }
+    30% {
+        -webkit-transform: translateX(-9px);
+        transform: translateX(-9px);
+    }
+    40% {
+        -webkit-transform: translateX(6px);
+        transform: translateX(6px);
+    }
+    50% {
+        -webkit-transform: translateX(-6px);
+        transform: translateX(-6px);
+    }
+    65% {
+        -webkit-transform: translateX(3px);
+        transform: translateX(3px);
+    }
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+  }

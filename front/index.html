@@ -59,20 +59,18 @@
               <input id="name-habit-input" type="text" maxlength="40">
             </label>
             <div class="index-container" id="extra_options">
-              <div class="index-container">
-                <label class="input-block">
-                  <div class="input-name">Описание</div>
-                  <input id="description-input" type="text" maxlength="120">
-                </label>
-                <div class="input-block">
-                  <div class="input-name">Дни недели</div>
-                  <div id="daysweek-input" class="checkbox-container"></div>
-                </div>
-                <label class="input-block">
-                  <div class="input-name">Цвет</div>
-                  <input id="color-input" type="range" min="0" max="360" step="1" value="240">
-                </label>
-              </div> 
+              <label class="input-block">
+                <div class="input-name">Описание</div>
+                <input id="description-input" type="text" maxlength="120">
+              </label>
+              <div class="input-block">
+                <div class="input-name">Дни недели</div>
+                <div id="daysweek-input" class="checkbox-container"></div>
+              </div>
+              <label class="input-block">
+                <div class="input-name">Цвет</div>
+                <input id="color-input" type="range" min="0" max="360" step="1" value="240">
+              </label> 
               <div class="input-row">
                 <label class="input-block">
                   <div class="input-name">Кол-во подходов</div>
@@ -100,6 +98,10 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="index-container" id="message" style="display: none;">
+            <div id="message-title"></div>
+            <div id="message-title_description"></div>
           </div>
           <div class="input-row btn-container" id="control-buttons">
             <label class="input-block input_button">
