@@ -116,6 +116,12 @@ button {
     display: grid;
 }
 
+.menu-btn {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .menu-btn, .cancel-btn {
     font-size: 1.6rem;
     padding: 0.4em 0.8em;
@@ -247,12 +253,8 @@ button {
     text-decoration: underline;
 }
 
-.habit-block:hover .count-brn_active {
-    display: block;
-}
-
 .habit-block_count-brn:active {
-    opacity: .4;
+    opacity: .2;
 }
 
 .habit-block_count-container:hover .habit-block_count-brn {
@@ -260,7 +262,11 @@ button {
 }
 
 .habit-block_count-container:hover .habit-block_count {
-    display: none !important;
+    display: none;
+}
+
+.habit-block:hover .el_active {
+    display: block;
 }
 
 
@@ -304,6 +310,7 @@ button {
 
 
 #habit-title, #message-title {
+    overflow-wrap: break-word;
     font-size: 8rem;
     line-height: 1.05em;
     min-width: 42vw;
@@ -581,7 +588,7 @@ input:checked + .checkbox_name #checkbox_mark path{
 }
 
 .btn-container {
-    margin-top: 5.2rem;
+    margin-top: 4rem;
 }
 
 .cancel-btn {

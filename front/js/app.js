@@ -96,6 +96,8 @@ function templateHabitBlock(data, mode = "show") {
     detailed_count = elClass("habit-block_count");
     detailed_count.innerHTML = `${countText} x ${data.repeat}&nbsp;${data.units}`;
     detailed_count.style.display = "none";
+    
+    if (mode == "show") detailed_count.classList.add('el_active');
     count_container.append(detailed_count);
   }
 
@@ -103,7 +105,7 @@ function templateHabitBlock(data, mode = "show") {
     function changeBtn() {
         if (isLastStep) {
           button.innerHTML = "выполнить";
-          button.classList.add("count-brn_active");
+          button.classList.add("el_active");
         } else {
           button.innerHTML = "выполнить подход";
         }
@@ -285,7 +287,9 @@ function generateDaysweekInput(maskChecked='all') {
                 daysweekArr.splice(pos, 1); 
             }
         }
-
+        
+        input.onfocus = () => daysweekInput.parentNode.classList.add("input-block_active");
+        input.onblur = () => daysweekInput.parentNode.classList.remove("input-block_active");
         input.oninput = () => inputState();
         let input_name = elClass('checkbox_name');
             input_name.innerHTML = DAYSWEEK[i];
@@ -553,7 +557,6 @@ async function habitPage(habit_id) {
             input.type = 'radio';
             input.name = 'today_habit';
         if (i == 1) firstRadioState = i == done_today;
-
         input.onclick = async function() {
             if (await isDateChanged()) return habitPage(habit_id);
             if (i == 1) {
@@ -677,6 +680,36 @@ async function deleteHabitPage(id) {
         deleteHabit.bind(null, id),
         'После удаления привычки также удалится история выполнения привычки' 
     );
+}
+
+//Animate Input
+let inputs = document.getElementsByTagName('input');
+
+for (let i = 0; i < inputs.length; ++i) {
+    let input = inputs[i];
+    let main_parents = input.parentNode;
+    while(!main_parents.classList.contains('input-block')){
+        main_parents = main_parents.parentNode;
+        if (main_parents.classList.contains('index-container')) break;
+    };
+    if (!main_parents.classList.contains('input-block')) continue;
+    input.onfocus = () => main_parents.classList.add("input-block_active");
+    input.onblur = () => main_parents.classList.remove("input-block_active");
+}
+
+let num_input = document.querySelectorAll('input[type="number"]');
+
+for (let i = 0; i < num_input.length; ++i) {
+    let input = num_input[i];
+    input.oninput = () => {
+        if (parseInt(input.value) > parseInt(input.max)) {
+            input.value = parseInt(input.max);
+        } else if (parseInt(input.value) < parseInt(input.min)) {
+            input.value = parseInt(input.min);
+        } else {
+            input.value = parseInt(input.value);
+        }
+    };
 }
 
 todayPage();
