@@ -47,19 +47,21 @@ function clearBlock(selector) {
 let workspaces = document.getElementsByClassName('workspace');
 let menu = document.getElementsByClassName('menu')[0];
 
-function defaultState(id_menu_btn, id_workspace, color_body = '#111111', isHabitPages = false) {
-    let workspace = document.getElementById(id_workspace);
-    (isHabitPages) ? menu.classList.add("habit-menu") : menu.classList.remove("habit-menu");
-    if (workspace.style.display == 'none') {
-        for (let i = 0; i < workspaces.length; ++i ) {
-            workspaces[i].style.display = 'none';
-            
+async function defaultState(id_menu_btn="", id_workspace="", color_body = '#111111', isHabitPages = false) {
+    await eel.check_tomorrow()();
+    if (isHabitPages !== "") (isHabitPages) ? menu.classList.add("habit-menu") : menu.classList.remove("habit-menu");
+    if (id_workspace){
+        let workspace = document.getElementById(id_workspace);
+        if (workspace.style.display == 'none') {
+            for (let i = 0; i < workspaces.length; ++i )  workspaces[i].style.display = 'none';
+            workspace.style.display = '';
         }
-        workspace.style.display = '';
     }
-    document.getElementsByClassName('menu-btn_active')[0].classList.remove('menu-btn_active');
-    document.getElementById(id_menu_btn).classList.add('menu-btn_active');
-    body.setAttribute("style", `--main-color: ${color_body};`);
+    if (id_menu_btn) {
+        document.getElementsByClassName('menu-btn_active')[0].classList.remove('menu-btn_active');
+        document.getElementById(id_menu_btn).classList.add('menu-btn_active');
+    }
+    if (color_body) body.setAttribute("style", `--main-color: ${color_body};`);
 }
 
 
@@ -183,7 +185,7 @@ let info_all_habits_keys = '["habit_id", "name", "step", "repeat", "units", "col
 let listContainer = document.querySelector("#list-container");
 
 async function todayPage() {
-    defaultState("menu-btn_today","dashboard-workspace");
+    await defaultState("menu-btn_today","dashboard-workspace");
 
     today = new Date();
     titleBlock.innerHTML = beautiToday();
@@ -234,7 +236,7 @@ async function todayPage() {
 //Load All Habits
 
 async function allHabitsPage() {
-    defaultState("menu-btn_all","dashboard-workspace");
+    await defaultState("menu-btn_all","dashboard-workspace");
     let all_habits = await eel.get_notes(
         "habits", 
         info_all_habits_keys
@@ -308,15 +310,13 @@ let unitsInput = document.getElementById('units-input');
 let remindInput = document.getElementById('remind-input');
 let buttonHabitInput = document.getElementById('load-button');
 let buttonHabitContainer = document.getElementsByClassName('input_button')[0];
+let cancelButton = document.getElementById('cancel');
 
-let messageBlock = document.getElementById('message');
-let form = document.getElementById('form');
 let extraOptionsBlock = document.getElementById('extra_options');
-let controlBtns = document.getElementById('control-buttons');
 
 
 function visibilityExtraOptions() {
-    extraOptionsBlock.style.display = (nameInput.value) ? 'flex' : 'none';
+    extraOptionsBlock.style.display = (nameInput.value) ? '' : 'none';
     (nameInput.value) ? buttonHabitContainer.classList.remove('disactive-btn') : buttonHabitContainer.classList.add('disactive-btn');
 }
 
@@ -326,6 +326,35 @@ nameInput.oninput = () => {
     visibilityExtraOptions();
 }
 
+let successBtn = document.getElementById('success_message');
+let failBtn = document.getElementById('fail_message');
+
+async function generateMessage(text, successTest, failText, successFunc, failFunc, description='') {
+    async function close(func) {
+        await func();
+        document.getElementById('message-title').innerHTML = '';
+        document.getElementById('message-title_description').innerHTML = '';
+        successBtn.value = '';
+        failBtn.value = '';
+        successBtn.onclick = '';
+        failBtn.onclick = '';
+    }
+
+    await defaultState("", "message-workspace", "", "");
+    document.getElementById('message-title').innerHTML = text;
+    document.getElementById('message-title_description').innerHTML = description;
+    successBtn.value = successTest;
+    failBtn.innerHTML = failText;
+
+    successBtn.onclick = async () => {
+        await close(successFunc);
+        return true;
+    }
+    failBtn.onclick = async () => {
+        await close(failFunc);
+        return false;
+    }
+}
 
 function getDataHabit() {
     today = new Date();
@@ -344,21 +373,34 @@ function getDataHabit() {
 }
 
 async function addHabitsPage() {
-    function clear() {
+    function clearField() {
         nameInput.value = '';
+        visibilityExtraOptions();
         descriptInput.value = '';
         colorInput.value = 240;
+        body.setAttribute("style", `--main-color: ${getColor(240)};`);
         stepInput.value = 1;
         repeatInput.value = 1;
         unitsInput.value = '';
         remindInput.checked = true;
         generateDaysweekInput();
     }
-    defaultState("menu-btn_add", "setting-workspace", getColor(colorInput.value));
+    clearField();
+    await defaultState("menu-btn_add", "setting-workspace", getColor(colorInput.value));  
     buttonHabitInput.value = 'Создать привычку';
+    cancelButton.value = 'Очистить';
+    cancelButton.onclick = async function() {
+        clearField();
+    }
     buttonHabitInput.onclick = async function() {
-        await addHabits();
-        clear();
+        let id = await addHabits();
+        await generateMessage(
+            "Привычка<br>добавлена", 
+            'Перейти к привычке', 
+            'Добавить ещё', 
+            habitPage.bind(null, id), 
+            addHabitsPage
+        );
     }
     colorInput.oninput = () => {
         body.setAttribute("style", `--main-color: ${getColor(colorInput.value)};`);
@@ -383,6 +425,7 @@ async function addHabits() {
             JSON.stringify(date)
         )();
     }
+    return habit_id;
 }
 
 
@@ -404,7 +447,7 @@ async function habitPage(habit_id) {
     menuHabit.innerHTML = habit_data.name;
     menuHabitEdit.onclick = () => editHabitPage(habit_id);
     menuHabitDelete.onclick = () => deleteHabitPage(habit_id);
-    defaultState("menu-btn_habit", "habit-workspace", getColor(habit_data.color), true);
+    await defaultState("menu-btn_habit", "habit-workspace", getColor(habit_data.color), true);
     document.getElementById('habit-title').innerHTML = habit_data.name;
     document.getElementById('habit-title_description').innerHTML = habit_data.description;
 
@@ -613,8 +656,27 @@ async function editHabitPage(id) {
     console.log(id);
 }
 
+async function deleteHabit(id) {
+    await eel.delete_notes(
+        'habits', 
+        `habit_id = ${id}`
+    )();
+    await eel.delete_notes(
+        'date_habits', 
+        `habit_id = ${id}`
+    )();
+    allHabitsPage();
+}
+
 async function deleteHabitPage(id) {
-    console.log(id);
+    await generateMessage(
+        'Удалить<br>привычку?', 
+        'Нет, не удалять', 
+        'Да, удалить', 
+        habitPage.bind(null, id),
+        deleteHabit.bind(null, id),
+        'После удаления привычки также удалится история выполнения привычки' 
+    );
 }
 
 todayPage();

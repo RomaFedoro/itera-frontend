@@ -37,7 +37,7 @@
 
 html {
     height: 100%;
-    font-size: 62.5%;
+    font-size: 0.7vw;
     scroll-behavior: smooth;
 }
 
@@ -54,6 +54,7 @@ body {
 
 button {
     transition: opacity .2s, color .2s;
+    font-size: 1.4rem;
     outline: none;
     color: var(--font-color);
     font-family: 'SF Pro Display';
@@ -115,23 +116,23 @@ button {
     display: grid;
 }
 
-.menu-btn, #cancel {
+.menu-btn, .cancel-btn {
     font-size: 1.6rem;
     padding: 0.4em 0.8em;
     border-radius: 3em;
     text-align: right;
 }
 
-.small-menu-btn, #cancel {
+.small-menu-btn, .cancel-btn {
     font-size: 1.2rem;
     padding: 0.533em 1.067em;
 }
 
-.menu-btn:hover, #cancel {
+.menu-btn:hover, .cancel-btn {
     opacity: .4;
 }
 
-#cancel:active {
+.cancel-btn:active {
     opacity: 1;
 }
 
@@ -583,7 +584,7 @@ input:checked + .checkbox_name #checkbox_mark path{
     margin-top: 5.2rem;
 }
 
-#cancel {
+.cancel-btn {
     height: max-content;
 }
 
