@@ -49,6 +49,7 @@ let menu = document.getElementsByClassName('menu')[0];
 
 async function defaultState(id_menu_btn="", id_workspace="", color_body = '#111111', isHabitPages = false) {
     await eel.check_tomorrow()();
+    clearBlock("#history-container");
     if (isHabitPages !== "") (isHabitPages) ? menu.classList.add("habit-menu") : menu.classList.remove("habit-menu");
     if (id_workspace){
         let workspace = document.getElementById(id_workspace);
@@ -442,6 +443,12 @@ let menuHabitEdit = document.getElementById('menu-btn_edit-habit');
 let menuHabitDelete = document.getElementById('menu-btn_delete-habit');
 
 async function habitPage(habit_id) {
+    function colorThisDay(k) {
+        let start_light = 15, end_light = 50;
+        let lightness = k * (end_light - start_light) + start_light; 
+        return `hsl(${habit_data['color']}deg 60% ${Math.round(lightness)}%)`;
+    }
+
     today = new Date();
     let habit_data = await eel.get_notes(
         "habits",
@@ -463,14 +470,13 @@ async function habitPage(habit_id) {
     )();
     date_habit_data = JSON.parse(date_habit_data);
     let done_today = 0;
+    let total_today = 0;
     let isToday= false;
 
     // Generate Statistic
     let total_perform = date_habit_data.length;
     let start_perform = 0;
     let end_perform = 0;
-    let total = 0;
-    let done_total = 0;
     let history_data = {};
     
     for(let i = 0; i < total_perform; ++i) {
@@ -481,16 +487,16 @@ async function habitPage(habit_id) {
         }
         if (date.date == formatDate(today)) {
             done_today = date.done_step;
+            total_today = date.total_step;
             isToday = true;
             continue;
         }
-        total += date.total_step;
-        done_total += date.done_step;
 
         if (date.done_step > 0) start_perform += 1;
         if (date.done_step == date.total_step) end_perform += 1; 
     }
     delete date_habit_data;
+    let color_today = (total_today) ? colorThisDay(done_today / habit_data.step): "rgb(20, 20, 20)";
 
     let statistic_data = {
         'total_fact': {
@@ -572,6 +578,9 @@ async function habitPage(habit_id) {
             showDoneToday();
             newValue('start_done_fact', done_today > 0);
             newValue('end_done_fact', done_today == habit_data.step);
+            color_today = colorThisDay(done_today / habit_data.step);
+            if (document.getElementById('today_history')) 
+                document.getElementById('today_history').style.fill = color_today;
             if (isToday) {
                 await eel.update_notes(
                     "date_habits",
@@ -586,6 +595,7 @@ async function habitPage(habit_id) {
                     'done_step': done_today,
                     'total_step': habit_data.step
                 }
+                total_today = habit_data.step;
                 await eel.add_note(
                     "date_habits",
                     JSON.stringify(date)
@@ -614,16 +624,35 @@ async function habitPage(habit_id) {
         today_step_cont.append(generateTodayStep(i));
     }
 
+    
     // Generate Habit History
-    function generateHistoryBlock() {
-        function colorThisDay(k) {
-            let start_light = 15, end_light = 50;
-            let lightness = k * (end_light - start_light) + start_light; 
-            return `hsl(${habit_data['color']}deg 60% ${Math.round(lightness)}%)`;
-        }
 
+    let historyContainer = document.querySelector("#history-container");
+
+    let prompt = document.createElement('div');
+        prompt.id = "prompt-history";
+        prompt.style.display = 'none';
+    let datePrompt = document.createElement('div');
+        datePrompt.id = "date-prompt";
+    let textPrompt = document.createElement('div');
+        textPrompt.id = "text-prompt";
+    prompt.append(datePrompt);
+    prompt.append(textPrompt);
+
+    window.onmousemove = function(event) {
+        prompt.style.left = event.clientX + 'px';
+        prompt.style.top = event.clientY + 'px';
+    }
+
+    function generateHistoryBlock() {
         function convertDayToMs(n) {
             return n * 24 * 3600 * 1000;
+        }
+
+        function displayFullDate(date) {
+            let month = date.getMonth() + 1;
+            month = month < 10 ? `0${month}` : month;
+            return `${date.getDate()}.${month}.${date.getFullYear()}, ${DAYSWEEK[date.getDay()]}`;
         }
 
         function getDayOnWeek(date, needDayweek=1) {
@@ -635,10 +664,12 @@ async function habitPage(habit_id) {
             return date;
         }
 
+        
         clearBlock("#history-container");
         let draw = SVG().addTo("#history-container").size("100%", "100%");
+        historyContainer.append(prompt);
       
-        let size = document.querySelector("#history-container").clientHeight;
+        let size = historyContainer.clientHeight;
         let weeks = 53;
         let intervalDayWeek = 0.6;
         let intervalWeek = 0.3;
@@ -661,27 +692,55 @@ async function habitPage(habit_id) {
         sizeDay *= radius;
       
         function generateWeeks() { 
-          console.log(history_data["2022-03-27"]);
           for (let i = 0; i < weeks; i++) {
             let group = draw.group();
             let posDay = 0;
             for (let j = 0; j < 7; j++) {
               let this_date = new Date(start_date.getTime() + convertDayToMs(7 * i + j));
               let circle = group.circle(sizeDay).move(posDay, 0);
+              let color = 'rgb(20, 20, 20)';
+              let done_step = 0;
+              let total_step = 0;
+
               if (history_data.hasOwnProperty(formatDate(this_date))) {
                 let this_date_data = history_data[formatDate(this_date)];
-                circle.attr({ fill: colorThisDay(this_date_data.done_step / this_date_data.total_step) });
+                done_step = this_date_data.done_step;
+                total_step = this_date_data.total_step;
+                color = colorThisDay(this_date_data.done_step / this_date_data.total_step);
+                circle.attr({ fill: color });
               } else if (this_date <= today){
-                circle.attr({ fill: 'rgba(255, 255, 255, 0.01)' });
+                circle.attr({ fill: color });
               } else if (habit_data["days_week"].indexOf(this_date.getDay()) != -1){
-                circle.attr({ fill: 'rgba(255, 255, 255, 0.05)' });
+                total_step = habit_data.step;
+                color = 'rgb(29, 29, 29)';
+                circle.attr({ fill: color });
               } else {
-                circle.attr({ fill: 'rgba(255, 255, 255, 0.01)' });
+                circle.attr({ fill: color });
               }
 
-              circle.click(function() {
-                alert(formatDate(this_date));
-              })
+              circle.on('mouseover', function() {
+                datePrompt.innerHTML = displayFullDate(this_date);
+                textPrompt.innerHTML = `${done_step} из ${total_step} выполнено`;
+                prompt.style.display = '';
+                prompt.style.backgroundColor = color;
+              });
+
+              if (formatDate(this_date) == formatDate(today)) {
+                circle.attr({ 
+                    id: "today_history",
+                    stroke: "rgba(255, 255, 255)", 
+                    'stroke-width': "1"
+                });
+                circle.on('mouseover', function() {
+                    textPrompt.innerHTML = `${done_today} из ${total_today} выполнено`;
+                    prompt.style.backgroundColor = color_today;
+                });
+              }
+
+              circle.on('mouseout', function() {
+                prompt.style.display = 'none';
+              });
+
               posDay = posDay + intervalDayWeek * sizeDay + sizeDay;
             }
             let degreeRadian = (degree * Math.PI) / 180;

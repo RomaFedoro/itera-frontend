@@ -220,11 +220,15 @@ button {
     border-color: transparent;
 }
 
-.habit-block_title, .statistic-block_title {
+.habit-block_title, .statistic-block_title, #statistic-history {
     font-size: 1.4em;
     overflow-wrap: break-word;
     line-height: 1.3em;
     font-weight: 300;
+}
+
+#statistic-history {
+    margin: auto;
 }
 
 .habit-block_count-container {
@@ -384,8 +388,9 @@ button {
 }
 
 #history-container {
-    width: 42vw;
-    height: 42vw;
+    width: 48vw;
+    height: 48vw;
+    margin: 2.8rem auto 0;
 }
 
 .index-container {
@@ -610,6 +615,37 @@ input:checked + .checkbox_name #checkbox_mark path{
 
 .disactive-btn:active  #load-button{
     animation: swing .4s;
+}
+
+#prompt-history {
+    top: 100px;
+    left: 300px;
+    position: fixed;
+    width: max-content;
+    display: flex;
+    grid-gap: 2rem;
+    padding: 1.6rem 2.4rem;
+    z-index: 3;
+    background: #3a3a3a;
+    transform: translate(-50%, -125%);
+    align-items: baseline;
+    border-radius: 23rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 5px 0px rgb(17 17 17 / 20%);
+}
+
+#date-prompt {
+    font-weight: bold;
+    font-size: 1.2em;
+    text-transform: none;
+}
+
+#text-prompt {
+    font-weight: 300;
+}
+
+#today_history {
+    transition: fill .2s;
 }
 
 @keyframes swing {
