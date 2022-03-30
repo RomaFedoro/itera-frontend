@@ -57,6 +57,7 @@ async function defaultState(id_menu_btn="", id_workspace="", color_body = '#1111
             for (let i = 0; i < workspaces.length; ++i )  workspaces[i].style.display = 'none';
             workspace.style.display = '';
         }
+        workspace.scrollTop = 0;
     }
     if (id_menu_btn) {
         document.getElementsByClassName('menu-btn_active')[0].classList.remove('menu-btn_active');
@@ -319,18 +320,6 @@ let cancelButton = document.getElementById('cancel');
 
 let extraOptionsBlock = document.getElementById('extra_options');
 
-
-function visibilityExtraOptions() {
-    extraOptionsBlock.style.display = (nameInput.value) ? '' : 'none';
-    (nameInput.value) ? buttonHabitContainer.classList.remove('disactive-btn') : buttonHabitContainer.classList.add('disactive-btn');
-}
-
-visibilityExtraOptions();
-
-nameInput.oninput = () => {
-    visibilityExtraOptions();
-}
-
 let successBtn = document.getElementById('success_message');
 let failBtn = document.getElementById('fail_message');
 
@@ -371,10 +360,14 @@ function getDataHabit() {
     if (stepInput.value) habit_data['step'] = stepInput.value;
     if (repeatInput.value) habit_data['repeat'] = repeatInput.value;
     if (unitsInput.value) habit_data['units'] = unitsInput.value;
-    if (!remindInput.checked) habit_data['remind'] = 0;
+    habit_data['remind'] = (!remindInput.checked) ? 0: 1;
     habit_data['date_creation'] = formatDate(today);
     habit_data['date_check'] = formatDate(today);
     return habit_data;
+}
+
+colorInput.oninput = () => {
+    body.setAttribute("style", `--main-color: ${getColor(colorInput.value)};`);
 }
 
 async function addHabitsPage() {
@@ -390,10 +383,20 @@ async function addHabitsPage() {
         remindInput.checked = true;
         generateDaysweekInput();
     }
+
+    function visibilityExtraOptions() {
+        extraOptionsBlock.style.display = (nameInput.value) ? '' : 'none';
+        (nameInput.value) ? buttonHabitContainer.classList.remove('disactive-btn') : buttonHabitContainer.classList.add('disactive-btn');
+    }
+    
+    nameInput.oninput = () => {
+        visibilityExtraOptions();
+    }
+
     clearField();
     await defaultState("menu-btn_add", "setting-workspace", getColor(colorInput.value));  
     buttonHabitInput.value = 'Создать привычку';
-    cancelButton.value = 'Очистить';
+    cancelButton.innerHTML = 'Очистить';
     cancelButton.onclick = async function() {
         clearField();
     }
@@ -406,9 +409,6 @@ async function addHabitsPage() {
             habitPage.bind(null, id), 
             addHabitsPage
         );
-    }
-    colorInput.oninput = () => {
-        body.setAttribute("style", `--main-color: ${getColor(colorInput.value)};`);
     }
 }
 
@@ -457,6 +457,7 @@ async function habitPage(habit_id) {
     )();
     habit_data = JSON.parse(habit_data)[0];
     menuHabit.innerHTML = habit_data.name;
+    menuHabit.onclick = () => habitPage(habit_id);
     menuHabitEdit.onclick = () => editHabitPage(habit_id);
     menuHabitDelete.onclick = () => deleteHabitPage(habit_id);
     await defaultState("menu-btn_habit", "habit-workspace", getColor(habit_data.color), true);
@@ -761,8 +762,78 @@ async function habitPage(habit_id) {
     generateHistoryBlock()
 }
 
-async function editHabitPage(id) {
-    console.log(id);
+async function editHabitPage(habit_id) {
+    today = new Date();
+    let habit_data = await eel.get_notes(
+        "habits",
+        '*',
+        `habit_id=${habit_id}`
+    )();
+    habit_data = JSON.parse(habit_data)[0];
+
+    function fillField() {
+        extraOptionsBlock.style.display = '';
+        nameInput.value = habit_data.name;
+        descriptInput.value = habit_data.description;
+        colorInput.value = habit_data.color;
+        body.setAttribute("style", `--main-color: ${getColor(habit_data.color)};`);
+        stepInput.value = habit_data.step;
+        repeatInput.value = habit_data.repeat;
+        unitsInput.value = habit_data.units;
+        remindInput.checked = (habit_data.remind) ? 1: 0;
+        generateDaysweekInput(habit_data.days_week);
+    }
+
+    nameInput.onkeyup = () => {
+        if (!nameInput.value) nameInput.value = habit_data.name;
+    }
+
+    fillField();
+    await defaultState("menu-btn_edit-habit", "setting-workspace", '', true);  
+    buttonHabitInput.value = 'Сохранить изменения';
+    cancelButton.innerHTML = 'Отменить изменения';
+
+    cancelButton.onclick = async function() {
+        editHabitPage(habit_id);
+    }
+
+    buttonHabitInput.onclick = async function() {
+        let updateHabit_data = getDataHabit();
+        isDateChanged();
+        updateHabit_data.date_creation = habit_data.date_creation;
+        await eel.update_notes(
+            "habits",
+            JSON.stringify(updateHabit_data),
+            `habit_id=${habit_id}`
+        )();
+
+        let info_step = await eel.get_notes(
+            "date_habits",
+            '["done_step", "total_step"]',
+            `habit_id=${habit_id} AND date="${formatDate(today)}"`
+        )();
+        info_step = JSON.parse(info_step)[0];
+        if (info_step) {
+            await eel.update_notes(
+                "date_habits",
+                JSON.stringify({
+                    "done_step": (info_step.done_step > updateHabit_data.step) ? updateHabit_data.step: info_step.done_step,
+                    "total_step": updateHabit_data.step
+                }),
+                `habit_id=${habit_id} AND date="${formatDate(today)}"`
+            )();
+        } else if (updateHabit_data.days_week.indexOf(today.getDay()) != -1) {
+            let date = {
+                'habit_id': habit_id,
+                'date': formatDate(today),
+                'total_step': updateHabit_data.step
+            }
+            await eel.add_note(
+                "date_habits",
+                JSON.stringify(date)
+            )();
+        }
+    }
 }
 
 async function deleteHabit(id) {
@@ -807,14 +878,17 @@ let num_input = document.querySelectorAll('input[type="number"]');
 
 for (let i = 0; i < num_input.length; ++i) {
     let input = num_input[i];
-    input.oninput = () => {
+    input.onkeyup = () => {
         if (parseInt(input.value) > parseInt(input.max)) {
             input.value = parseInt(input.max);
         } else if (parseInt(input.value) < parseInt(input.min)) {
             input.value = parseInt(input.min);
+        } else if (!input.value) {
+            input.value = parseInt(input.min);
         } else {
             input.value = parseInt(input.value);
         }
+
     };
 }
 
