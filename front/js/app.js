@@ -435,13 +435,14 @@ async function addHabits() {
 
 //Page Habit
 
-let habit_keys = '["name", "description", "step", "color"]';
+let habit_keys = '["name", "description", "step", "color", "days_week", "date_creation"]';
 let date_habit_keys = '["date", "done_step", "total_step"]';
 let menuHabit = document.getElementById('menu-btn_habit');
 let menuHabitEdit = document.getElementById('menu-btn_edit-habit');
 let menuHabitDelete = document.getElementById('menu-btn_delete-habit');
 
 async function habitPage(habit_id) {
+    today = new Date();
     let habit_data = await eel.get_notes(
         "habits",
         habit_keys,
@@ -615,6 +616,25 @@ async function habitPage(habit_id) {
 
     // Generate Habit History
     function generateHistoryBlock() {
+        function colorThisDay(k) {
+            let start_light = 15, end_light = 50;
+            let lightness = k * (end_light - start_light) + start_light; 
+            return `hsl(${habit_data['color']}deg 60% ${Math.round(lightness)}%)`;
+        }
+
+        function convertDayToMs(n) {
+            return n * 24 * 3600 * 1000;
+        }
+
+        function getDayOnWeek(date, needDayweek=1) {
+            date = new Date(date);
+            let dayweek = date.getDay();
+            if (dayweek == 0) dayweek = 7;
+            let delta = needDayweek - dayweek;
+            date = new Date(date.getTime() + convertDayToMs(delta));
+            return date;
+        }
+
         clearBlock("#history-container");
         let draw = SVG().addTo("#history-container").size("100%", "100%");
       
@@ -622,21 +642,46 @@ async function habitPage(habit_id) {
         let weeks = 53;
         let intervalDayWeek = 0.6;
         let intervalWeek = 0.3;
-        let degree = -90;
-      
+        let degree = 0;
+
+        let start_date = getDayOnWeek(habit_data["date_creation"], 1);
+        one_year_week = new Date(start_date.getTime() + convertDayToMs(7 * (weeks - 1) + 6));
+        if (one_year_week < today) {
+            start_date = new Date(getDayOnWeek(today, 1).getTime() - convertDayToMs(7 * (weeks - 1)));
+            degree = getDayOnWeek(formatDate(today), 1).getTime() - getDayOnWeek(habit_data["date_creation"], 1).getTime();
+            degree = (degree / (24 * 3600000 * 7)) + 1;
+            degree = (degree % weeks) * 360 / weeks;
+        }
+        degree -= 90;
+
         let sizeDay = (2 * Math.PI) / (weeks * (1 + intervalWeek));
         let widthWeek = sizeDay * (7 + 6 * intervalDayWeek);
         let radius = size / (2 * (1 + widthWeek));
         widthWeek *= radius;
         sizeDay *= radius;
       
-        function generateWeeks() {
+        function generateWeeks() { 
+          console.log(history_data["2022-03-27"]);
           for (let i = 0; i < weeks; i++) {
             let group = draw.group();
             let posDay = 0;
             for (let j = 0; j < 7; j++) {
+              let this_date = new Date(start_date.getTime() + convertDayToMs(7 * i + j));
               let circle = group.circle(sizeDay).move(posDay, 0);
-              circle.attr({ fill: "var(--inactive-color)" });
+              if (history_data.hasOwnProperty(formatDate(this_date))) {
+                let this_date_data = history_data[formatDate(this_date)];
+                circle.attr({ fill: colorThisDay(this_date_data.done_step / this_date_data.total_step) });
+              } else if (this_date <= today){
+                circle.attr({ fill: 'rgba(255, 255, 255, 0.01)' });
+              } else if (habit_data["days_week"].indexOf(this_date.getDay()) != -1){
+                circle.attr({ fill: 'rgba(255, 255, 255, 0.05)' });
+              } else {
+                circle.attr({ fill: 'rgba(255, 255, 255, 0.01)' });
+              }
+
+              circle.click(function() {
+                alert(formatDate(this_date));
+              })
               posDay = posDay + intervalDayWeek * sizeDay + sizeDay;
             }
             let degreeRadian = (degree * Math.PI) / 180;
@@ -647,12 +692,14 @@ async function habitPage(habit_id) {
                 sizeDay / 2
               })`,
             });
-            degree -= 360 / weeks;
+            degree += 360 / weeks;
           }
         }
       
         generateWeeks();
     }
+
+    generateHistoryBlock()
 }
 
 async function editHabitPage(id) {
