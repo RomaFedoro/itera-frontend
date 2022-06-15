@@ -1,0 +1,12 @@
+.block {
+  height: 15vw;
+  padding: 2.8rem;
+  font-size: 1.6rem;
+  color: var(--white-color);
+  border-radius: 2rem;
+  border: 1px solid var(--inactive-color);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: 0.2s;
+}

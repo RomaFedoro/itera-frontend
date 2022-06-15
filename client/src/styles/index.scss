@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: none;
+    background: none;
+    box-sizing: border-box;
+}
+
+
+html {
+    height: 100%;
+    font-size: 0.625vw;
+    scroll-behavior: smooth;
+}
+
+body {
+    position: relative;
+    height: 100%;
+    color: var(--font-color);
+    background-color: var(--main-color);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-family: 'SF Pro Display';
+    transition: background-color .2s;
+}
