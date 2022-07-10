@@ -1,6 +1,6 @@
 @mixin CreateFont($weight-name, $weight) {
     @font-face {
-      font-family: "Gilroy";
+      font-family: "SF Pro Display";
       src: url('fonts/SFProDisplay-#{$weight-name}.eot');
       src: url('fonts/SFProDisplay-#{$weight-name}.eot?#iefix') format('embedded-opentype'),
           url('fonts/SFProDisplay-#{$weight-name}.woff') format('woff'),

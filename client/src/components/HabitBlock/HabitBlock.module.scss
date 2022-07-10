@@ -1,12 +1,83 @@
+@import "../../styles/variables";
+
 .block {
   height: 15vw;
-  padding: 2.8rem;
+  padding: 2.4rem;
   font-size: 1.6rem;
-  color: var(--white-color);
-  border-radius: 2rem;
-  border: 1px solid var(--inactive-color);
+  color: $font-color;
+  border-radius: 0.8em;
+  border: 1px solid $inactive-color;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   cursor: pointer;
-  transition: 0.2s;
+  transition: background-color 0.2s;
+
+  &Active {
+    background-color: #4241dd;
+    border-color: transparent;
+
+    .button {
+      opacity: 1;
+    }
+  }
+
+  &Completed {
+    color: $inactive-color;
+
+    .title {
+      text-decoration: line-through;
+      text-decoration-color: $inactive-color;
+    }
+
+    &:hover {
+      background-color: $font-color;
+      color: $main-color;
+
+      .title {
+        text-decoration-color: transparent;
+      }
+
+      .count {
+        opacity: 0.4;
+      }
+    }
+  }
+}
+
+.title {
+  font-size: 1.2em;
+  overflow-wrap: break-word;
+  line-height: 1.3em;
+  letter-spacing: 0.04em;
+  font-weight: 300;
+}
+
+.body {
+  font-size: 1em;
+  padding-top: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.count {
+  line-height: 1.2;
+  user-select: none;
+  letter-spacing: 0.01em;
+  font-weight: 700;
+  text-transform: none;
+  transition: opacity 0.2s;
+}
+
+.button {
+  font-size: 0.8em;
+  color: inherit;
+  font-weight: 300;
+  // opacity: 0;
+  transition: opacity 0.2s;
+
+  &:active {
+    opacity: 0.4;
+  }
 }

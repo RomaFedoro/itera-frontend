@@ -1,13 +1,13 @@
+@import './variables';
+
 * {
     margin: 0;
     padding: 0;
     margin: 0;
     border: 0;
-    outline: none;
     background: none;
     box-sizing: border-box;
 }
-
 
 html {
     height: 100%;
@@ -18,10 +18,22 @@ html {
 body {
     position: relative;
     height: 100%;
-    color: var(--font-color);
-    background-color: var(--main-color);
+    color: $font-color;
+    background-color: $main-color;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     font-family: 'SF Pro Display';
     transition: background-color .2s;
+}
+
+button {
+    transition: opacity .2s, color .2s;
+    font-size: 1.4rem;
+    color: var(--font-color);
+    font-family: 'SF Pro Display';
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    user-select: none;
+    cursor: pointer;
+    transition: color .2s, opacity .2s;
 }
