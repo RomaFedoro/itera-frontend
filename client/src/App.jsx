@@ -1,18 +1,17 @@
 import React from "react";
-import ListHabit from "./components/ListHabit/ListHabit";
-import './styles/fonts.scss';
+import Menu from "./components/Menu/Menu";
+import Today from "./pages/Today/Today";
+import "./styles/fonts.scss";
 import "./styles/index.scss";
 
 function App() {
-  const habits = [
-    {id: 1, name: 'Попить водки 1', done: 0, repeat: 100, total: 4},
-    {id: 2, name: 'Попить водки 2', done: 0, repeat: 200, total: 1},
-    {id: 3, name: 'Попить водки 3', done: 0, repeat: 1000, total: 10},
-    {id: 4, name: 'Попить водки 4', done: 0, repeat: 100, total: 2},
-  ]
-
   return (
-    <ListHabit habits={habits}></ListHabit>
+    <>
+      <Menu></Menu>
+      <div className="workspace">
+        <Today></Today>
+      </div>
+    </>
   );
 }
 
