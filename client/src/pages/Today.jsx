@@ -1,9 +1,13 @@
 import React from "react";
 import ListHabit from "../components/ListHabit/ListHabit";
 import { setBackgr } from "../utils";
+import { getTodayDate } from "../utils/date";
 
-const AllHabits = () => {
+const Today = (props) => {
   setBackgr();
+  const todayDate = getTodayDate();
+
+  //TODO: Backend and useEffect, also list separation
   const habits = [
     {
       id: 1,
@@ -41,10 +45,14 @@ const AllHabits = () => {
 
   return (
     <div className="workspace">
-      <header className="title">{habits.length}</header>
-      <ListHabit habits={habits} staticHabit></ListHabit>
+      <header className="title">
+        {todayDate.format("DD.MM")}
+        <div className="title__description">{todayDate.format("dd")}</div>
+      </header>
+      <ListHabit habits={habits}></ListHabit>
+      <ListHabit habits={habits}></ListHabit>
     </div>
   );
 };
 
-export default AllHabits;
+export default Today;

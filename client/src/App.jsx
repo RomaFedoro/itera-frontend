@@ -1,17 +1,16 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
 import Menu from "./components/Menu/Menu";
-import Today from "./pages/Today/Today";
+import AppRouter from "./components/AppRouter";
 import "./styles/fonts.scss";
 import "./styles/index.scss";
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <Menu></Menu>
-      <div className="workspace">
-        <Today></Today>
-      </div>
-    </>
+      <AppRouter />
+    </BrowserRouter>
   );
 }
 
