@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c7ccf8f4-5b73-47ed-9f6d-5714e2566568" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/ListHabit/ListHabit.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/ListHabit/ListHabit.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/AllHabits.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/AllHabits.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/CreateHabit.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/CreateHabit.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/EditHabit.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/EditHabit.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Habit.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Habit.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Today/Today.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Today/Today.module.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/styles/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles/index.scss" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2BlJsgLjG0L3qpEhais2wwsLHxX" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c7ccf8f4-5b73-47ed-9f6d-5714e2566568" name="Changes" comment="" />
+      <created>1657474947196</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1657474947196</updated>
+      <workItem from="1657474952485" duration="62000" />
+      <workItem from="1657601782069" duration="107000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
