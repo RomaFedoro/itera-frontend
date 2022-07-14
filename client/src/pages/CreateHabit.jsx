@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const CreateHabit = () => {
   return (
-    <div>CreateHabit</div>
-  )
-}
+    <div className="workspace">
+      
+    </div>
+  );
+};
 
-export default CreateHabit
+export default CreateHabit;

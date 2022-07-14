@@ -4,15 +4,21 @@ import style from "./HabitBlock.module.scss";
 import { getColor } from "../../utils";
 import { DEFAULT_HABIT_COLOR } from "../../utils/const";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
-const HabitBlock = ({ staticBlock, ...props }) => {
-  const BACKGR_COLOR = getColor(props.color ?? DEFAULT_HABIT_COLOR);
+const HabitBlock = ({ staticBlock, changeHabit, habit }) => {
+  const BACKGR_COLOR = getColor(habit.color ?? DEFAULT_HABIT_COLOR);
+
+  const [doneStep, setDoneStep] = useState(habit.done);
+
+  useEffect(() => changeHabit({ ...habit, done: doneStep }), [doneStep, habit, changeHabit]);
 
   const [isActive, setActive] = useState(false);
-  const [leftStep, setLeftStep] = useState(
-    staticBlock ? props.total : props.total - props.done
-  );
 
+  const leftStep = useMemo(
+    () => (staticBlock ? habit.total : habit.total - doneStep),
+    [doneStep, staticBlock, habit.total]
+  );
   const isCompleted = useMemo(() => leftStep <= 0, [leftStep]);
   const isLastStep = useMemo(() => leftStep === 1, [leftStep]);
 
@@ -33,18 +39,18 @@ const HabitBlock = ({ staticBlock, ...props }) => {
 
   const countString = useMemo(() => {
     if (isCompleted) return "ВЫПОЛНЕНО";
-    const count = leftStep * props.repeat;
-    const unit = props.unit ?? "ones";
+    const count = leftStep * habit.repeat;
+    const unit = habit.unit ?? "ones";
 
     if (isActive) {
       if (count <= 1) return null;
-      if (leftStep === 1) return `${props.repeat} ${unit}`;
-      if (props.repeat === 1) return `${leftStep} ${unit}`;
-      return `${props.repeat} x ${leftStep} ${unit}`;
+      if (leftStep === 1) return `${habit.repeat} ${unit}`;
+      if (habit.repeat === 1) return `${leftStep} ${unit}`;
+      return `${habit.repeat} x ${leftStep} ${unit}`;
     } else {
-      return count > 1 ? leftStep * props.repeat : null;
+      return count > 1 ? leftStep * habit.repeat : null;
     }
-  }, [leftStep, isActive, isCompleted, props.repeat, props.unit]);
+  }, [leftStep, isActive, isCompleted, habit.repeat, habit.unit]);
 
   return (
     <div
@@ -53,14 +59,14 @@ const HabitBlock = ({ staticBlock, ...props }) => {
       onMouseLeave={() => setActive(false)}
       style={styles}
     >
-      <Link to={'/habit/' + props.id} className={style.link}></Link>
-      <div className={style.title}>{props.name}</div>
+      <Link to={"/habit/" + habit.id} className={style.link}></Link>
+      <div className={style.title}>{habit.name}</div>
       <div className={style.body}>
         <div className={style.count}>{countString}</div>
         {!(isCompleted || staticBlock) && (
           <button
             className={style.button}
-            onClick={() => setLeftStep(leftStep - 1)}
+            onClick={() => setDoneStep(doneStep + 1)}
           >
             {isLastStep ? "закончить" : "выполнить"}
           </button>

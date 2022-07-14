@@ -86,4 +86,12 @@ button {
     margin-top: 0.4em;
     letter-spacing: 0;
   }
+
+  &_small {
+    overflow-wrap: break-word;
+    font-size: 8rem;
+    line-height: 1.05;
+    min-width: 42vw;
+    max-width: 100%;
+  }
 }

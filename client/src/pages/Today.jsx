@@ -1,14 +1,14 @@
 import React from "react";
+import { useState, useMemo } from "react";
 import ListHabit from "../components/ListHabit/ListHabit";
 import { setBackgr } from "../utils";
 import { getTodayDate } from "../utils/date";
 
-const Today = (props) => {
+const Today = () => {
   setBackgr();
   const todayDate = getTodayDate();
 
-  //TODO: Backend and useEffect, also list separation
-  const habits = [
+  const [habits, setHabits] = useState([
     {
       id: 1,
       name: "Попить водки 1",
@@ -41,7 +41,26 @@ const Today = (props) => {
       total: 2,
       color: 212,
     },
-  ];
+  ]);
+
+  const useHabits = (habit) => {
+    const index = habits.findIndex((el) => el.id === habit.id);
+    console.log(index);
+    const newHabits = habits.slice();
+    newHabits[index] = { ...habit };
+    console.log(newHabits);
+    setHabits(newHabits);
+  };
+
+  const unfulfilledHabits = useMemo(
+    () => habits.filter((habit) => habit.done !== habit.total),
+    [habits]
+  );
+
+  const fulfilledHabits = useMemo(
+    () => habits.filter((habit) => habit.done === habit.total),
+    [habits]
+  );
 
   return (
     <div className="workspace">
@@ -49,8 +68,8 @@ const Today = (props) => {
         {todayDate.format("DD.MM")}
         <div className="title__description">{todayDate.format("dd")}</div>
       </header>
-      <ListHabit habits={habits}></ListHabit>
-      <ListHabit habits={habits}></ListHabit>
+      <ListHabit habits={unfulfilledHabits} changeHabit={useHabits}></ListHabit>
+      <ListHabit habits={fulfilledHabits} changeHabit={useHabits}></ListHabit>
     </div>
   );
 };
