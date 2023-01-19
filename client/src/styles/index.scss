@@ -1,0 +1,97 @@
+@import "./variables";
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $inactive-color;
+}
+
+:root {
+  --main-color: #111111;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-size: 0.625vw;
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+  height: 100%;
+  color: $font-color;
+  background-color: var(--main-color);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-family: "SF Pro Display";
+  transition: background-color 0.2s;
+}
+
+button {
+  transition: opacity 0.2s, color 0.2s;
+  font-size: 1.4rem;
+  color: $font-color;
+  font-family: "SF Pro Display";
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  user-select: none;
+  cursor: pointer;
+  transition: color 0.2s, opacity 0.2s;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+}
+
+.workspace {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 2vw 3vw 4vw;
+  row-gap: 6.4rem;
+}
+
+.title {
+  display: flex;
+  column-gap: 0.05em;
+  font-size: 24rem;
+  line-height: 0.8;
+  vertical-align: top;
+  letter-spacing: -0.05em;
+
+  &__description {
+    font-size: 2.4rem;
+    font-weight: 300;
+    margin-left: 1em;
+    margin-top: 0.4em;
+    letter-spacing: 0;
+  }
+
+  &_small {
+    overflow-wrap: break-word;
+    font-size: 8rem;
+    line-height: 1.05;
+    min-width: 42vw;
+    max-width: 100%;
+  }
+}
