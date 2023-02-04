@@ -1,4 +1,4 @@
-import { Layout } from '@/container/Layout';
+import Layout from '@/container/Layout';
 import './globals.scss';
 
 export default function RootLayout({

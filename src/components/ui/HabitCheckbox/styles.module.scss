@@ -1,0 +1,49 @@
+.checkbox {
+  width: 2.8em;
+  height: 2.8em;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  font-weight: 700;
+  color: var(--color-secondary);
+  border: var(--border-line);
+  user-select: none;
+  transition: background-color var(--animation), border-color var(--animation),
+    color var(--animation), scale var(--animation);
+
+  &:hover {
+    color: var(--color-secondary-hover);
+
+    .icon {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    scale: 0.9;
+  }
+
+  &_checked {
+    background-color: var(--color-secondary-hover);
+    border-color: transparent;
+    color: var(--background-color-item);
+
+    .icon {
+      opacity: 1;
+    }
+
+    &:hover {
+      background-color: var(--color-secondary);
+      color: var(--background-color-item);
+    }
+  }
+}
+
+.icon {
+  width: 1.4em;
+  height: 1.4em;
+  opacity: 0;
+  transition: opacity var(--animation);
+}
