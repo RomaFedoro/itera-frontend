@@ -12,4 +12,11 @@
     color: #000;
     flex: 1;
   }
+
+  &_completed {
+    .habit__title {
+      text-decoration: line-through;
+      color: var(--color-secondary);
+    }
+  }
 }

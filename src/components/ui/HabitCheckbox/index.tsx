@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo } from 'react';
+import React from 'react';
 import styles from './styles.module.scss';
 import { CheckIcon } from '@heroicons/react/20/solid';
 import cn from 'classnames';
