@@ -1,0 +1,22 @@
+.habit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em 1.2em;
+  border-radius: 3em;
+  background-color: var(--background-color-item);
+  column-gap: 0.8em;
+
+  &__title {
+    font-size: 1.6rem;
+    color: #000;
+    flex: 1;
+  }
+
+  &_completed {
+    .habit__title {
+      text-decoration: line-through;
+      color: var(--color-secondary);
+    }
+  }
+}
