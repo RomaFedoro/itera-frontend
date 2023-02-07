@@ -7,13 +7,15 @@ const Menu = () => {
   return (
     <div className={styles.menu}>
       <ul className={styles.menu__container}>
-        {menuLinks.map((menuLink) => (
-          <li key={menuLink.link}>
-            <MenuItem {...menuLink} />
+        {menuLinks.map(({ link, title }) => (
+          <li key={link}>
+            <MenuItem link={link}>{title}</MenuItem>
           </li>
         ))}
       </ul>
-      <div className={styles.menu__container}></div>
+      <div className={styles.menu__container}>
+        <MenuItem link="/account">Личный кабинет</MenuItem>
+      </div>
     </div>
   );
 };

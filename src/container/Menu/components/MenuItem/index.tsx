@@ -1,12 +1,28 @@
-import Link from 'next/link';
-import React from 'react';
-import { TMenuLink } from '../../types';
-import styles from './style.module.scss';
+'use client';
 
-const MenuItem = ({ title, link }: TMenuLink) => {
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import React from 'react';
+import styles from './style.module.scss';
+import cn from 'classnames';
+
+type TMenuLinkProps = {
+  link: string;
+  children?: React.ReactNode;
+};
+
+const MenuItem = ({ link, children }: TMenuLinkProps) => {
+  const pathname = usePathname();
+
   return (
-    <Link href={link} className={styles.menu__item}>
-      {title}
+    <Link
+      href={link}
+      className={cn(
+        styles.menu__item,
+        pathname === link && styles.menu__item_active
+      )}
+    >
+      {children}
     </Link>
   );
 };

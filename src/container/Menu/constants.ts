@@ -9,4 +9,8 @@ export const menuLinks: TMenuLink[] = [
     link: '/all',
     title: 'Все привычки',
   },
+  {
+    link: '/create',
+    title: 'Создать привычку',
+  },
 ];
