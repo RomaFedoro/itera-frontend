@@ -1,0 +1,18 @@
+.statistic {
+  border-radius: var(--border-radius-big);
+  color: white;
+  background-color: var(--background-color-substrate);
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.6em;
+  padding: 1.2em;
+
+  &__title {
+    font-size: 2.2rem;
+  }
+
+  &__description {
+    font-size: 1.2rem;
+    opacity: 0.4;
+  }
+}

@@ -1,0 +1,27 @@
+.menu__item {
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  column-gap: 1.2em;
+  width: 100%;
+  color: white;
+  padding: 1.4em 2em;
+  user-select: none;
+  cursor: pointer;
+  border-radius: 10rem;
+  transition: background-color var(--animation), color var(--animation);
+
+  &:hover {
+    background-color: var(--background-color-substrate);
+  }
+
+  &_active {
+    background-color: var(--color-main);
+    color: black;
+    cursor: default;
+
+    &:hover {
+      background-color: var(--color-main);
+    }
+  }
+}

@@ -11,6 +11,9 @@
     font-size: 1.6rem;
     color: #000;
     flex: 1;
+    min-height: 2.8rem;
+    display: flex;
+    align-items: center;
   }
 
   &_completed {

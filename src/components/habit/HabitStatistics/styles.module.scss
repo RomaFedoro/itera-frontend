@@ -1,0 +1,9 @@
+.statistics {
+  background-color: #1e1e1e;
+  border-radius: var(--border-radius-big) var(--border-radius-big) 0 0;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: max-content;
+  gap: var(--row-gap-item);
+}

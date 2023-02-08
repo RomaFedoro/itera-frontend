@@ -24,3 +24,12 @@ body {
 h1 {
   font-size: 3.6rem;
 }
+
+.content {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--row-gap-content);
+  padding: var(--padding-content);
+}

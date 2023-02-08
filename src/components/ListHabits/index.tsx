@@ -5,14 +5,20 @@ import { THabitList } from '@/types/habit';
 
 type TListHabits = {
   habits: THabitList;
-  onChange: (id: number, completedSteps: number) => void;
+  onChange?: (id: number, completedSteps: number) => void;
+  onlyRead?: boolean;
 };
 
-const ListHabits = ({ habits, onChange }: TListHabits) => {
+const ListHabits = ({ habits, onlyRead, onChange }: TListHabits) => {
   return (
     <ul className={styles.container}>
       {habits.map((habit) => (
-        <HabitItem key={habit.id} onChange={onChange} {...habit} />
+        <HabitItem
+          key={habit.id}
+          onChange={onChange}
+          onlyRead={onlyRead}
+          {...habit}
+        />
       ))}
     </ul>
   );
