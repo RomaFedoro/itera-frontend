@@ -6,7 +6,7 @@ export const menuLinks: TMenuLink[] = [
     title: 'Сегодня',
   },
   {
-    link: '/all',
+    link: '/habits',
     title: 'Все привычки',
   },
   {

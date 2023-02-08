@@ -3,9 +3,11 @@ import HabitCheckbox from '@/components/ui/HabitCheckbox';
 import styles from './styles.module.scss';
 import { THabitItem } from '@/types/habit';
 import cn from 'classnames';
+import Link from 'next/link';
 
 type THabitItemProps = {
-  onChange: (id: number, completedSteps: number) => void;
+  onChange?: (id: number, completedSteps: number) => void;
+  onlyRead?: boolean;
 } & THabitItem;
 
 const HabitItem = ({
@@ -13,23 +15,35 @@ const HabitItem = ({
   title,
   totalSteps,
   completedSteps,
+  onlyRead,
   onChange,
 }: THabitItemProps) => {
   const needRepeat = totalSteps - completedSteps;
 
   const handleCheckboxChange = () => {
-    onChange(
-      id,
-      totalSteps > completedSteps ? completedSteps + 1 : completedSteps - 1
-    );
+    if (onChange)
+      onChange(
+        id,
+        totalSteps > completedSteps ? completedSteps + 1 : completedSteps - 1
+      );
   };
 
   return (
     <div
-      className={cn(styles.habit, needRepeat <= 0 && styles.habit_completed)}
+      className={cn(
+        styles.habit,
+        needRepeat <= 0 && !onlyRead && styles.habit_completed
+      )}
     >
-      <HabitCheckbox onChange={handleCheckboxChange} needRepeat={needRepeat} />
-      <div className={styles.habit__title}>{title}</div>
+      {!onlyRead && (
+        <HabitCheckbox
+          onChange={handleCheckboxChange}
+          needRepeat={needRepeat}
+        />
+      )}
+      <Link href={`/habits/${id}`} className={styles.habit__title}>
+        {title}
+      </Link>
     </div>
   );
 };

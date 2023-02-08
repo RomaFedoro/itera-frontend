@@ -1,11 +1,13 @@
-import HabitInfo from '@/components/habit/HabitInfo';
-import HabitStatistics from '@/components/habit/HabitStatistics';
+import React from 'react';
+import AllHabitList from '@/container/AllHabitList';
 
-export default function HabitPage() {
+const AllHabits = () => {
   return (
-    <>
-      <HabitInfo />
-      <HabitStatistics />
-    </>
+    <div className="content">
+      <h1>Все привычки</h1>
+      <AllHabitList />
+    </div>
   );
-}
+};
+
+export default AllHabits;
