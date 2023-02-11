@@ -6,11 +6,10 @@
     "build": "nitro build"
   },
   "devDependencies": {
+    "@prisma/client": "^4.10.1",
     "@types/node": "^18.13.0",
     "nitropack": "^2.2.1",
-    "prisma": "^4.10.1"
-  },
-  "dependencies": {
-    "@prisma/client": "^4.10.1"
+    "prisma": "^4.10.1",
+    "yup": "^1.0.0"
   }
 }
