@@ -1,0 +1,13 @@
+{
+  "name": "itera",
+  "private": true,
+  "scripts": {
+    "dev": "nitro dev",
+    "build": "nitro build"
+  },
+  "devDependencies": {
+    "@types/node": "^18.13.0",
+    "nitropack": "^2.2.1",
+    "prisma": "^4.10.1"
+  }
+}
