@@ -1,9 +1,9 @@
-import { defineNitroConfig } from 'nitropack';
-import { resolve } from 'path';
+import {defineNitroConfig} from 'nitropack';
+import {resolve} from 'path';
 
 const SRC = resolve(__dirname, 'src');
 
 export default defineNitroConfig({
-    noPublicDir: true,
-    srcDir: SRC,
+  noPublicDir: true,
+  srcDir: SRC,
 });
