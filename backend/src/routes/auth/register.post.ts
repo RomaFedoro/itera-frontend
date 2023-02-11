@@ -11,5 +11,11 @@ type registerRequestType = InferType<typeof registerRequest>;
 export default defineEventHandler(async (event) => {
     const credentials = await readBody<registerRequestType>(event);
 
-    return await validate(registerRequest, credentials);
+    const validator = await validate(registerRequest, credentials);
+
+    if (!validator.valid)
+        throw createError({
+            statusCode: 422,
+            message: 'Invalid credentials',
+        });
 });
