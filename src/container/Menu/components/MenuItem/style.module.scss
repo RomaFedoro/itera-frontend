@@ -1,14 +1,14 @@
 .menu__item {
-  font-size: 1.4rem;
+  font-size: var(--font-size-button);
   display: flex;
   align-items: center;
   column-gap: 1.2em;
   width: 100%;
   color: white;
-  padding: 1.4em 2em;
+  padding: var(--padding-button);
   user-select: none;
   cursor: pointer;
-  border-radius: 10rem;
+  border-radius: var(--border-radius-button);
   transition: background-color var(--animation), color var(--animation);
 
   &:hover {

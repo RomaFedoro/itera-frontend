@@ -1,0 +1,9 @@
+.inform::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: var(--border-radius-big);
+    background-color: var(--background-color-content);
+}

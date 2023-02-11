@@ -1,0 +1,9 @@
+.link {
+  text-align: center;
+  opacity: var(--opacity);
+  transition: opacity var(--animation);
+
+  &:hover {
+    opacity: 1;
+  }
+}

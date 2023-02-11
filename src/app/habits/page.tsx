@@ -1,13 +1,10 @@
-import React from 'react';
 import AllHabitList from '@/container/AllHabitList';
 
-const AllHabits = () => {
+export default function AllHabits() {
   return (
-    <div className="content">
+    <div className="content content_fill">
       <h1>Все привычки</h1>
       <AllHabitList />
     </div>
   );
-};
-
-export default AllHabits;
+}
