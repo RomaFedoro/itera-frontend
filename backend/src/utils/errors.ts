@@ -17,3 +17,8 @@ export const NotFoundException = (message: string = 'Not found') => createError(
   statusCode: 404,
   message,
 });
+
+export const BadRequestException = (message: string = 'Bad request') => createError({
+  statusCode: 400,
+  message,
+});

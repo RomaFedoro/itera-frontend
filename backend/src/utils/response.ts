@@ -12,6 +12,7 @@ const prepareResponse = (data: object, options?: ResponseOptiopns) => {
 
   if (pick)
     return pick.filter(key => key in data).map(key => ({
+      // @ts-ignore
       [key]: data[key],
     }));
 
