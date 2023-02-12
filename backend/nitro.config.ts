@@ -7,7 +7,10 @@ export default defineNitroConfig({
   noPublicDir: true,
   srcDir: SRC,
   imports: {
-    dirs: ['src/services', 'src/validators'],
+    dirs: ['src/services', 'src/validators', 'src/handlers'],
+  },
+  typescript: {
+
   },
   runtimeConfig: {
     jwt: {

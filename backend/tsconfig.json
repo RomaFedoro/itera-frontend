@@ -1,6 +1,8 @@
 {
   "extends": "./.nitro/types/tsconfig.json",
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
     "types": [
       "node"
     ],

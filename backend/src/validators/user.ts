@@ -6,11 +6,9 @@ export const registerUserRequest = object({
   password: string().trim().min(6).required(),
 });
 export type RegisterUserRequestType = InferType<typeof registerUserRequest>;
-export type RegisterUserType = Required<RegisterUserRequestType>;
 
 export const loginUserRequest = object({
   email: string().trim().email().required(),
   password: string().trim().min(6).required(),
 });
 export type LoginUserRequestType = InferType<typeof loginUserRequest>;
-export type LoginUserType = Required<LoginUserRequestType>;

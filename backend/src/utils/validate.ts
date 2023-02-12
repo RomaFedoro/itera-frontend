@@ -1,4 +1,4 @@
-import {ObjectSchema, ValidationError} from 'yup';
+import {Schema, ValidationError} from 'yup';
 
 const err = (error: ValidationError) => ({
   valid: false as false,
@@ -13,6 +13,6 @@ const ok = <T>(data: T) => ({
   data,
 });
 
-export const validate = <T, K>(schema: ObjectSchema<T>, data: K) => {
+export const validate = <T extends Schema, K>(schema:T, data: K) => {
   return schema.validate(data).then(ok).catch(err);
 }

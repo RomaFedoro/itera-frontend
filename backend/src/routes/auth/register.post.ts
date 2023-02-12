@@ -1,4 +1,4 @@
-import {RegisterUserRequestType, RegisterUserType} from '@/validators/user';
+import {RegisterUserRequestType} from '@/validators/user';
 
 export default defineEventHandler(async (event) => {
   const credentials = await readBody<RegisterUserRequestType>(event);
@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   if (!validator.valid)
     throw ValidationException();
 
-  const user = await createUser(credentials as RegisterUserType);
+  const user = await createUser(validator.data);
 
   const token = generateToken({
     id: user.id

@@ -15,6 +15,6 @@ export const verifyToken = <T extends object>(token: string) => {
   try {
     return jsonwebtoken.verify(token, jwt.secret) as T & { iat: number, exp: number }
   } catch (error) {
-    return false as false
+    return false as false;
   }
 }

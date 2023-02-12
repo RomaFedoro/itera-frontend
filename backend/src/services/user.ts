@@ -1,9 +1,9 @@
-import {LoginUserType, RegisterUserType} from '@/validators/user';
+import {LoginUserRequestType, RegisterUserRequestType} from '@/validators/user';
 import {hash, compare} from 'bcrypt';
 
 const SAULT_ROUNDS = 10;
 
-export const createUser = async (credentials: RegisterUserType) => {
+export const createUser = async (credentials: RegisterUserRequestType) => {
   credentials.password = await hash(credentials.password, SAULT_ROUNDS);
 
   try {
@@ -15,7 +15,7 @@ export const createUser = async (credentials: RegisterUserType) => {
   }
 }
 
-export const loginUser = async (credentials: LoginUserType) => {
+export const loginUser = async (credentials: LoginUserRequestType) => {
  const user = await prisma.user.findUnique({
     where: {email: credentials.email},
  });
