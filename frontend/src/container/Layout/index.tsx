@@ -5,7 +5,7 @@ import cn from 'classnames';
 import Menu from '@/container/Menu';
 
 const font = Manrope({
-  weight: ['300', '500', '700'],
+  weight: ['300', '500', '600'],
   subsets: ['latin', 'cyrillic'],
 });
 

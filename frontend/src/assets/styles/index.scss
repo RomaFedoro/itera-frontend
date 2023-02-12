@@ -25,6 +25,12 @@ h1 {
   font-size: 3.6rem;
 }
 
+.list {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--row-gap-item);
+}
+
 .content {
   width: 100%;
   position: relative;
@@ -32,4 +38,21 @@ h1 {
   flex-direction: column;
   row-gap: var(--row-gap-content);
   padding: var(--padding-content);
+  background-color: var(--background-color-content);
+
+  &_dark {
+    color: white;
+    background-color: var(--background-color-substrate);
+  }
+
+  &_fill {
+    flex: 1;
+  }
+}
+
+.form-element {
+  width: 100%;
+  border-radius: var(--border-radius-button);
+  padding: var(--padding-button);
+  font-size: var(--font-size-button);
 }

@@ -1,26 +1,19 @@
-'use client';
-
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import React from 'react';
 import styles from './style.module.scss';
 import cn from 'classnames';
 
 type TMenuLinkProps = {
   link: string;
+  isActive?: boolean;
   children?: React.ReactNode;
 };
 
-const MenuItem = ({ link, children }: TMenuLinkProps) => {
-  const pathname = usePathname();
-
+const MenuItem = ({ link, isActive, children }: TMenuLinkProps) => {
   return (
     <Link
       href={link}
-      className={cn(
-        styles.menu__item,
-        pathname === link && styles.menu__item_active
-      )}
+      className={cn(styles.menu__item, isActive && styles.menu__item_active)}
     >
       {children}
     </Link>

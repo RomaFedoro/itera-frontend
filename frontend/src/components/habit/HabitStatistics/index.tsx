@@ -5,7 +5,7 @@ import HabitStatisticBlock from '@/components/habit/HabitStatisticBlock';
 
 const HabitStatistics = () => {
   return (
-    <div className={cn('content', styles.statistics)}>
+    <div className={cn('content', ' content_fill', styles.statistics)}>
       <HabitStatisticBlock />
       <HabitStatisticBlock />
       <HabitStatisticBlock />

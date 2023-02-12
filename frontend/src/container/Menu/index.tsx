@@ -1,21 +1,32 @@
-import React from 'react';
+'use client';
+
+import React, { useMemo } from 'react';
 import MenuItem from './components/MenuItem';
+import { usePathname } from 'next/navigation';
 import { menuLinks } from './constants';
 import styles from './styled.module.scss';
 
 const Menu = () => {
+  const pathname = usePathname();
+  const isAuthPage = useMemo(() => pathname?.startsWith('/auth'), [pathname]);
+
   return (
     <div className={styles.menu}>
-      <ul className={styles.menu__container}>
-        {menuLinks.map(({ link, title }) => (
-          <li key={link}>
-            <MenuItem link={link}>{title}</MenuItem>
-          </li>
-        ))}
+      <ul className="list">
+        {!isAuthPage &&
+          menuLinks.map(({ link, title }) => (
+            <li key={link}>
+              <MenuItem link={link} isActive={pathname === link}>
+                {title}
+              </MenuItem>
+            </li>
+          ))}
       </ul>
-      <div className={styles.menu__container}>
-        <MenuItem link="/account">Личный кабинет</MenuItem>
-      </div>
+      {!isAuthPage && (
+        <div className="list">
+          <MenuItem link="/account">Личный кабинет</MenuItem>
+        </div>
+      )}
     </div>
   );
 };

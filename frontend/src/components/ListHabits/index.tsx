@@ -1,6 +1,5 @@
 import React from 'react';
 import HabitItem from '@/components/HabitItem';
-import styles from './styles.module.scss';
 import { THabitList } from '@/types/habit';
 
 type TListHabits = {
@@ -11,7 +10,7 @@ type TListHabits = {
 
 const ListHabits = ({ habits, onlyRead, onChange }: TListHabits) => {
   return (
-    <ul className={styles.container}>
+    <ul className="list">
       {habits.map((habit) => (
         <HabitItem
           key={habit.id}
