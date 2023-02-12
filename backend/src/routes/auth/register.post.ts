@@ -1,21 +1,20 @@
-import {InferType, object, string} from 'yup';
-
-const registerRequest = object({
-  name: string().required(),
-  email: string().email().required(),
-  password: string().min(6).required(),
-});
-
-type registerRequestType = InferType<typeof registerRequest>;
+import {RegisterUserRequestType, RegisterUserType} from '@/validators/user';
 
 export default defineEventHandler(async (event) => {
-  const credentials = await readBody<registerRequestType>(event);
+  const credentials = await readBody<RegisterUserRequestType>(event);
 
-  const validator = await validate(registerRequest, credentials);
+  const validator = await validate(registerUserRequest, credentials);
 
   if (!validator.valid)
-    throw createError({
-      statusCode: 422,
-      message: 'Invalid credentials',
-    });
+    throw ValidationException();
+
+  const user = await createUser(credentials as RegisterUserType);
+
+  const token = generateToken({
+    id: user.id
+  });
+
+  return responseWithMeta(user, token, {
+    omit: ['password'],
+  });
 });

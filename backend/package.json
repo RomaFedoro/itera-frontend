@@ -8,6 +8,8 @@
   "devDependencies": {
     "@prisma/client": "^4.10.1",
     "@types/node": "^18.13.0",
+    "bcrypt": "^5.1.0",
+    "jsonwebtoken": "^9.0.0",
     "nitropack": "^2.2.1",
     "prisma": "^4.10.1",
     "yup": "^1.0.0"
