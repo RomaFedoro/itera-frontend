@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { DAYS_OF_WEEK } from '@/constants/daysweek';
 import IteraCheckbox from '@/components/ui/IteraCheckbox';
 
@@ -13,9 +13,12 @@ const IteraDaysWeek = () => {
     return data;
   });
 
-  const handleChange = (value: number) => {
-    setDays((prev) => ({ ...prev, [value]: !prev[value] }));
-  };
+  const handleChange = useCallback(
+    (value: number) => {
+      setDays((prev) => ({ ...prev, [value]: !prev[value] }));
+    },
+    [setDays]
+  );
 
   return (
     <div className="list-row">

@@ -6,7 +6,7 @@ import IteraDaysWeek from '@/container/form/IteraDaysWeek';
 const DaysWeekField = () => {
   return (
     <IteraDropdown icon={<CalendarIcon />} title="Дни недели">
-        <IteraDaysWeek />
+      <IteraDaysWeek />
     </IteraDropdown>
   );
 };

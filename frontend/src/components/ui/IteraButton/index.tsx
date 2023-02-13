@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import styles from './styles.module.scss';
 import cn from 'classnames';
@@ -7,6 +9,7 @@ type TButtonProps = React.ButtonHTMLAttributes<HTMLElement> & {
   secondary?: boolean;
   small?: boolean;
   active?: boolean;
+  className?: string;
 };
 
 const IteraButton = ({
@@ -16,17 +19,19 @@ const IteraButton = ({
   small = false,
   active = false,
   type = 'button',
+  className,
   ...rest
 }: TButtonProps) => {
   return (
     <button
       className={cn(
+        'form-element',
         styles.button,
         fillContent && styles.button_fill,
         secondary && styles.button_secondary,
         small && styles.button_small,
         active && styles.button_active,
-        'form-element'
+        className
       )}
       type={type}
       {...rest}

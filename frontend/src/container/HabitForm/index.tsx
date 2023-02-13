@@ -1,10 +1,12 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect } from 'react';
 import cn from 'classnames';
 import styles from './styles.module.scss';
 import IteraTextarea from '@/components/ui/IteraTextarea';
 import IteraButton from '@/components/ui/IteraButton';
-import IteraDropdown from '@/components/ui/IteraDropdown';
 import DaysWeekField from './components/DaysWeekField';
+import StepsField from './components/StepsField';
 
 const HabitForm = () => {
   return (
@@ -22,7 +24,7 @@ const HabitForm = () => {
         </fieldset>
         <fieldset className={styles.params}>
           <DaysWeekField />
-          <IteraDropdown></IteraDropdown>
+          <StepsField />
         </fieldset>
       </div>
       <div className={styles.buttons}>
