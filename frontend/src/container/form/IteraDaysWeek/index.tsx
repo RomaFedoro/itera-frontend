@@ -1,33 +1,23 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { DAYS_OF_WEEK } from '@/constants/daysweek';
 import IteraCheckbox from '@/components/ui/IteraCheckbox';
 
-const IteraDaysWeek = () => {
-  const [days, setDays] = useState(() => {
-    const data: Record<number, boolean> = {};
-    DAYS_OF_WEEK.forEach(({ value }) => {
-      data[value] = true;
-    });
-    return data;
-  });
+type TIteraDaysWeekProps = {
+  onChange: (value: number) => void;
+  defaultValues: Record<number, boolean>;
+};
 
-  const handleChange = useCallback(
-    (value: number) => {
-      setDays((prev) => ({ ...prev, [value]: !prev[value] }));
-    },
-    [setDays]
-  );
-
+const IteraDaysWeek = ({ defaultValues, onChange }: TIteraDaysWeekProps) => {
   return (
     <div className="list-row">
       {DAYS_OF_WEEK.map(({ value, label }) => {
         return (
           <IteraCheckbox
             key={value}
-            onChange={() => handleChange(value)}
-            checked={days[value]}
+            onChange={() => onChange(value)}
+            checked={defaultValues[value]}
           >
             {label.toUpperCase()}
           </IteraCheckbox>
@@ -37,4 +27,4 @@ const IteraDaysWeek = () => {
   );
 };
 
-export default IteraDaysWeek;
+export default memo(IteraDaysWeek);
