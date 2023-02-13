@@ -1,0 +1,21 @@
+.dropdown {
+  position: relative;
+
+  &__body {
+    position: absolute;
+    top: calc(100% + var(--gap-item));
+    left: 0;
+    width: max-content;
+    background-color: var(--background-color-item);
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--gap-content);
+    padding: 1.6rem;
+  }
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+}

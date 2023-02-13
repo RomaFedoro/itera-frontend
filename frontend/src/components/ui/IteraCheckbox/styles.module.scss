@@ -30,10 +30,6 @@
     border-color: transparent;
     color: var(--background-color-item);
 
-    .icon {
-      opacity: 1;
-    }
-
     &:hover {
       background-color: var(--color-secondary);
       color: var(--background-color-item);
@@ -44,6 +40,5 @@
 .icon {
   width: 1.4em;
   height: 1.4em;
-  opacity: 0;
   transition: opacity var(--animation);
 }

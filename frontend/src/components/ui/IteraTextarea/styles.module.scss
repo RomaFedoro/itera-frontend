@@ -1,0 +1,11 @@
+.textarea {
+  background-color: transparent;
+  resize: none;
+  min-height: 1em;
+  outline: none;
+  overflow-y: hidden;
+
+  &::placeholder {
+    color: var(--color-secondary);
+  }
+}

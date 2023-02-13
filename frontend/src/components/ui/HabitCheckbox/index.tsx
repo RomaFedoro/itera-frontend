@@ -1,9 +1,7 @@
 'use client';
 
-import React from 'react';
-import styles from './styles.module.scss';
-import { CheckIcon } from '@heroicons/react/20/solid';
-import cn from 'classnames';
+import React, { memo } from 'react';
+import IteraCheckbox from '../IteraCheckbox';
 
 type CheckboxProps = {
   needRepeat?: number;
@@ -12,16 +10,10 @@ type CheckboxProps = {
 
 const HabitCheckbox = ({ needRepeat = 1, onChange }: CheckboxProps) => {
   return (
-    <button className={cn(styles.checkbox, needRepeat === 0 && styles.checkbox_checked)} onClick={onChange}>
-      {needRepeat > 1 ? (
-        needRepeat
-      ) : (
-        <CheckIcon
-          className={styles.icon}
-        />
-      )}
-    </button>
+    <IteraCheckbox onChange={onChange} checked={needRepeat === 0}>
+      {needRepeat > 1 && needRepeat}
+    </IteraCheckbox>
   );
 };
 
-export default React.memo(HabitCheckbox);
+export default memo(HabitCheckbox);
