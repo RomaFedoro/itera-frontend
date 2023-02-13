@@ -25,10 +25,14 @@ h1 {
   font-size: 3.6rem;
 }
 
-.list {
+.list,
+.list-row {
   display: flex;
+  gap: var(--gap-item);
+}
+
+.list {
   flex-direction: column;
-  row-gap: var(--row-gap-item);
 }
 
 .content {
@@ -36,7 +40,7 @@ h1 {
   position: relative;
   display: flex;
   flex-direction: column;
-  row-gap: var(--row-gap-content);
+  row-gap: var(--gap-content);
   padding: var(--padding-content);
   background-color: var(--background-color-content);
 

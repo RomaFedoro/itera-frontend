@@ -13,7 +13,7 @@ type TModelProps = {
   setIsOpen: (isOpen: boolean) => void;
 };
 
-const Popup = ({
+const IteraPopup = ({
   title,
   isOpen,
   noCloseByOverlay = false,
@@ -51,4 +51,4 @@ const Popup = ({
   );
 };
 
-export default Popup;
+export default IteraPopup;
