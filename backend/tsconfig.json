@@ -1,0 +1,11 @@
+{
+    "compilerOptions": { 
+      "target": "es5",
+      "moduleResolution": "Node",
+      "outDir": "dist",
+      "module": "commonjs",
+      "lib": ["dom", "dom.iterable", "esnext"],
+      "esModuleInterop": true,
+    },
+    "exclude": ["node_modules"]
+}

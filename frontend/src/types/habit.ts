@@ -1,6 +1,7 @@
 export type THabit = {
   id: number;
   title: string;
+  description: string;
   totalSteps: number;
   days: number[];
 };

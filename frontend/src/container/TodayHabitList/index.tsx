@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import ListHabits from '@/components/ListHabits';
 import styles from './styles.module.scss';
 import { THabitList } from '@/types/habit';
@@ -37,6 +37,10 @@ const TodayHabitList = () => {
     setHabitList(defaultHabitList);
   }, []);
 
+  useEffect(() => {
+    fetch('/api/movies').then((res) => console.log(res));
+  }, []);
+
   return (
     <div className={styles.list}>
       {habitListUnfinished.length > 0 && (
@@ -55,4 +59,4 @@ const TodayHabitList = () => {
   );
 };
 
-export default React.memo(TodayHabitList);
+export default memo(TodayHabitList);
