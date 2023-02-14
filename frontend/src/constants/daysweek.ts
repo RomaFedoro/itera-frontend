@@ -1,4 +1,11 @@
-export const DAYS_OF_WEEK = [
+import { TDaysOfWeek } from '@/types/daysweek';
+
+type TDaysOfWeekData = {
+  value: TDaysOfWeek;
+  label: string;
+};
+
+export const DAYS_OF_WEEK: TDaysOfWeekData[] = [
   {
     value: 1,
     label: 'пн',
@@ -24,7 +31,7 @@ export const DAYS_OF_WEEK = [
     label: 'сб',
   },
   {
-    value: 7,
+    value: 0,
     label: 'вс',
   },
 ];
