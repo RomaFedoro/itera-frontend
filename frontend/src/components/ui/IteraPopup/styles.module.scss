@@ -13,16 +13,17 @@
   position: relative;
   background-color: #fff;
   border-radius: var(--border-radius-big);
-  width: max(60rem, 50%);
+  width: max(30rem, 30%);
   max-height: calc(100% - 2 * var(--padding-wrapper));
   margin: auto;
   overflow-y: auto;
+  font-size: 1.2rem;
 
   &__content {
     padding: var(--padding-wrapper);
     display: flex;
     flex-direction: column;
-    row-gap: var(--gap-content);
+    row-gap: var(--gap-item-big);
   }
 
   &__header {
