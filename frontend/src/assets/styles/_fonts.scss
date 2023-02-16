@@ -1,0 +1,22 @@
+@mixin MakeFont($base-font-path: '') {
+  $font-family: 'Manrope';
+
+  $fonts: (
+    Medium: 500,
+    SemiBold: 700,
+  );
+
+  @each $font, $weight in $fonts {
+    $font-with-dash: #{$font-family}-#{$font};
+    $font-with-space: #{$font-family} #{$font};
+    $font-with-path: #{$base-font-path}/#{$font-with-dash};
+
+    @font-face {
+      font-family: 'Manrope';
+      src: local('#{$font-with-dash}'), local('#{$font-with-space}'),
+        url('#{$font-with-path}.ttf') format('truetype');
+      font-weight: $weight;
+      font-style: normal;
+    }
+  }
+}
