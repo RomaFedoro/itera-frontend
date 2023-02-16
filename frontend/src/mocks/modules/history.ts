@@ -9,7 +9,11 @@ export type THistoryHabit = {
   totalSteps: number;
 };
 
-const createHistoryHabit = (id, habit: THabit, date: Date): THistoryHabit => {
+const createHistoryHabit = (
+  id: number,
+  habit: THabit,
+  date: Date
+): THistoryHabit => {
   const { id: habitId, totalSteps } = habit;
 
   return {
