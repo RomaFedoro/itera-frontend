@@ -1,12 +1,11 @@
 @import 'variables';
+@import 'fonts';
 @import 'reset';
+
+@include MakeFont('../fonts');
 
 html {
   font-size: 1rem;
-}
-
-body {
-  font-size: 1.6rem;
 }
 
 html,
@@ -16,9 +15,10 @@ body {
 }
 
 body {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: 'Manrope', Helvetica, Arial, sans-serif;
   background-color: var(--background-color-main);
   line-height: 1.25;
+  font-size: 1.6rem;
 }
 
 h1 {
