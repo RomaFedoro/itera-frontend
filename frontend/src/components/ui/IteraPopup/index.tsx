@@ -1,5 +1,5 @@
 import { XMarkIcon } from '@heroicons/react/20/solid';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useClickAway } from 'react-use';
 import styles from './styles.module.scss';
 import cn from 'classnames';
@@ -44,7 +44,7 @@ const IteraPopup = ({
               <XMarkIcon />
             </button>
           </div>
-          {!!children && <div className={styles.popup__body}>{children}</div>}
+          {children}
         </div>
       </div>
     </div>

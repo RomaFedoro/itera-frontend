@@ -35,6 +35,10 @@ h1 {
   flex-direction: column;
 }
 
+.list_end {
+  justify-content: flex-end;
+}
+
 .content {
   width: 100%;
   position: relative;
