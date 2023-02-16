@@ -11,9 +11,13 @@ const nextConfig = {
         destination: '/today',
         permanent: true,
       },
+      {
+        source: '/auth',
+        destination: '/auth/login',
+        permanent: true,
+      },
     ];
   },
 };
 
 module.exports = nextConfig;
-
