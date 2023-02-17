@@ -1,6 +1,7 @@
 {
   "name": "itera",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "nitro dev",
     "build": "nitro build"

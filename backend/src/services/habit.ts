@@ -2,7 +2,7 @@ import {User} from '@prisma/client';
 import {StoreHabitRequestType, UpdateHabitRequestType} from '@/validators/habit';
 
 export const getAllHabbits = async (userId: User['id']) => {
-  return await prisma.habit.findMany({
+  return prisma.habit.findMany({
     where: {userId},
   });
 }
@@ -19,7 +19,7 @@ export const getHabitById = async (userId: User['id'], id: number) => {
 }
 
 export const storeHabit = async (userId: User['id'], habit: StoreHabitRequestType) => {
-  return await prisma.habit.create({
+  return prisma.habit.create({
     data: {
       userId,
       ...habit,
