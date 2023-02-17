@@ -3,9 +3,11 @@ import jsonwebtoken from 'jsonwebtoken';
 export const generateToken = (payload: object) => {
   const {jwt} = useRuntimeConfig();
 
+  const expires = parseInt(jwt.expiresIn);
+
   return {
-    token: jsonwebtoken.sign(payload, jwt.secret, {expiresIn: jwt.expiresIn}) as string,
-    expires: jwt.expiresIn as string,
+    token: jsonwebtoken.sign(payload, jwt.secret, {expiresIn: expires}) as string,
+    expires: expires,
   };
 };
 

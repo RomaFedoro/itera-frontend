@@ -14,8 +14,11 @@ export default defineNitroConfig({
   },
   runtimeConfig: {
     jwt: {
-      expiresIn: '1d',
+      expiresIn: '3600', // s
       secret: 'secret',
     }
+  },
+  routeRules: {
+    '/**': { cors: true },
   },
 });

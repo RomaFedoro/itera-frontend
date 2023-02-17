@@ -1,5 +1,6 @@
 import {LoginUserRequestType, RegisterUserRequestType} from '@/validators/user';
 import {hash, compare} from 'bcrypt';
+import {User} from '@prisma/client';
 
 const SAULT_ROUNDS = 10;
 
@@ -16,9 +17,9 @@ export const createUser = async (credentials: RegisterUserRequestType) => {
 }
 
 export const loginUser = async (credentials: LoginUserRequestType) => {
- const user = await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: {email: credentials.email},
- });
+  });
 
   if (!user)
     throw InvalidCredentialsException();
@@ -27,6 +28,17 @@ export const loginUser = async (credentials: LoginUserRequestType) => {
 
   if (!valid)
     throw InvalidCredentialsException();
+
+  return user;
+}
+
+export const getUserById = async (id: User['id']) => {
+  const user = await prisma.user.findUnique({
+    where: {id},
+  });
+
+  if (!user)
+    throw NotFoundException('User not found');
 
   return user;
 }
