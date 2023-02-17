@@ -1,17 +1,32 @@
-version: '3'
+version: "3"
 
 services:
-  database:
-    image: 'postgres:latest'
+
+  api:
+    build:
+      context: .
+      dockerfile: ./build/api/Dockerfile
     ports:
-      - '${DB_PORT:-5432}:5432'
+      - "${FORWARD_APP_PORT:-3000}:3000"
     environment:
-      PGPASSWORD: '${DB_PASSWORD:-secret}'
-      POSTGRES_DB: '${DB_DATABASE}'
-      POSTGRES_USER: '${DB_USERNAME}'
-      POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+      DB_URL: "${DB_URL}"
+    networks:
+      - itera_net
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    image: postgres:latest
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    environment:
+      PGPASSWORD: "${DB_PASSWORD:-secret}"
+      POSTGRES_DB: "${DB_DATABASE}"
+      POSTGRES_USER: "${DB_USERNAME}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD:-secret}"
     volumes:
-      - 'itera_vol:/var/lib/postgresql/data'
+      - "itera_vol:/var/lib/postgresql/data"
     networks:
       - itera_net
     healthcheck:
