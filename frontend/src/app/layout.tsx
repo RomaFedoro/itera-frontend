@@ -1,5 +1,6 @@
 import Layout from '@/container/Layout';
 import './globals.scss';
+import Providers from './providers';
 
 export default function RootLayout({
   children,
@@ -10,9 +11,10 @@ export default function RootLayout({
     <html lang="ru">
       <head />
       <body>
-        <Layout>{children}</Layout>
+        <Providers>
+          <Layout>{children}</Layout>
+        </Providers>
       </body>
     </html>
   );
 }
-

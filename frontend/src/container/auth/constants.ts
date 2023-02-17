@@ -1,13 +1,5 @@
-import { TLoginValues, TRegisterValues } from './types';
-import { RegisterOptions, FieldPath } from 'react-hook-form';
-
-type TField<T extends Record<string, unknown>> = {
-  name: keyof T;
-  placeholder?: string;
-  type?: string;
-  label?: string;
-  options?: RegisterOptions<T, FieldPath<T>>;
-};
+import { TLoginValues, TRegisterValues } from '@/types/auth';
+import { TField } from '@/types/form';
 
 export const loginFields: TField<TLoginValues>[] = [
   {

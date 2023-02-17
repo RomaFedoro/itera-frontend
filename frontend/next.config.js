@@ -4,6 +4,9 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  env: {
+    apiPath: 'http://92.125.33.134:3000',
+  },
   async redirects() {
     return [
       {

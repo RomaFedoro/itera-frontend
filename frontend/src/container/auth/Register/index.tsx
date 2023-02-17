@@ -1,33 +1,19 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import IteraInput from '@/components/ui/IteraInput';
 import IteraButton from '@/components/ui/IteraButton';
 import IteraLink from '@/components/ui/IteraLink';
 import { registerFields } from '../constants';
-import { useForm } from 'react-hook-form';
-import { TRegisterValues } from '../types';
+import { useRegister } from '../hooks';
 
 const Register = () => {
-  const [hasMounted, setHasMounted] = useState(false);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { isDirty, isValid, errors },
-  } = useForm<TRegisterValues>({
-    mode: 'onTouched',
-  });
-  const onSubmit = handleSubmit((data) => console.log(data));
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
+  const { register, hasMounted, isValidForm, errors, onSubmit } = useRegister();
 
   if (!hasMounted) return null;
 
   return (
-    <form className="list" onSubmit={onSubmit}>
+    <form method='POST' className="list" onSubmit={onSubmit}>
       {registerFields.map((field) => (
         <IteraInput
           key={field.name}
@@ -36,9 +22,7 @@ const Register = () => {
           {...field}
         />
       ))}
-      <IteraButton disabled={!isDirty || !isValid}>
-        Зарегистрироваться
-      </IteraButton>
+      <IteraButton type='submit' disabled={!isValidForm}>Зарегистрироваться</IteraButton>
       <IteraLink href="/auth/login">
         Уже есть аккаунта? <b>Войдите в него</b>
       </IteraLink>
