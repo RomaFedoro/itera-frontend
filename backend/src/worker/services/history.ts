@@ -2,15 +2,6 @@ import {History} from '@prisma/client';
 import prisma from '../../utils/prisma';
 import {getHabitByDay} from './habit';
 
-export const getLastHistoryRecord = async () => {
-  const record = await prisma.history.findMany({
-    orderBy: {date: 'desc'},
-    take: 1,
-  });
-
-  return record[0] ?? null;
-}
-
 export const makeHistory = async (date: Date) => {
   const day = date.getDay();
 
@@ -26,9 +17,13 @@ export const makeHistory = async (date: Date) => {
     date,
   }));
 
-  console.log(history);
-
-  return prisma.history.createMany({
-    data: history,
-  });
+  for (const h of history) {
+    await prisma.history.upsert({
+      where: {
+        habitId_date: {habitId: h.habitId, date: h.date}
+      },
+      update: {},
+      create: h,
+    });
+  }
 }
