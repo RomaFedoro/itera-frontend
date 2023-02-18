@@ -1,13 +1,10 @@
 import { THistoryHabit } from '@/types/habit';
-import plural from '../utils/plural';
+import { pluralWithNum } from '../utils/plural';
 
 type TStatisticProps = {
   label: string;
   getValue: (history: THistoryHabit[]) => string;
 };
-
-const dayPlural = (num: number) =>
-  `${num} ${plural(num, ['день', 'дня', 'дней'])}`;
 
 const STATISTIC_BLOCKS: TStatisticProps[] = [
   {
@@ -27,8 +24,8 @@ const STATISTIC_BLOCKS: TStatisticProps[] = [
   {
     label: 'Начато выполнение',
     getValue: (history) => {
-      let result = history.filter((day) => day.completedSteps > 0).length;
-      return dayPlural(result);
+      const result = history.filter((day) => day.completedSteps > 0).length;
+      return pluralWithNum(result, ['раз', 'раза', 'раз']);
     },
   },
   {
@@ -42,7 +39,7 @@ const STATISTIC_BLOCKS: TStatisticProps[] = [
         maxStreak = Math.max(maxStreak, currentStreak);
       }
 
-      return dayPlural(maxStreak);
+      return pluralWithNum(maxStreak, ['день', 'дня', 'дней']);
     },
   },
 ];

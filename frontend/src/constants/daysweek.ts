@@ -24,7 +24,7 @@ export const DAYS_OF_WEEK = [
     label: 'сб',
   },
   {
-    value: 7,
+    value: 0,
     label: 'вс',
   },
 ];

@@ -39,7 +39,7 @@ const getProgressData = ({
     };
   }
 
-  return progressData;
+  return { progressData, today: today.toISOString() };
 };
 
 export default getProgressData;
