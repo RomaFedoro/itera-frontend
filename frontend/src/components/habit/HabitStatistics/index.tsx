@@ -18,7 +18,7 @@ const HabitStatistics = () => {
           value={getValue(historyData)}
         />
       ))}
-      <HabitProgessBlock />
+      <HabitProgessBlock totalSteps={6} days={[1, 3, 5, 0]} history={historyData} />
     </div>
   );
 };

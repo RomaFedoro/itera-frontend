@@ -6,7 +6,7 @@ export type THabit = {
 };
 
 export type THistoryHabit = {
-  date: Date;
+  date: string;
   completedSteps: number;
   totalSteps: number;
 };
