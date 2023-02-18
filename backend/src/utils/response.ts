@@ -3,6 +3,7 @@ type ResponseOptiopns = {
   omit?: string[];
 };
 
+// TODO: add list processing
 const prepareResponse = (data: object, options?: ResponseOptiopns) => {
   if (!options) {
     return data;

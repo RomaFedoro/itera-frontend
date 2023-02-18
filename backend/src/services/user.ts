@@ -1,6 +1,6 @@
-import {LoginUserRequestType, RegisterUserRequestType} from '@/validators/user';
-import {hash, compare} from 'bcrypt';
 import {User} from '@prisma/client';
+import {hash, compare} from 'bcrypt';
+import {LoginUserRequestType, RegisterUserRequestType} from '@/validators/user';
 
 const SAULT_ROUNDS = 10;
 

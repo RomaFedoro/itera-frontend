@@ -1,5 +1,7 @@
 import {addMethod, array, ArraySchema, Schema, ValidationError} from 'yup';
 
+// TODO: fix types
+
 declare module 'yup' {
   // @ts-ignore
   interface ArraySchema<T> {
