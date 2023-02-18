@@ -1,0 +1,15 @@
+.progress {
+  border-radius: var(--border-radius-big);
+  background-color: var(--background-color-field);
+  display: flex;
+  padding: 1.2em;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  position: relative;
+}
+
+#progress__svg {
+  margin: auto;
+  width: 40vw;
+  height: 40vw;
+}

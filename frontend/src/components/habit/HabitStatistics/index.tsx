@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 import HabitStatisticBlock from '@/components/habit/HabitStatisticBlock';
 import STATISTIC_BLOCKS from '@/constants/statistic';
 import { createMockHistory } from '@/mocks/history';
+import HabitProgessBlock from '../HabitProgressBlock';
 
 const HabitStatistics = () => {
   const historyData = createMockHistory();
@@ -17,6 +18,7 @@ const HabitStatistics = () => {
           value={getValue(historyData)}
         />
       ))}
+      <HabitProgessBlock />
     </div>
   );
 };
