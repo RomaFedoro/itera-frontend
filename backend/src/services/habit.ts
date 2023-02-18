@@ -19,22 +19,35 @@ export const getHabitById = async (userId: User['id'], id: number) => {
 }
 
 export const storeHabit = async (userId: User['id'], habit: StoreHabitRequestType) => {
-  return prisma.habit.create({
+  const habitEntity = await prisma.habit.create({
     data: {
       userId,
       ...habit,
     },
   });
+
+  await insertHistory(habitEntity);
+
+  return habitEntity;
 }
 
 export const updateHabit = async (userId: User['id'], id: number, habit: UpdateHabitRequestType) => {
-  const {count} = await prisma.habit.updateMany({
-    where: {id, userId},
-    data: habit,
-  });
+  const [{count}] = await prisma.$transaction([
+    prisma.habit.updateMany({
+      where: {id, userId},
+      data: habit,
+    }),
+    prisma.history.updateMany({
+      where: {habitId: id},
+      data: {totalSteps: habit.totalSteps},
+    }),
+    prisma.$executeRaw`UPDATE "public"."History" SET "completedSteps" = "totalSteps" WHERE "habitId" = ${id} AND "completedSteps" > "totalSteps";`,
+  ]);
 
   if (count === 0)
     throw NotFoundException('Habit not found');
+
+  await insertHistoryByHabitId(id);
 
   return true;
 }

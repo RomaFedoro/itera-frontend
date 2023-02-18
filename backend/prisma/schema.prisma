@@ -28,9 +28,11 @@ model Habit {
 
 model History {
   id             Int      @id @default(autoincrement())
-  habit          Habit    @relation(fields: [habitId], references: [id])
+  habit          Habit    @relation(fields: [habitId], references: [id], onDelete: Cascade)
   habitId        Int
   date           DateTime
   totalSteps     Int
   completedSteps Int
+
+  @@unique([habitId, date])
 }
