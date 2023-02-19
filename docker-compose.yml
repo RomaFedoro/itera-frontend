@@ -2,6 +2,17 @@ version: "3"
 
 services:
 
+  frontend:
+    build:
+      context: frontend
+      dockerfile: ./build/Dockerfile
+    ports:
+      - "${FORWARD_FRONTEND_PORT:-8000}:3000"
+    networks:
+      - itera_net
+    depends_on:
+      - api
+
   api:
     build:
       context: backend
