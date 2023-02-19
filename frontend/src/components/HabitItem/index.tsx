@@ -6,7 +6,7 @@ import cn from 'classnames';
 import Link from 'next/link';
 
 type THabitItemProps = {
-  onChange?: (id: number, completedSteps: number) => void;
+  onChange?: (id: number | string, completedSteps: number) => void;
   onlyRead?: boolean;
 } & THabitItem;
 

@@ -1,5 +1,6 @@
 @import 'variables';
 @import 'fonts';
+@import 'scroll';
 @import 'reset';
 
 @include MakeFont('../fonts');
@@ -39,12 +40,12 @@ h1 {
   justify-content: flex-end;
 }
 
-.content {
+.content,
+.content-row {
   width: 100%;
   position: relative;
   display: flex;
-  flex-direction: column;
-  row-gap: var(--gap-content);
+  gap: var(--gap-content);
   padding: var(--padding-content);
   background-color: var(--background-color-content);
 
@@ -58,9 +59,17 @@ h1 {
   }
 }
 
+.content {
+  flex-direction: column;
+}
+
 .form-element {
   width: 100%;
   border-radius: var(--border-radius-button);
   padding: var(--padding-button);
   font-size: var(--font-size-button);
+}
+
+.description {
+  font-size: 0.8em;
 }

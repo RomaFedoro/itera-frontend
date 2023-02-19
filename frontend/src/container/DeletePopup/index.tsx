@@ -6,7 +6,7 @@ import IteraButton from '@/components/ui/IteraButton';
 import { useRouter } from 'next/navigation';
 
 type TDeletePopupProps = {
-  id: number;
+  id: number | string;
   name?: string;
 };
 
@@ -14,7 +14,9 @@ const DeletePopup = ({ name, id }: TDeletePopupProps) => {
   const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
 
-  const closePopup = () => setIsOpen(() => false);
+  const closePopup = () => {
+    setIsOpen(() => false);
+  };
   const deleteHabit = () => {
     // Here code
     setIsOpen(() => false);
@@ -22,7 +24,7 @@ const DeletePopup = ({ name, id }: TDeletePopupProps) => {
   };
 
   return (
-    <IteraPopup isOpen={isOpen} setIsOpen={setIsOpen}>
+    <IteraPopup isOpen={isOpen} setIsOpen={closePopup}>
       <span>
         Вы уверены, что хотите удалить {name ? <b>{name}</b> : 'привычку'}?
       </span>

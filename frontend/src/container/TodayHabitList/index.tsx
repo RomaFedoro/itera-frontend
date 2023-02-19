@@ -19,7 +19,7 @@ const TodayHabitList = () => {
   );
 
   const completedOneStepHabit = useCallback(
-    (id: number, completedSteps: number) => {
+    (id: number | string, completedSteps: number) => {
       setHabitList((prevHabits) =>
         prevHabits.map((habit) => {
           if (habit.id !== id) {

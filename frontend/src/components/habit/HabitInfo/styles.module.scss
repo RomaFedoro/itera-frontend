@@ -1,9 +1,19 @@
+.inform {
+  gap: var(--gap-content);
+  flex: 1;
+}
+
 .inform::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    height: var(--border-radius-big);
-    background-color: var(--background-color-content);
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: var(--border-radius-big);
+  background-color: var(--background-color-content);
+}
+
+.buttons {
+  padding-top: 0.8em;
+  align-items: flex-start;
 }
