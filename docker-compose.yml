@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+
+  api:
+    build:
+      context: backend
+      dockerfile: ./build/api/Dockerfile
+    ports:
+      - "${FORWARD_API_PORT:-3000}:3000"
+    environment:
+      DB_URL: "${DB_URL}"
+    networks:
+      - itera_net
+    depends_on:
+      database:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: backend
+      dockerfile: ./build/worker/Dockerfile
+    environment:
+      DB_URL: "${DB_URL}"
+    networks:
+      - itera_net
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    image: postgres:latest
+    environment:
+      PGPASSWORD: "${DB_PASSWORD:-secret}"
+      POSTGRES_DB: "${DB_DATABASE}"
+      POSTGRES_USER: "${DB_USERNAME}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD:-secret}"
+    volumes:
+      - "itera_vol:/var/lib/postgresql/data"
+    networks:
+      - itera_net
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
+      retries: 3
+      timeout: 5s
+
+networks:
+  itera_net:
+    driver: bridge
+
+volumes:
+  itera_vol:
+    driver: local
