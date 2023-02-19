@@ -6,13 +6,14 @@ import {
   START_DEGREE,
   TOTAL_RAYS,
 } from '../constants/size';
+import { TPosition } from '../types';
 
 const getPostionCircle = (
   center: number,
   circleRadius: number,
   radius: number,
   index: number
-) => {
+): TPosition => {
   const rayIndex = Math.floor(index / CIRCLES_IN_RAY);
   const circleIndex = index % CIRCLES_IN_RAY;
   const angle =

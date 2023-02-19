@@ -15,3 +15,4 @@ export type THabitProgressProps = {
 };
 
 export type TColor = [number, number, number];
+export type TPosition = { cx: number; cy: number };
