@@ -1,8 +1,10 @@
 import { DAYS_OF_WEEK, EVERY_DAY_DATA } from '@/constants/daysweek';
 import { TDaysOfWeekOption } from '@/types/daysweek';
 
-const getDaysOfWeek = (days: TDaysOfWeekOption) => {
-  const daysOfWeek = DAYS_OF_WEEK.filter(({ value }) => days[value] === true);
+const getDaysOfWeek = (days: TDaysOfWeekOption | Day[]) => {
+  const daysOfWeek = Array.isArray(days)
+    ? DAYS_OF_WEEK.filter(({ value }) => days.includes(value))
+    : DAYS_OF_WEEK.filter(({ value }) => days[value] === true);
 
   if (daysOfWeek.length === 7) return 'Каждый день';
   if (daysOfWeek.length === 0) return 'Никогда';

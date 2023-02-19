@@ -3,12 +3,9 @@ const nextConfig = {
   pageExtensions: ['ts', 'tsx'],
   experimental: {
     appDir: true,
-    fontLoaders: [
-      {
-        loader: '@next/font/google',
-        options: { subsets: ['latin', 'cyrillic'] },
-      },
-    ],
+  },
+  env: {
+    apiPath: 'https://forma-web.ru',
   },
   async redirects() {
     return [
@@ -17,9 +14,13 @@ const nextConfig = {
         destination: '/today',
         permanent: true,
       },
+      {
+        source: '/auth',
+        destination: '/auth/login',
+        permanent: true,
+      },
     ];
   },
 };
 
 module.exports = nextConfig;
-

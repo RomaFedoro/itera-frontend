@@ -1,9 +1,23 @@
+'use client';
+
 import React from 'react';
 import ListHabits from '@/components/ListHabits';
-import { defaultHabitList } from '@/constants/list';
+import { useQuery } from '@tanstack/react-query';
+import { allHabitsFetch } from '@/services/habits';
 
 const AllHabitList = () => {
-  return <ListHabits habits={defaultHabitList} onlyRead />;
+  // const {
+  //   isLoading,
+  //   isError,
+  //   data: habits,
+  // } = useQuery({
+  //   queryKey: ['todos', 'all'],
+  //   queryFn: allHabitsFetch,
+  // });
+
+  // if (!habits) return null;
+
+  return <ListHabits habits={[]} onlyRead />;
 };
 
 export default AllHabitList;

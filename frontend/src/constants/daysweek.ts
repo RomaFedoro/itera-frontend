@@ -1,9 +1,7 @@
-import { TDaysOfWeek } from '@/types/daysweek';
-
 type TDeclension = 0 | 1 | 2;
 
 type TDaysOfWeekData = {
-  value: TDaysOfWeek;
+  value: Day;
   label: string;
   declensionCode: TDeclension;
 };

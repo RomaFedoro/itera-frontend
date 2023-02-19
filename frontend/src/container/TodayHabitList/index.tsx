@@ -4,7 +4,6 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import ListHabits from '@/components/ListHabits';
 import styles from './styles.module.scss';
 import { THabitList } from '@/types/habit';
-import { defaultHabitList } from '@/constants/list';
 
 const TodayHabitList = () => {
   const [habitList, setHabitList] = useState<THabitList>([]);
@@ -19,7 +18,7 @@ const TodayHabitList = () => {
   );
 
   const completedOneStepHabit = useCallback(
-    (id: number, completedSteps: number) => {
+    (id: number | string, completedSteps: number) => {
       setHabitList((prevHabits) =>
         prevHabits.map((habit) => {
           if (habit.id !== id) {
@@ -34,7 +33,7 @@ const TodayHabitList = () => {
   );
 
   useEffect(() => {
-    setHabitList(defaultHabitList);
+    setHabitList([]);
   }, []);
 
   useEffect(() => {

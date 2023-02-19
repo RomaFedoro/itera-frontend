@@ -1,0 +1,37 @@
+.prompt {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.4em;
+  border-radius: var(--border-radius);
+  background-color: black;
+  padding: var(--padding-button-small);
+  font-size: 0.96rem;
+  color: white;
+  min-width: max-content;
+  user-select: none;
+  transform: translate(-50%, calc(-100% - 1.8em));
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 96%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 0.8rem solid transparent;
+    border-top: 0.6rem solid black;
+  }
+
+  &__date {
+    font-size: 1.2em;
+    font-weight: 700;
+  }
+
+  &__description {
+    color: var(--color-secondary);
+  }
+
+  &_hide {
+    display: none;
+  }
+}

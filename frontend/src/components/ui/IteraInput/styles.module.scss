@@ -5,6 +5,23 @@
   position: relative;
   row-gap: 0.36em;
   font-size: var(--font-size-button);
+
+  .error {
+    color: var(--color-error);
+    font-size: 0.6em;
+    font-weight: 600;
+    margin-bottom: 0.36em;
+  }
+
+  &_error {
+    .input {
+      outline-color: var(--color-error);
+
+      &:focus {
+        outline-color: var(--color-error);
+      }
+    }
+  }
 }
 
 .label {
@@ -15,10 +32,9 @@
 
 .input {
   background-color: var(--background-color-field);
-  outline: none;
-  outline-offset: 0.2rem;
+  outline: 0.1rem solid transparent;
 
   &:focus {
-    outline: 0.1rem solid var(--color-main);
+    outline-color: var(--color-main);
   }
 }

@@ -1,5 +1,5 @@
 import TodayHabitList from '@/container/TodayHabitList';
-import getToday from '@/utils/getToday';
+import { getToday } from '@/utils/getToday';
 
 export default function TodayPage() {
   const todayDate = getToday();

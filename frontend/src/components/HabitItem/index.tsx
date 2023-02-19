@@ -6,13 +6,13 @@ import cn from 'classnames';
 import Link from 'next/link';
 
 type THabitItemProps = {
-  onChange?: (id: number, completedSteps: number) => void;
+  onChange?: (id: number | string, completedSteps: number) => void;
   onlyRead?: boolean;
 } & THabitItem;
 
 const HabitItem = ({
   id,
-  title,
+  name,
   totalSteps,
   completedSteps,
   onlyRead,
@@ -42,7 +42,7 @@ const HabitItem = ({
         />
       )}
       <Link href={`/habits/${id}`} className={styles.habit__title}>
-        {title}
+        {name}
       </Link>
     </div>
   );

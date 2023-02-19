@@ -3,12 +3,12 @@ import IteraDropdown from '@/components/ui/IteraDropdown';
 import { CalendarIcon } from '@heroicons/react/20/solid';
 import IteraDaysWeek from '@/container/form/IteraDaysWeek';
 import { DAYS_OF_WEEK } from '@/constants/daysweek';
-import { TDaysOfWeek, TDaysOfWeekOption } from '@/types/daysweek';
-import getDaysOfWeek from '../../../../utils/getDaysOfWeek';
+import getDaysOfWeek from '@/utils/getDaysOfWeek';
+import { TDaysOfWeekOption } from '@/types/daysweek';
 
 const DaysWeekField = () => {
   const [days, setDays] = useState(() => {
-    const data: Partial<TDaysOfWeekOption> = {};
+    const data = {} as Record<Day, boolean>;
     DAYS_OF_WEEK.forEach(({ value }) => {
       data[value] = true;
     });
@@ -17,7 +17,7 @@ const DaysWeekField = () => {
 
   const title = useMemo(() => getDaysOfWeek(days), [days]);
 
-  const handleChange = (value: TDaysOfWeek) => {
+  const handleChange = (value: Day) => {
     setDays((days) => {
       return {
         ...days,

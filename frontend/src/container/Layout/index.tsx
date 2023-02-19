@@ -1,17 +1,10 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import { Manrope } from '@next/font/google';
-import cn from 'classnames';
 import Menu from '@/container/Menu';
-
-const font = Manrope({
-  weight: ['500', '600'],
-  subsets: ['latin', 'cyrillic'],
-});
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className={cn(styles.wrapper, font.className)}>
+    <div className={styles.wrapper}>
       <header className={styles.header}>
         <Menu />
       </header>
