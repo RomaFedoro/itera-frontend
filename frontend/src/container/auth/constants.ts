@@ -35,5 +35,5 @@ export const registerFields: TField<TRegisterValues>[] = [
       required: 'Это поле должно быть заполнено',
     },
   },
-  ...loginFields,
+  ...(loginFields as unknown as TField<TRegisterValues>[]),
 ];

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import ListHabits from '@/components/ListHabits';
 import styles from './styles.module.scss';
 import { THabitList } from '@/types/habit';
@@ -54,4 +54,4 @@ const TodayHabitList = () => {
   );
 };
 
-export default React.memo(TodayHabitList);
+export default memo(TodayHabitList);
