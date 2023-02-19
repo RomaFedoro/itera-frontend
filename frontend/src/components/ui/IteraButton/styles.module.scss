@@ -10,6 +10,11 @@
   user-select: none;
   gap: var(--gap-item);
 
+  svg {
+    width: 1em;
+    height: 1em;
+  }
+
   &_fill {
     width: max-content;
   }

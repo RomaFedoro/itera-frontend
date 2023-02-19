@@ -11,7 +11,7 @@ export type TProgressRecord = {
 export type THabitProgressProps = {
   history: THistoryHabit[];
   totalSteps: number;
-  days: number[];
+  days: Day[];
 };
 
 export type TColor = [number, number, number];

@@ -5,8 +5,9 @@ import HabitStatisticBlock from '@/components/habit/HabitStatisticBlock';
 import STATISTIC_BLOCKS from '@/constants/statistic';
 import { createMockHistory } from '@/mocks/history';
 import HabitProgessBlock from '@/container/HabitProgressBlock';
+import { THabit } from '@/types/habit';
 
-const HabitStatistics = () => {
+const HabitStatistics = ({ totalSteps, days }: THabit) => {
   const historyData = createMockHistory();
 
   return (
@@ -18,7 +19,11 @@ const HabitStatistics = () => {
           value={getValue(historyData)}
         />
       ))}
-      <HabitProgessBlock totalSteps={6} days={[1, 3, 5, 0]} history={historyData} />
+      <HabitProgessBlock
+        totalSteps={totalSteps}
+        days={days}
+        history={historyData}
+      />
     </div>
   );
 };
