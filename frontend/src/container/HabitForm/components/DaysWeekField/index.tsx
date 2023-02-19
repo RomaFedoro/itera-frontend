@@ -7,7 +7,7 @@ import getDaysOfWeek from '@/utils/getDaysOfWeek';
 
 const DaysWeekField = () => {
   const [days, setDays] = useState(() => {
-    const data: Record<Day, boolean> = {};
+    const data = {} as Record<Day, boolean>;
     DAYS_OF_WEEK.forEach(({ value }) => {
       data[value] = true;
     });
@@ -16,7 +16,7 @@ const DaysWeekField = () => {
 
   const title = useMemo(() => getDaysOfWeek(days), [days]);
 
-  const handleChange = (value: number) => {
+  const handleChange = (value: Day) => {
     setDays((days) => {
       return {
         ...days,

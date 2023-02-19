@@ -24,7 +24,7 @@ const getProgressData = ({
       representation: 'date',
     });
 
-    const isComingHabit = currentDay > today && days.includes(date.getDay());
+    const isComingHabit = currentDay > today && days.includes(date.getDay() as Day);
 
     progressData[currentDay] = {
       totalSteps: isComingHabit ? totalStepsHabit : 0,
