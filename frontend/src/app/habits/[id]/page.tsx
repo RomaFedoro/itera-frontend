@@ -1,3 +1,5 @@
+'use client';
+
 import HabitInfo from '@/components/habit/HabitInfo';
 import HabitStatistics from '@/components/habit/HabitStatistics';
 import { THabit } from '@/types/habit';
