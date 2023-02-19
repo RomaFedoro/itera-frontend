@@ -4,6 +4,9 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
+  env: {
+    apiPath: 'https://forma-web.ru',
+  },
   async redirects() {
     return [
       {
@@ -11,9 +14,13 @@ const nextConfig = {
         destination: '/today',
         permanent: true,
       },
+      {
+        source: '/auth',
+        destination: '/auth/login',
+        permanent: true,
+      },
     ];
   },
 };
 
 module.exports = nextConfig;
-

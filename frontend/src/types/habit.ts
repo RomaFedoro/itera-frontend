@@ -2,7 +2,7 @@ import { Day } from 'date-fns';
 
 export type THabit = {
   id: number | string;
-  title: string;
+  name: string;
   description?: string;
   totalSteps: number;
   days: Day[];

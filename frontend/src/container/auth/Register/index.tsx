@@ -1,16 +1,28 @@
+'use client';
+
 import React from 'react';
 import IteraInput from '@/components/ui/IteraInput';
 import IteraButton from '@/components/ui/IteraButton';
 import IteraLink from '@/components/ui/IteraLink';
 import { registerFields } from '../constants';
+import { useRegister } from '../hooks';
 
 const Register = () => {
+  const { register, hasMounted, isValidForm, errors, onSubmit } = useRegister();
+
+  if (!hasMounted) return null;
+
   return (
-    <form className="list">
+    <form method='POST' className="list" onSubmit={onSubmit}>
       {registerFields.map((field) => (
-        <IteraInput key={field.name} {...field} />
+        <IteraInput
+          key={field.name}
+          error={errors[field.name]?.message}
+          {...register(field.name, field.options)}
+          {...field}
+        />
       ))}
-      <IteraButton disabled>Зарегистрироваться</IteraButton>
+      <IteraButton type='submit' disabled={!isValidForm}>Зарегистрироваться</IteraButton>
       <IteraLink href="/auth/login">
         Уже есть аккаунта? <b>Войдите в него</b>
       </IteraLink>

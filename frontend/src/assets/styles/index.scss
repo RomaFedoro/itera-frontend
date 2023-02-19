@@ -57,6 +57,10 @@ h1 {
   &_fill {
     flex: 1;
   }
+
+  &_between {
+    justify-content: space-between;
+  }
 }
 
 .content {

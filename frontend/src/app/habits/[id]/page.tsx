@@ -11,7 +11,7 @@ export default function HabitPage({
 }) {
   const habitData: THabit = {
     id,
-    title: 'Тестовая привычка',
+    name: 'Тестовая привычка',
     description: 'Тесовое описание привычки',
     days: [1, 3, 5, 0],
     totalSteps: 6,
