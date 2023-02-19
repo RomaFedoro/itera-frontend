@@ -2,10 +2,10 @@ import {User} from '@prisma/client';
 import {hash, compare} from 'bcrypt';
 import {LoginUserRequestType, RegisterUserRequestType} from '@/validators/user';
 
-const SAULT_ROUNDS = 10;
+const SALT_ROUNDS = 10;
 
 export const createUser = async (credentials: RegisterUserRequestType) => {
-  credentials.password = await hash(credentials.password, SAULT_ROUNDS);
+  credentials.password = await hash(credentials.password, SALT_ROUNDS);
 
   try {
     return await prisma.user.create({
