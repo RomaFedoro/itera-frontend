@@ -36,10 +36,6 @@ const TodayHabitList = () => {
     setHabitList([]);
   }, []);
 
-  useEffect(() => {
-    fetch('/api/movies').then((res) => console.log(res));
-  }, []);
-
   return (
     <div className={styles.list}>
       {habitListUnfinished.length > 0 && (

@@ -4,7 +4,6 @@ import { CalendarIcon } from '@heroicons/react/20/solid';
 import IteraDaysWeek from '@/container/form/IteraDaysWeek';
 import { DAYS_OF_WEEK } from '@/constants/daysweek';
 import getDaysOfWeek from '@/utils/getDaysOfWeek';
-import { TDaysOfWeekOption } from '@/types/daysweek';
 
 const DaysWeekField = () => {
   const [days, setDays] = useState(() => {
@@ -12,7 +11,7 @@ const DaysWeekField = () => {
     DAYS_OF_WEEK.forEach(({ value }) => {
       data[value] = true;
     });
-    return data as TDaysOfWeekOption;
+    return data;
   });
 
   const title = useMemo(() => getDaysOfWeek(days), [days]);
