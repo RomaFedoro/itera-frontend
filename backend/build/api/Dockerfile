@@ -1,6 +1,8 @@
 ARG NODE_VERSION=18.12-slim
 
-FROM node:${NODE_VERSION} AS builder
+FROM node:${NODE_VERSION} AS base
+
+FROM base AS builder
 
 WORKDIR /build
 
@@ -8,7 +10,7 @@ COPY . .
 
 RUN npm cache clean --force && npm ci && npm run build
 
-FROM node:${NODE_VERSION}
+FROM base
 
 WORKDIR /app
 

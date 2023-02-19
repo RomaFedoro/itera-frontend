@@ -4,10 +4,22 @@ services:
 
   api:
     build:
-      context: .
+      context: backend
       dockerfile: ./build/api/Dockerfile
     ports:
-      - "${FORWARD_APP_PORT:-3000}:3000"
+      - "${FORWARD_API_PORT:-3000}:3000"
+    environment:
+      DB_URL: "${DB_URL}"
+    networks:
+      - itera_net
+    depends_on:
+      database:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: backend
+      dockerfile: ./build/worker/Dockerfile
     environment:
       DB_URL: "${DB_URL}"
     networks:
@@ -18,8 +30,6 @@ services:
 
   database:
     image: postgres:latest
-    ports:
-      - "${DB_PORT:-5432}:5432"
     environment:
       PGPASSWORD: "${DB_PASSWORD:-secret}"
       POSTGRES_DB: "${DB_DATABASE}"
