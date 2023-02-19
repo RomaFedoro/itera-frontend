@@ -1,13 +1,16 @@
 import React from 'react';
 import styles from './styles.module.scss';
 
-const HabitStatisticBlock = () => {
+type TStatisticBlockProps = {
+  value: string;
+  label: string;
+};
+
+const HabitStatisticBlock = ({ value, label }: TStatisticBlockProps) => {
   return (
     <div className={styles.statistic}>
-      <div className={styles.statistic__title}>12 дней</div>
-      <div className={styles.statistic__description}>
-        Время создания проекта
-      </div>
+      <div className={styles.statistic__title}>{value}</div>
+      <div className={styles.statistic__description}>{label}</div>
     </div>
   );
 };

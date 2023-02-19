@@ -1,0 +1,19 @@
+@import 'variables';
+
+::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-secondary);
+  transition: background-color var(--animation);
+
+  &:active {
+    width: 0.8rem;
+    background-color: var(--color-secondary-hover);
+  }
+}

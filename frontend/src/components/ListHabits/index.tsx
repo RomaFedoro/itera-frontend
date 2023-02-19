@@ -4,7 +4,7 @@ import { THabitList } from '@/types/habit';
 
 type TListHabits = {
   habits: THabitList;
-  onChange?: (id: number, completedSteps: number) => void;
+  onChange?: (id: number | string, completedSteps: number) => void;
   onlyRead?: boolean;
 };
 

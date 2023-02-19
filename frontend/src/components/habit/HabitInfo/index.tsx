@@ -2,15 +2,23 @@ import React from 'react';
 import styles from './styles.module.scss';
 import cn from 'classnames';
 import HabitDaysWeek from '@/components/habit/HabitDaysWeek';
+import { THabit } from '@/types/habit';
+import HabitButtons from '@/components/habit/HabitButtons';
 
-const HabitInfo = () => {
+const HabitInfo = ({ id, title, description, days }: THabit) => {
   return (
-    <div className={cn(styles.inform, 'content')}>
-      <div className={styles.inform__container}>
-        <h1>Название привычки</h1>
+    <div className={cn(styles.container, 'content-row')}>
+      <div className={cn(styles.inform, 'list')}>
+        <div className="list">
+          <h1>{title}</h1>
+          {description && <span className="description">{description}</span>}
+        </div>
+        <div className={styles.inform__container}>
+          {days && <HabitDaysWeek days={days} />}
+        </div>
       </div>
-      <div className={styles.inform__container}>
-        <HabitDaysWeek />
+      <div className={cn(styles.buttons, 'list-row')}>
+        <HabitButtons id={id} />
       </div>
     </div>
   );

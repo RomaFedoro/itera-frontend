@@ -21,7 +21,9 @@
   --border-radius: 0.4em;
   --border-radius-middle: 0.8em;
   --border-radius-big: 1.2em;
-  --border-line: 0.1rem solid currentColor;
+
+  --border: 0.1rem solid;
+  --border-line: var(--border) currentColor;
 
   --border-radius-button: 10rem;
   --padding-button: 1.4em 2em;

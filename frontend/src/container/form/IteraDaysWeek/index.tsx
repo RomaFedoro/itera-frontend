@@ -1,11 +1,11 @@
 'use client';
 
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo } from 'react';
 import { DAYS_OF_WEEK } from '@/constants/daysweek';
 import IteraCheckbox from '@/components/ui/IteraCheckbox';
 
 type TIteraDaysWeekProps = {
-  onChange: (value: number) => void;
+  onChange: (value: Day) => void;
   defaultValues: Record<number, boolean>;
 };
 

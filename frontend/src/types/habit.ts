@@ -1,8 +1,17 @@
+import { Day } from 'date-fns';
+
 export type THabit = {
-  id: number;
+  id: number | string;
   title: string;
+  description?: string;
   totalSteps: number;
-  days: number[];
+  days: Day[];
+};
+
+export type THistoryHabit = {
+  date: string;
+  completedSteps: number;
+  totalSteps: number;
 };
 
 export type THabitItem = {

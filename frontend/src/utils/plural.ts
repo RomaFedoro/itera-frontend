@@ -6,4 +6,7 @@ const plural = (count: number, words: [string, string, string]) => {
   ];
 };
 
+export const pluralWithNum = (count: number, words: [string, string, string]) =>
+  `${count} ${plural(count, words)}`;
+
 export default plural;
