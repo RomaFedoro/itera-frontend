@@ -8,6 +8,11 @@ export const getAllHistory = async (userId: User['id'], interval: Date[]) => {
       habit: {userId},
       date: {gte: min(interval), lte: max(interval)},
     },
+    include: {
+      habit: {
+        select: {name: true},
+      },
+    },
   });
 }
 
