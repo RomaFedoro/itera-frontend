@@ -18,7 +18,4 @@ export default defineNitroConfig({
       secret: 'secret',
     }
   },
-  routeRules: {
-    '/**': { cors: true },
-  },
 });
