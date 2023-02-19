@@ -10,7 +10,7 @@ export const getAllHistory = async (userId: User['id'], interval: Date[]) => {
     },
     include: {
       habit: {
-        select: { name: true},
+        select: {name: true},
       },
     },
   });
