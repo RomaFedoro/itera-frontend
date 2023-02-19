@@ -1,4 +1,6 @@
 import { TAuth, TLoginValues, TRegisterValues } from '@/types/auth';
+import { getCookie } from 'cookies-next';
+import { TUser } from '@/types/user';
 
 const baseUrl = `${process.env.apiPath}/auth`;
 
@@ -9,8 +11,6 @@ const authFetch =
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
-        accept: 'application/json',
-        'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
       },
     });
@@ -20,3 +20,15 @@ const authFetch =
 
 export const registerUser = authFetch<TRegisterValues>('register');
 export const loginUser = authFetch<TLoginValues>('login');
+
+export const currentUserFetch = async (): Promise<{ data: TUser }> => {
+  const response = await fetch(`${baseUrl}/me`, {
+    method: 'GET',
+    headers: {
+      Authorization: String(getCookie('jwt')),
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return response.json();
+};

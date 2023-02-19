@@ -1,13 +1,16 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { loginUser, registerUser } from '@/services/auth';
 import { TAuth, TLoginValues, TRegisterValues } from '@/types/auth';
+import { setJWTToken } from '@/utils/setJWTToken';
+import { useRouter } from 'next/navigation';
 
 const useAuth = <T extends FieldValues>(
   mutationFn: (body: T) => Promise<TAuth>
 ) => {
   const [hasMounted, setHasMounted] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -21,10 +24,20 @@ const useAuth = <T extends FieldValues>(
     setHasMounted(true);
   }, []);
 
+  const client = useQueryClient();
+
   const { mutate } = useMutation({
     mutationFn,
-    onSuccess: (data) => {
-      console.log('onSuccess', data);
+    onSuccess: ({ data, meta }) => {
+      client.setQueriesData(['user'], () => ({
+        data,
+      }));
+      client.invalidateQueries({
+        queryKey: ['user'],
+        refetchType: 'none',
+      });
+      setJWTToken(meta);
+      router.push('/');
     },
   });
 

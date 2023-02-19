@@ -11,10 +11,12 @@ export type TRegisterValues = TLoginValues & {
 
 export type TAuth = {
   data: TUser;
-  meta: {
-    token: string;
-    expires: number;
-  };
+  meta: TMeta;
+};
+
+export type TMeta = {
+  token: string;
+  expires: number;
 };
 
 export type TAuthError = {
@@ -23,4 +25,3 @@ export type TAuthError = {
     errors?: Record<string, string[]>;
   };
 };
-

@@ -5,12 +5,12 @@ import HabitDaysWeek from '@/components/habit/HabitDaysWeek';
 import { THabit } from '@/types/habit';
 import HabitButtons from '@/components/habit/HabitButtons';
 
-const HabitInfo = ({ id, title, description, days }: THabit) => {
+const HabitInfo = ({ id, name, description, days }: THabit) => {
   return (
     <div className={cn(styles.container, 'content-row')}>
       <div className={cn(styles.inform, 'list')}>
         <div className="list">
-          <h1>{title}</h1>
+          <h1>{name}</h1>
           {description && <span className="description">{description}</span>}
         </div>
         <div className={styles.inform__container}>

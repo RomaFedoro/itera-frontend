@@ -12,7 +12,7 @@ type THabitItemProps = {
 
 const HabitItem = ({
   id,
-  title,
+  name,
   totalSteps,
   completedSteps,
   onlyRead,
@@ -42,7 +42,7 @@ const HabitItem = ({
         />
       )}
       <Link href={`/habits/${id}`} className={styles.habit__title}>
-        {title}
+        {name}
       </Link>
     </div>
   );
