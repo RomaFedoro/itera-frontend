@@ -6,7 +6,7 @@ import IteraCheckbox from '@/components/ui/IteraCheckbox';
 
 type TIteraDaysWeekProps = {
   onChange: (value: Day) => void;
-  defaultValues: Record<number, boolean>;
+  defaultValues: Day[];
 };
 
 const IteraDaysWeek = ({ defaultValues, onChange }: TIteraDaysWeekProps) => {
@@ -17,7 +17,7 @@ const IteraDaysWeek = ({ defaultValues, onChange }: TIteraDaysWeekProps) => {
           <IteraCheckbox
             key={value}
             onChange={() => onChange(value)}
-            checked={defaultValues[value]}
+            checked={defaultValues.includes(value)}
           >
             {label.toUpperCase()}
           </IteraCheckbox>

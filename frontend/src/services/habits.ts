@@ -1,11 +1,20 @@
-import { THabit } from '@/types/habit';
+import { THabit, THabitResponse, THabitValues } from '@/types/habit';
 import getHeaders from '@/utils/getHeaders';
 
 const baseUrl = `${process.env.apiPath}/habits`;
 
-export const getHabitsFetch = async (
-  id: number | string = ''
-): Promise<{ data: THabit[] }> => {
+export const allHabitsFetch = async (): Promise<{ data: THabit[] }> => {
+  const response = await fetch(baseUrl, {
+    method: 'GET',
+    headers: getHeaders(),
+  });
+
+  return response.json();
+};
+
+export const getHabitFetch = async (
+  id: number | string
+): Promise<THabitResponse> => {
   const response = await fetch(`${baseUrl}/${id}`, {
     method: 'GET',
     headers: getHeaders(),
@@ -15,8 +24,8 @@ export const getHabitsFetch = async (
 };
 
 export const createHabitsFetch = async (
-  body: Omit<THabit, 'id'>
-): Promise<{ data: THabit }> => {
+  body: THabitValues
+): Promise<THabitResponse> => {
   const response = await fetch(baseUrl, {
     method: 'POST',
     headers: getHeaders(),

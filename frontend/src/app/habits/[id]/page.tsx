@@ -2,25 +2,29 @@
 
 import HabitInfo from '@/components/habit/HabitInfo';
 import HabitStatistics from '@/components/habit/HabitStatistics';
-import { THabit } from '@/types/habit';
+import { useQuery } from '@tanstack/react-query';
+import { getHabitFetch } from '@/services/habits';
 
 export default function HabitPage({
   params: { id },
 }: {
   params: { id: string };
 }) {
-  const habitData: THabit = {
-    id,
-    name: 'Тестовая привычка',
-    description: 'Тесовое описание привычки',
-    days: [1, 3, 5, 0],
-    totalSteps: 6,
-  };
+  const {
+    isLoading,
+    isError,
+    data: habit,
+  } = useQuery({
+    queryKey: ['habits', id],
+    queryFn: () => getHabitFetch(id),
+  });
+
+  if (!habit) return null;
 
   return (
     <>
-      <HabitInfo {...habitData} />
-      <HabitStatistics {...habitData} />
+      <HabitInfo {...habit.data} />
+      <HabitStatistics {...habit.data} />
     </>
   );
 }

@@ -1,6 +1,10 @@
 .inform {
   gap: var(--gap-content);
   flex: 1;
+
+  &__name {
+    row-gap: 1em;
+  }
 }
 
 .inform::after {

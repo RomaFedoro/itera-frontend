@@ -3,7 +3,7 @@
 import React from 'react';
 import ListHabits from '@/components/ListHabits';
 import { useQuery } from '@tanstack/react-query';
-import { getHabitsFetch } from '@/services/habits';
+import { allHabitsFetch } from '@/services/habits';
 
 const AllHabitList = () => {
   const {
@@ -12,7 +12,7 @@ const AllHabitList = () => {
     data: habits,
   } = useQuery({
     queryKey: ['habits', 'all'],
-    queryFn: () => getHabitsFetch(),
+    queryFn: allHabitsFetch,
   });
 
   if (!habits) return null;

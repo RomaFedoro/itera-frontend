@@ -7,27 +7,28 @@ import useAutosizeTextArea from './useAutosizeTextArea';
 
 type TTextareaProps = React.InputHTMLAttributes<HTMLTextAreaElement> & {};
 
-const IteraTextarea = ({ className, ...rest }: TTextareaProps) => {
-  const [value, setValue] = useState('');
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+const IteraTextarea = React.forwardRef<HTMLTextAreaElement, TTextareaProps>(
+  ({ className, ...rest }, ref) => {
+    // const [value, setValue] = useState('');
+    // const textAreaRef = useRef<HTMLTextAreaElement | null>(ref);
 
-  useAutosizeTextArea(textAreaRef.current, value);
+    // useAutosizeTextArea(textAreaRef.current, value);
 
-  const handleChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const val = evt.target?.value;
-    setValue(val);
-  };
+    // const handleChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+    //   const val = evt.target?.value;
+    //   setValue(val);
+    // };
 
-  return (
-    <textarea
-      ref={textAreaRef}
-      onChange={handleChange}
-      value={value}
-      className={cn(className, styles.textarea)}
-      rows={1}
-      {...rest}
-    ></textarea>
-  );
-};
+    return (
+      <textarea
+        ref={ref}
+        className={cn(className, styles.textarea)}
+        rows={1}
+        {...rest}
+      ></textarea>
+    );
+  }
+);
+IteraTextarea.displayName = 'IteraTextarea';
 
 export default IteraTextarea;

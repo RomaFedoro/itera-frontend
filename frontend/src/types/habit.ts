@@ -8,6 +8,8 @@ export type THabit = {
   days: Day[];
 };
 
+export type THabitValues = Omit<THabit, 'id'>;
+
 export type THistoryHabit = {
   date: string;
   completedSteps: number;
@@ -19,3 +21,5 @@ export type THabitItem = {
 } & Omit<THabit, 'days'>;
 
 export type THabitList = THabitItem[];
+
+export type THabitResponse = { data: THabit };

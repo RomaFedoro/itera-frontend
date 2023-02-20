@@ -6,10 +6,12 @@ import { THabit } from '@/types/habit';
 import HabitButtons from '@/components/habit/HabitButtons';
 
 const HabitInfo = ({ id, name, description, days }: THabit) => {
+  console.log(id, name, description, days);
+
   return (
     <div className={cn(styles.container, 'content-row')}>
       <div className={cn(styles.inform, 'list')}>
-        <div className="list">
+        <div className={cn(styles.inform__name, 'list')}>
           <h1>{name}</h1>
           {description && <span className="description">{description}</span>}
         </div>
