@@ -12,6 +12,10 @@ RUN npm cache clean --force && npm ci && npm run build
 
 FROM base
 
+ENV TZ=UTC
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 WORKDIR /app
 
 COPY --from=builder /build/.output .
