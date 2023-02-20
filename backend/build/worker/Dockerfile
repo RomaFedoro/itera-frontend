@@ -2,6 +2,10 @@ ARG NODE_VERSION=18.12-slim
 
 FROM node:${NODE_VERSION}
 
+ENV TZ=UTC
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 WORKDIR /app
 
 COPY . .

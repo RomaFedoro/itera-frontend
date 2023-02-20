@@ -21,6 +21,7 @@ services:
       - "${FORWARD_API_PORT:-3000}:3000"
     environment:
       DB_URL: "${DB_URL}"
+      TZ: "${TZ:-UTC}"
     networks:
       - itera_net
     depends_on:
@@ -33,6 +34,7 @@ services:
       dockerfile: ./build/worker/Dockerfile
     environment:
       DB_URL: "${DB_URL}"
+      TZ: "${TZ:-UTC}"
     networks:
       - itera_net
     depends_on:
@@ -46,6 +48,8 @@ services:
       POSTGRES_DB: "${DB_DATABASE}"
       POSTGRES_USER: "${DB_USERNAME}"
       POSTGRES_PASSWORD: "${DB_PASSWORD:-secret}"
+    ports:
+      - "5432:5432"
     volumes:
       - "itera_vol:/var/lib/postgresql/data"
     networks:
