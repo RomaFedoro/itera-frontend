@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 
 const HabitButtons = ({ id }: { id: string | number }) => {
   const router = useRouter();
-  const habitPath = 'habits/' + id;
+  const habitPath = '/habits/' + id;
 
   return (
     <>
@@ -18,11 +18,7 @@ const HabitButtons = ({ id }: { id: string | number }) => {
       >
         <PencilIcon />
       </IteraButton>
-      <IteraButton
-        secondary
-        small
-        onClick={() => router.push(`${habitPath}/delete`)}
-      >
+      <IteraButton secondary small>
         <TrashIcon />
       </IteraButton>
     </>

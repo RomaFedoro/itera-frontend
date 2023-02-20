@@ -16,10 +16,7 @@ const useUpdateHabit = (
 
   return useCallback(
     ({ data: habit }: THabitResponse) => {
-      const id = habit.id ?? defaultId;
-
-      if (!id) router.push('/');
-      console.log(id, habit);
+      const id = String(habit.id ?? defaultId);
 
       client.setQueriesData<THabitsResponse>(['habits', 'all'], (habitData) => {
         if (mode === 'add') {
@@ -28,30 +25,31 @@ const useUpdateHabit = (
           return {
             data: habitData
               ? habitData?.data.map((oldHabit) =>
-                  oldHabit.id === id ? { ...oldHabit, ...habit } : oldHabit
+                  String(oldHabit.id) === id
+                    ? { ...oldHabit, ...habit }
+                    : oldHabit
                 )
               : [],
           };
         }
         return habitData;
       });
+
       client.invalidateQueries({
         queryKey: ['habits', 'all'],
         refetchType: 'none',
       });
 
-      // client.setQueriesData<THabitResponse>(['habits', id], (oldHabit) => {
-      //   console.log(oldHabit);
+      client.setQueriesData<THabitResponse>(['habits', id], (oldHabit) => ({
+        data: {
+          ...(oldHabit ?? {}),
+          ...habit,
+        },
+      }));
 
-      //   return {
-      //     data: {
-      //       ...habit,
-      //     },
-      //   };
-      // });
       client.invalidateQueries({
         queryKey: ['habits', id],
-        // refetchType: 'none',
+        refetchType: 'none',
       });
 
       router.push('/habits/' + id);

@@ -11,20 +11,18 @@ type TDeletePopupProps = {
 };
 
 const DeletePopup = ({ name, id }: TDeletePopupProps) => {
-  const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
 
   const closePopup = () => {
-    setIsOpen(() => false);
+    router.push('/habits/' + id);
   };
   const deleteHabit = () => {
     // Here code
-    setIsOpen(() => false);
     router.push('/');
   };
 
   return (
-    <IteraPopup isOpen={isOpen} setIsOpen={closePopup}>
+    <IteraPopup isOpen={true} setIsOpen={closePopup}>
       <span>
         Вы уверены, что хотите удалить {name ? <b>{name}</b> : 'привычку'}?
       </span>

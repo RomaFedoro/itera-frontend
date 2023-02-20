@@ -62,7 +62,7 @@ const useProgress = () => {
     const circlecenter =
       (2 * Math.PI * radiusSVG) / (TOTAL_RAYS * (1 + INTERVAL_RAY));
     setCircleRadius(() => circlecenter / 2);
-  }, [ref]);
+  }, [ref, ref.current?.clientHeight]);
 
   return {
     ref,
