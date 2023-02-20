@@ -1,14 +1,20 @@
 import React from 'react';
 import HabitItem from '@/components/HabitItem';
-import { THabitList } from '@/types/habit';
+import { THabit, THabitList } from '@/types/habit';
 
-type TListHabits = {
-  habits: THabitList;
-  onChange?: (id: number | string, completedSteps: number) => void;
-  onlyRead?: boolean;
-};
+type TListHabits =
+  | {
+      habits: THabit[];
+      onlyRead: true;
+      onChange?: never;
+    }
+  | {
+      habits: THabitList;
+      onlyRead: false;
+      onChange: (id: number | string, completedSteps: number) => void;
+    };
 
-const ListHabits = ({ habits, onlyRead, onChange }: TListHabits) => {
+const ListHabits = ({ habits, onlyRead = false, onChange }: TListHabits) => {
   return (
     <ul className="list">
       {habits.map((habit) => (

@@ -3,21 +3,21 @@
 import React from 'react';
 import ListHabits from '@/components/ListHabits';
 import { useQuery } from '@tanstack/react-query';
-import { allHabitsFetch } from '@/services/habits';
+import { getHabitsFetch } from '@/services/habits';
 
 const AllHabitList = () => {
-  // const {
-  //   isLoading,
-  //   isError,
-  //   data: habits,
-  // } = useQuery({
-  //   queryKey: ['todos', 'all'],
-  //   queryFn: allHabitsFetch,
-  // });
+  const {
+    isLoading,
+    isError,
+    data: habits,
+  } = useQuery({
+    queryKey: ['habits', 'all'],
+    queryFn: () => getHabitsFetch(),
+  });
 
-  // if (!habits) return null;
+  if (!habits) return null;
 
-  return <ListHabits habits={[]} onlyRead />;
+  return <ListHabits habits={habits.data} onlyRead />;
 };
 
 export default AllHabitList;
