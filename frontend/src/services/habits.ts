@@ -38,7 +38,7 @@ export const createHabitsFetch = async (
 export const updateHabitsFetch = async (
   id: string | number,
   body: Partial<THabit>
-): Promise<{ data: Partial<THabit> }> => {
+): Promise<THabitResponse> => {
   const response = await fetch(`${baseUrl}/${id}`, {
     method: 'PATCH',
     headers: getHeaders(),

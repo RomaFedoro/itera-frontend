@@ -1,10 +1,10 @@
 import React from 'react';
-import HabitForm from '@/container/HabitForm';
+import CreateHabitForm from '@/container/form/CreateHabitForm';
 
 const CreateHabitPage = () => {
   return (
     <div className="content content_fill">
-      <HabitForm />
+      <CreateHabitForm />
     </div>
   );
 };

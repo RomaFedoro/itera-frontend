@@ -23,3 +23,4 @@ export type THabitItem = {
 export type THabitList = THabitItem[];
 
 export type THabitResponse = { data: THabit };
+export type THabitsResponse = { data: THabit[] };

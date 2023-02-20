@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import IteraDropdown from '@/components/ui/IteraDropdown';
 import { CalendarIcon } from '@heroicons/react/20/solid';
-import IteraDaysWeek from '@/container/form/IteraDaysWeek';
+import IteraDaysWeek from '@/components/ui/IteraDaysWeek';
 import getDaysOfWeek from '@/utils/getDaysOfWeek';
 
 type TDaysWeekField = {

@@ -8,13 +8,17 @@ import IteraButton from '@/components/ui/IteraButton';
 import DaysWeekField from './components/DaysWeekField';
 import StepsField from './components/StepsField';
 import useHabitForm from './hooks/useHabitForm';
-import { createHabitsFetch } from '@/services/habits';
 import { habitsOptions } from './constants';
-import { Controller } from 'react-hook-form';
+import { Controller, RegisterOptions } from 'react-hook-form';
+import { THabitValues } from '@/types/habit';
+import { THabitForm } from './types';
 
-const HabitForm = () => {
+const HabitForm = ({
+  textSubmitButton,
+  ...props
+}: THabitForm & { textSubmitButton: string }) => {
   const { register, hasMounted, isValidForm, control, errors, onSubmit } =
-    useHabitForm(createHabitsFetch);
+    useHabitForm(props);
 
   if (!hasMounted) return null;
 
@@ -25,12 +29,21 @@ const HabitForm = () => {
           <IteraTextarea
             placeholder="Название привычки"
             id={styles.textarea__name}
-            {...register('name', habitsOptions.name)}
+            {...register(
+              'name',
+              habitsOptions.name as RegisterOptions<THabitValues, 'name'>
+            )}
           />
           <IteraTextarea
             placeholder="Описание"
             id={styles.textarea__description}
-            {...register('description', habitsOptions.description)}
+            {...register(
+              'description',
+              habitsOptions.description as RegisterOptions<
+                THabitValues,
+                'description'
+              >
+            )}
           />
         </fieldset>
         <fieldset className={styles.params}>
@@ -55,7 +68,7 @@ const HabitForm = () => {
           Отменить
         </IteraButton>
         <IteraButton type="submit" disabled={!isValidForm} fillContent>
-          Создать привычку
+          {textSubmitButton}
         </IteraButton>
       </div>
     </form>

@@ -1,26 +1,21 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useMutation } from '@tanstack/react-query';
 import { THabitResponse, THabitValues } from '@/types/habit';
-import useMutationForm from '../../../hooks/useForm';
+import useMutationForm from '@/hooks/useForm';
+import { DEFAULT_HABIT_FORM } from '../constants';
+import { THabitForm } from '../types';
 
-const useHabitForm = (
-  mutationFn: (body: THabitValues) => Promise<THabitResponse>
-) => {
-  const router = useRouter();
-  const client = useQueryClient();
-
+const useHabitForm = ({
+  mutationFn,
+  onSuccess,
+  defaultValues = DEFAULT_HABIT_FORM,
+}: THabitForm) => {
   const { mutate } = useMutation({
     mutationFn,
-    onSuccess: (data) => {
-      console.log(data);
-    },
+    onSuccess,
   });
 
   return useMutationForm<THabitValues, THabitResponse>(mutate, {
-    defaultValues: {
-      days: [0, 1, 2, 3, 4, 5, 6],
-      totalSteps: 1,
-    },
+    defaultValues,
   });
 };
 

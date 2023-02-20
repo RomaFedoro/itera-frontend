@@ -19,3 +19,8 @@ export const habitsOptions: Partial<
     },
   },
 };
+
+export const DEFAULT_HABIT_FORM: Partial<THabitValues> = {
+  days: [0, 1, 2, 3, 4, 5, 6],
+  totalSteps: 1,
+};

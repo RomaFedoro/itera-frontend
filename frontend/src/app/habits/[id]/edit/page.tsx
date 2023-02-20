@@ -1,5 +1,4 @@
-
-import HabitForm from '@/container/HabitForm';
+import EditHabitForm from '@/container/form/EditHabitForm';
 
 export default function HabitEditPage({
   params: { id },
@@ -8,7 +7,7 @@ export default function HabitEditPage({
 }) {
   return (
     <div className="content content_fill">
-      <HabitForm />
+      <EditHabitForm id={id} />
     </div>
   );
 }
