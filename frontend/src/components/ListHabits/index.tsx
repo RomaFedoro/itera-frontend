@@ -13,7 +13,7 @@ type TListHabits =
   | {
       habits: THabitList;
       loading?: false;
-      onlyRead: false;
+      onlyRead?: false;
       onChange: (id: number | string, completedSteps: number) => void;
     }
   | {
@@ -29,15 +29,16 @@ const ListHabits = ({
   onlyRead = false,
   onChange,
 }: TListHabits) => {
-
   if (loading)
     return (
       <ul className="list">
-        {Array(3).fill(0).map((_, index) => (
-          <li key={index}>
-            <HabitItemSkeleton />
-          </li>
-        ))}
+        {Array(3)
+          .fill(0)
+          .map((_, index) => (
+            <li key={index}>
+              <HabitItemSkeleton />
+            </li>
+          ))}
       </ul>
     );
 
