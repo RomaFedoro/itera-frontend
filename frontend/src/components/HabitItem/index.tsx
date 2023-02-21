@@ -22,16 +22,21 @@ const HabitItem = ({
 
   const { totalSteps, completedSteps, onChange } = habit as THabitItem;
   const needRepeat = totalSteps - completedSteps;
-  const handleCheckboxChange = () =>
-    onChange(
-      totalSteps > completedSteps ? completedSteps + 1 : completedSteps - 1
-    );
+  const handleCheckboxChange = (habitId: number | string) =>
+    onChange({
+      completedSteps:
+        totalSteps > completedSteps ? completedSteps + 1 : completedSteps - 1,
+      habitId,
+    });
 
   return (
     <div
       className={cn(styles.habit, needRepeat! <= 0 && styles.habit_completed)}
     >
-      <HabitCheckbox onChange={handleCheckboxChange} needRepeat={needRepeat!} />
+      <HabitCheckbox
+        onChange={() => handleCheckboxChange(id)}
+        needRepeat={needRepeat!}
+      />
       <Link href={`/habits/${id}`} className={styles.habit__title}>
         {name}
       </Link>

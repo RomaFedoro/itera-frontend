@@ -32,7 +32,12 @@ export type THabitItemReadOnly = {
 export type THabitItem = THabitItemReadOnly & {
   totalSteps: number;
   completedSteps: number;
-  onChange: (completedSteps: number) => void;
+  onChange: ({ completedSteps, habitId }: TUpdateCompletedSteps) => void;
+};
+
+export type TUpdateCompletedSteps = {
+  completedSteps: number;
+  habitId: number | string;
 };
 
 export type THabitResponse = { data: THabit };

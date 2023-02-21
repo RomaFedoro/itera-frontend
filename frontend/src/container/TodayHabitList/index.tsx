@@ -3,12 +3,13 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import ListHabits from '@/components/ListHabits';
 import styles from './styles.module.scss';
-import { useQuery } from '@tanstack/react-query';
-import { todayHabitFetch } from '@/services/history';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { todayHabitFetch, updateCompletedStepsFetch } from '@/services/history';
 import ErrorPlug from '@/components/plugs/ErrorPlug';
 import TodayPlug from '@/components/plugs/TodayPlug';
 import ListHabitsSkeleton from '@/components/ListHabits/skeleton';
-import { THabitItem } from '@/types/habit';
+import { THabitItem, TUpdateCompletedSteps } from '@/types/habit';
+import { THistoryRecordResponse, TTodayHabitResponse } from '@/types/history';
 
 const TodayHabitList = () => {
   const {
@@ -20,18 +21,48 @@ const TodayHabitList = () => {
     queryFn: todayHabitFetch,
   });
 
-  const changeTodayHabit = useCallback(
-    (recordId: number | string) => (completedSteps: number) => {
-      // setHabitList((prevHabits) =>
-      //   prevHabits.map((habit) => {
-      //     if (habit.id !== id) {
-      //       return habit;
-      //     }
-      //     return { ...habit, completedSteps };
-      //   })
-      // );
+  const client = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: updateCompletedStepsFetch,
+    onSuccess: ({ data: { completedSteps } }, { id, habitId }) => {
+      client.setQueriesData<TTodayHabitResponse>(['today'], (todayData) => ({
+        data:
+          todayData?.data.map((todayHabit) =>
+            String(todayHabit.id) === String(id)
+              ? { ...todayHabit, completedSteps }
+              : todayHabit
+          ) ?? [],
+      }));
+      client.invalidateQueries({
+        queryKey: ['today'],
+        refetchType: 'none',
+      });
+
+      client.setQueriesData<THistoryRecordResponse>(
+        ['today'],
+        (historyData) => ({
+          data:
+            historyData?.data.map((historyRecord) =>
+              String(historyRecord.id) === String(id)
+                ? { ...historyRecord, completedSteps }
+                : historyRecord
+            ) ?? [],
+        })
+      );
+      client.invalidateQueries({
+        queryKey: ['history', String(habitId)],
+        refetchType: 'none',
+      });
     },
-    []
+  });
+
+  const changeTodayHabit = useCallback(
+    (id: number | string) =>
+      ({ completedSteps, habitId }: TUpdateCompletedSteps) => {
+        mutate({ id, habitId, completedSteps });
+      },
+    [mutate]
   );
 
   const todayData: THabitItem[] = useMemo(
