@@ -15,7 +15,7 @@ const AllHabitList = () => {
     queryFn: allHabitsFetch,
   });
 
-  if (!habits) return null;
+  if (!habits || isLoading) return <ListHabits loading />;
 
   return <ListHabits habits={habits.data} onlyRead />;
 };

@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { currentUserFetch } from '@/services/auth';
 import { useRouter } from 'next/navigation';
 import { deleteCookie } from 'cookies-next';
-import { useState } from 'react';
+import LoadingPage from '@/container/LoadingPage';
 
 export default function AccountPage() {
   const {
@@ -24,6 +24,8 @@ export default function AccountPage() {
     deleteCookie('jwt');
     router.push('/auth/login');
   };
+
+  if (!user || isLoading) return <LoadingPage />;
 
   return (
     <div className="content content_fill content_between">

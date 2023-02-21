@@ -12,11 +12,13 @@ import { habitsOptions } from './constants';
 import { Controller, RegisterOptions } from 'react-hook-form';
 import { THabitValues } from '@/types/habit';
 import { THabitForm } from './types';
+import { useRouter } from 'next/navigation';
 
 const HabitForm = ({
   textSubmitButton,
+  cancelHref,
   ...props
-}: THabitForm & { textSubmitButton: string }) => {
+}: THabitForm & { textSubmitButton: string; cancelHref: string }) => {
   const {
     register,
     hasMounted,
@@ -26,6 +28,10 @@ const HabitForm = ({
     onSubmit,
     isLoading,
   } = useHabitForm(props);
+
+  const router = useRouter();
+
+  const onCancel = () => router.push(cancelHref);
 
   if (!hasMounted) return null;
 
@@ -71,7 +77,7 @@ const HabitForm = ({
         </fieldset>
       </div>
       <div className="list-row list_end">
-        <IteraButton fillContent secondary>
+        <IteraButton fillContent secondary onClick={onCancel}>
           Отменить
         </IteraButton>
         <IteraButton

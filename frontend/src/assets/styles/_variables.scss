@@ -7,6 +7,7 @@
 
   --background-color-main: #121212;
   --background-color-secondary: hsl(260, 30%, 97%);
+  --background-color-secondary-shine: hsl(274, 14%, 90%);
   --background-color-content: #ffffff;
   --background-color-item: hsl(213, 36%, 93%);
   --background-color-substrate: #171717;
@@ -21,6 +22,8 @@
   --border-radius: 0.4em;
   --border-radius-middle: 0.8em;
   --border-radius-big: 1.2em;
+
+  --line-height: 1.25;
 
   --border: 0.1rem solid;
   --border-line: var(--border) currentColor;

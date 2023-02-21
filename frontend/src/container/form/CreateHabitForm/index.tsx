@@ -13,6 +13,7 @@ const CreateHabitForm = () => {
       mutationFn={createHabitsFetch}
       onSuccess={onSuccess}
       textSubmitButton="Создать привычку"
+      cancelHref="/"
     />
   );
 };
