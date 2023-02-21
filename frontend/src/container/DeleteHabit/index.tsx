@@ -5,7 +5,9 @@ import IteraButton from '@/components/ui/IteraButton';
 import useDeleteHabit from '@/hooks/useDeleteHabit';
 
 const DeleteHabit = ({ id }: { id: number | string }) => {
-  const { habit, closePage, deleteHabit } = useDeleteHabit(String(id));
+  const { habit, closePage, deleteHabit, isLoading } = useDeleteHabit(
+    String(id)
+  );
 
   return (
     <>
@@ -17,7 +19,12 @@ const DeleteHabit = ({ id }: { id: number | string }) => {
         </span>
       </div>
       <div className="list-row list_end">
-        <IteraButton secondary fillContent onClick={deleteHabit}>
+        <IteraButton
+          secondary
+          fillContent
+          onClick={deleteHabit}
+          loading={isLoading}
+        >
           Удалить
         </IteraButton>
         <IteraButton fillContent onClick={closePage}>

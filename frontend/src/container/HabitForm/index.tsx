@@ -17,8 +17,15 @@ const HabitForm = ({
   textSubmitButton,
   ...props
 }: THabitForm & { textSubmitButton: string }) => {
-  const { register, hasMounted, isValidForm, control, errors, onSubmit } =
-    useHabitForm(props);
+  const {
+    register,
+    hasMounted,
+    isValidForm,
+    control,
+    errors,
+    onSubmit,
+    isLoading,
+  } = useHabitForm(props);
 
   if (!hasMounted) return null;
 
@@ -67,7 +74,12 @@ const HabitForm = ({
         <IteraButton fillContent secondary>
           Отменить
         </IteraButton>
-        <IteraButton type="submit" disabled={!isValidForm} fillContent>
+        <IteraButton
+          type="submit"
+          disabled={!isValidForm}
+          fillContent
+          loading={isLoading}
+        >
           {textSubmitButton}
         </IteraButton>
       </div>

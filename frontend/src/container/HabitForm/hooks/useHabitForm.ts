@@ -9,14 +9,17 @@ const useHabitForm = ({
   onSuccess,
   defaultValues = DEFAULT_HABIT_FORM,
 }: THabitForm) => {
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn,
     onSuccess,
   });
 
-  return useMutationForm<THabitValues, THabitResponse>(mutate, {
-    defaultValues,
-  });
+  return {
+    ...useMutationForm<THabitValues, THabitResponse>(mutate, {
+      defaultValues,
+    }),
+    isLoading,
+  };
 };
 
 export default useHabitForm;

@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { currentUserFetch } from '@/services/auth';
 import { useRouter } from 'next/navigation';
 import { deleteCookie } from 'cookies-next';
+import { useState } from 'react';
 
 export default function AccountPage() {
   const {
