@@ -5,7 +5,7 @@ import IteraInput from '@/components/ui/IteraInput';
 import IteraButton from '@/components/ui/IteraButton';
 import IteraLink from '@/components/ui/IteraLink';
 import { registerFields } from '../constants';
-import { useRegister } from '../hooks';
+import useRegister from '../hooks/useRegister';
 
 const Register = () => {
   const { register, hasMounted, isValidForm, errors, onSubmit } = useRegister();

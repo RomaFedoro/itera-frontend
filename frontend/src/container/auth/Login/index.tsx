@@ -5,7 +5,7 @@ import IteraInput from '@/components/ui/IteraInput';
 import IteraButton from '@/components/ui/IteraButton';
 import IteraLink from '@/components/ui/IteraLink';
 import { loginFields } from '../constants';
-import { useLogin } from '../hooks';
+import { useLogin } from '../hooks/useLogin';
 
 const Login = () => {
   const { register, hasMounted, isValidForm, errors, onSubmit } = useLogin();

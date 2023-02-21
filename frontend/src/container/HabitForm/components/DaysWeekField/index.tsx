@@ -1,28 +1,23 @@
-import React, { useMemo, useState } from 'react';
+import React, { memo } from 'react';
 import IteraDropdown from '@/components/ui/IteraDropdown';
 import { CalendarIcon } from '@heroicons/react/20/solid';
-import IteraDaysWeek from '@/container/form/IteraDaysWeek';
-import { DAYS_OF_WEEK } from '@/constants/daysweek';
+import IteraDaysWeek from '@/components/ui/IteraDaysWeek';
 import getDaysOfWeek from '@/utils/getDaysOfWeek';
 
-const DaysWeekField = () => {
-  const [days, setDays] = useState(() => {
-    const data = {} as Record<Day, boolean>;
-    DAYS_OF_WEEK.forEach(({ value }) => {
-      data[value] = true;
-    });
-    return data;
-  });
+type TDaysWeekField = {
+  onChange: (newValue: Day[]) => void;
+  days: Day[];
+};
 
-  const title = useMemo(() => getDaysOfWeek(days), [days]);
+const DaysWeekField = ({ days = [], onChange }: TDaysWeekField) => {
+  const title = getDaysOfWeek(Array.from(days));
 
   const handleChange = (value: Day) => {
-    setDays((days) => {
-      return {
-        ...days,
-        [value]: !days[value],
-      };
-    });
+    onChange(
+      days.includes(value)
+        ? Array.from(days).filter((day) => day !== value)
+        : [...Array.from(days), value]
+    );
   };
 
   return (
@@ -32,4 +27,4 @@ const DaysWeekField = () => {
   );
 };
 
-export default DaysWeekField;
+export default memo(DaysWeekField);

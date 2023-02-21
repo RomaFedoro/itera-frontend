@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 
 const HabitButtons = ({ id }: { id: string | number }) => {
   const router = useRouter();
-  const habitPath = 'habits/' + id;
+  const habitPath = '/habits/' + id;
 
   return (
     <>

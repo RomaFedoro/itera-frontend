@@ -7,7 +7,7 @@ import styles from './styles.module.scss';
 
 type TCounterProps = {
   value: number;
-  onChange: React.Dispatch<React.SetStateAction<number>>;
+  onChange: (value: number) => void;
   min?: number;
   max?: number;
 };
@@ -15,12 +15,12 @@ type TCounterProps = {
 const IteraCounter = ({ value, min, max, onChange }: TCounterProps) => {
   const decrement = () => {
     if (min !== undefined && min >= value) return;
-    onChange((value) => value - 1);
+    onChange(value - 1);
   };
 
   const increment = () => {
     if (max !== undefined && max <= value) return;
-    onChange((value) => value + 1);
+    onChange(value + 1);
   };
 
   return (

@@ -22,20 +22,18 @@ const IteraButton = ({
   className,
   ...rest
 }: TButtonProps) => {
+  const classnames = cn(
+    'form-element',
+    styles.button,
+    fillContent && styles.button_fill,
+    secondary && styles.button_secondary,
+    small && styles.button_small,
+    active && styles.button_active,
+    className
+  );
+
   return (
-    <button
-      className={cn(
-        'form-element',
-        styles.button,
-        fillContent && styles.button_fill,
-        secondary && styles.button_secondary,
-        small && styles.button_small,
-        active && styles.button_active,
-        className
-      )}
-      type={type}
-      {...rest}
-    >
+    <button className={classnames} type={type} {...rest}>
       {children}
     </button>
   );

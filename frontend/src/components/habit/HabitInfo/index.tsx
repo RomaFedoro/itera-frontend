@@ -9,7 +9,7 @@ const HabitInfo = ({ id, name, description, days }: THabit) => {
   return (
     <div className={cn(styles.container, 'content-row')}>
       <div className={cn(styles.inform, 'list')}>
-        <div className="list">
+        <div className={cn(styles.inform__name, 'list')}>
           <h1>{name}</h1>
           {description && <span className="description">{description}</span>}
         </div>
