@@ -2,7 +2,7 @@
   font-size: var(--font-size-button);
   display: flex;
   align-items: center;
-  column-gap: 1.2em;
+  column-gap: 0.8em;
   width: 100%;
   color: white;
   padding: var(--padding-button);
@@ -23,5 +23,10 @@
     &:hover {
       background-color: var(--color-main);
     }
+  }
+
+  svg {
+    width: 1.2em;
+    height: 1.2em;
   }
 }
