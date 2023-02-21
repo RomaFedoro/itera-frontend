@@ -63,7 +63,7 @@ const HabitForm = ({
           />
         </fieldset>
       </div>
-      <div className={styles.buttons}>
+      <div className="list-row list_end">
         <IteraButton fillContent secondary>
           Отменить
         </IteraButton>

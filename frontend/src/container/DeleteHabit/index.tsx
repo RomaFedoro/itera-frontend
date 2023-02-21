@@ -1,16 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
-import IteraPopup from '@/components/ui/IteraPopup';
 import IteraButton from '@/components/ui/IteraButton';
 import { useRouter } from 'next/navigation';
 
-type TDeletePopupProps = {
+type TDeleteHabitProps = {
   id: number | string;
   name?: string;
 };
 
-const DeletePopup = ({ name, id }: TDeletePopupProps) => {
+const DeleteHabit = ({ name, id }: TDeleteHabitProps) => {
   const router = useRouter();
 
   const closePopup = () => {
@@ -22,10 +21,13 @@ const DeletePopup = ({ name, id }: TDeletePopupProps) => {
   };
 
   return (
-    <IteraPopup isOpen={true} setIsOpen={closePopup}>
-      <span>
-        Вы уверены, что хотите удалить {name ? <b>{name}</b> : 'привычку'}?
-      </span>
+    <>
+      <div className="list">
+        <h1>Удаление привычки</h1>
+        <span className="description">
+          Вы уверены, что хотите удалить {name ? <b>{name}</b> : 'привычку'}?
+        </span>
+      </div>
       <div className="list-row list_end">
         <IteraButton small secondary fillContent onClick={deleteHabit}>
           Удалить
@@ -34,8 +36,8 @@ const DeletePopup = ({ name, id }: TDeletePopupProps) => {
           Отменить
         </IteraButton>
       </div>
-    </IteraPopup>
+    </>
   );
 };
 
-export default DeletePopup;
+export default DeleteHabit;

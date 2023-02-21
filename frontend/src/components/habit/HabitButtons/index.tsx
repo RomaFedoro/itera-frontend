@@ -18,7 +18,11 @@ const HabitButtons = ({ id }: { id: string | number }) => {
       >
         <PencilIcon />
       </IteraButton>
-      <IteraButton secondary small>
+      <IteraButton
+        secondary
+        small
+        onClick={() => router.push(`${habitPath}/delete`)}
+      >
         <TrashIcon />
       </IteraButton>
     </>
