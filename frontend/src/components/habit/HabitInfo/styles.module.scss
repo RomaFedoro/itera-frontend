@@ -3,7 +3,7 @@
   flex: 1;
 
   &__name {
-    row-gap: 1em;
+    row-gap: var(--gap-item);
   }
 }
 

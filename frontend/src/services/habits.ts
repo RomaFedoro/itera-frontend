@@ -48,13 +48,11 @@ export const updateHabitsFetch = async (
   return response.json();
 };
 
-export const deleteHabitFetch = async (
-  id: number | string
-): Promise<{ data: THabit[] }> => {
-  const response = await fetch(`${baseUrl}/${id}`, {
+export const deleteHabitFetch = async (id: number | string): Promise<null> => {
+  await fetch(`${baseUrl}/${id}`, {
     method: 'DELETE',
     headers: getHeaders(),
   });
 
-  return response.json();
+  return null;
 };
