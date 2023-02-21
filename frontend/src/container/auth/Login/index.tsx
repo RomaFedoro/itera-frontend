@@ -8,12 +8,13 @@ import { loginFields } from '../constants';
 import { useLogin } from '../hooks/useLogin';
 
 const Login = () => {
-  const { register, hasMounted, isValidForm, errors, onSubmit } = useLogin();
+  const { register, hasMounted, isValidForm, errors, onSubmit, isLoading } =
+    useLogin();
 
   if (!hasMounted) return null;
 
   return (
-    <form method='POST' className="list" onSubmit={onSubmit}>
+    <form method="POST" className="list" onSubmit={onSubmit}>
       {loginFields.map((field) => (
         <IteraInput
           key={field.name}
@@ -22,7 +23,7 @@ const Login = () => {
           {...field}
         />
       ))}
-      <IteraButton type="submit" disabled={!isValidForm}>
+      <IteraButton type="submit" disabled={!isValidForm} loading={isLoading}>
         Войти
       </IteraButton>
       <IteraLink href="/auth/register">

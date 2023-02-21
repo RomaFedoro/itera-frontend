@@ -8,11 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { THabitValues } from '@/types/habit';
 
 const EditHabitForm = ({ id }: { id: number | string }) => {
-  const {
-    isLoading,
-    isError,
-    data: habit,
-  } = useQuery({
+  const { isError, data: habit } = useQuery({
     queryKey: ['habits', id],
     queryFn: () => getHabitFetch(id),
   });
@@ -32,6 +28,7 @@ const EditHabitForm = ({ id }: { id: number | string }) => {
       onSuccess={onSuccess}
       defaultValues={habit.data}
       textSubmitButton="Изменить привычку"
+      cancelHref={`/habits/${id}`}
     />
   );
 };

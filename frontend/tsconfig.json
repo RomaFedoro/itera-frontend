@@ -21,9 +21,10 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@@/*": ["./*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/ui/IteraTextarea/styled.module.scss"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }

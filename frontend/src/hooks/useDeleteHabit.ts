@@ -37,12 +37,12 @@ const useDeleteHabit = (id: string) => {
     router.push('/');
   };
 
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: () => deleteHabitFetch(id),
     onSuccess,
   });
 
-  return { habit, closePage, deleteHabit: () => mutate() };
+  return { habit, closePage, deleteHabit: () => mutate(), isLoading };
 };
 
 export default useDeleteHabit;

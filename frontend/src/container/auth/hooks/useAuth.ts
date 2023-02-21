@@ -11,7 +11,7 @@ const useAuth = <T extends FieldValues>(
   const router = useRouter();
   const client = useQueryClient();
 
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn,
     onSuccess: ({ data, meta }) => {
       client.setQueriesData(['user'], () => ({
@@ -26,7 +26,7 @@ const useAuth = <T extends FieldValues>(
     },
   });
 
-  return useMutationForm<T, TAuth>(mutate);
+  return { ...useMutationForm<T, TAuth>(mutate), isLoading };
 };
 
 export default useAuth;

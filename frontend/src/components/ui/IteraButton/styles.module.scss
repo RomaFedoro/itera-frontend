@@ -2,17 +2,35 @@
   background-color: var(--color-main);
   color: black;
   outline: none;
+  position: relative;
   transition: scale var(--animation), background-color var(--animation),
     color var(--animation), opacity var(--animation);
-  display: grid;
-  grid-auto-flow: column;
-  align-items: center;
-  user-select: none;
-  gap: var(--gap-item);
 
-  svg {
-    width: 1em;
-    height: 1em;
+  &__content {
+    display: grid;
+    width: 100%;
+    grid-auto-flow: column;
+    align-items: center;
+    user-select: none;
+    gap: var(--gap-item);
+    opacity: 1;
+
+    svg {
+      width: 1em;
+      height: 1em;
+    }
+  }
+
+  &__loader {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &_fill {
@@ -57,5 +75,15 @@
   &_small {
     padding: var(--padding-button-small);
     font-size: 1.2rem;
+  }
+
+  &_loading {
+    .button__content {
+      opacity: 0;
+    }
+
+    .button__loader {
+      opacity: 1;
+    }
   }
 }

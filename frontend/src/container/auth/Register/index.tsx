@@ -8,12 +8,13 @@ import { registerFields } from '../constants';
 import useRegister from '../hooks/useRegister';
 
 const Register = () => {
-  const { register, hasMounted, isValidForm, errors, onSubmit } = useRegister();
+  const { register, hasMounted, isValidForm, errors, onSubmit, isLoading } =
+    useRegister();
 
   if (!hasMounted) return null;
 
   return (
-    <form method='POST' className="list" onSubmit={onSubmit}>
+    <form method="POST" className="list" onSubmit={onSubmit}>
       {registerFields.map((field) => (
         <IteraInput
           key={field.name}
@@ -22,7 +23,9 @@ const Register = () => {
           {...field}
         />
       ))}
-      <IteraButton type='submit' disabled={!isValidForm}>Зарегистрироваться</IteraButton>
+      <IteraButton type="submit" disabled={!isValidForm} loading={isLoading}>
+        Зарегистрироваться
+      </IteraButton>
       <IteraLink href="/auth/login">
         Уже есть аккаунта? <b>Войдите в него</b>
       </IteraLink>

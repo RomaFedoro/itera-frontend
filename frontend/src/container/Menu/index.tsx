@@ -3,8 +3,9 @@
 import React, { useMemo } from 'react';
 import MenuItem from './components/MenuItem';
 import { usePathname } from 'next/navigation';
-import { menuLinks } from './constants';
+import { accountLink, menuLinks } from './constants';
 import styles from './styled.module.scss';
+import IteraLogo from '@/components/ui/IteraLogo';
 
 const Menu = () => {
   const pathname = usePathname();
@@ -13,10 +14,12 @@ const Menu = () => {
   return (
     <div className={styles.menu}>
       <ul className="list">
+        <IteraLogo />
         {!isAuthPage &&
-          menuLinks.map(({ link, title }) => (
+          menuLinks.map(({ link, title, Icon }) => (
             <li key={link}>
               <MenuItem link={link} isActive={pathname === link}>
+                {Icon && <Icon />}
                 {title}
               </MenuItem>
             </li>
@@ -24,7 +27,13 @@ const Menu = () => {
       </ul>
       {!isAuthPage && (
         <div className="list">
-          <MenuItem link="/account">Личный кабинет</MenuItem>
+          <MenuItem
+            link={accountLink.link}
+            isActive={pathname === accountLink.link}
+          >
+            {accountLink.Icon && <accountLink.Icon />}
+            {accountLink.title}
+          </MenuItem>
         </div>
       )}
     </div>

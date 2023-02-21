@@ -4,6 +4,7 @@ import HabitInfo from '@/components/habit/HabitInfo';
 import HabitStatistics from '@/components/habit/HabitStatistics';
 import { useQuery } from '@tanstack/react-query';
 import { getHabitFetch } from '@/services/habits';
+import LoadingPage from '../LoadingPage';
 
 const Habit = ({ id }: { id: string }) => {
   const {
@@ -15,7 +16,7 @@ const Habit = ({ id }: { id: string }) => {
     queryFn: () => getHabitFetch(id),
   });
 
-  if (!habit) return <div className="content content_fill" />;
+  if (!habit || isLoading) return <LoadingPage />;
 
   return (
     <>
