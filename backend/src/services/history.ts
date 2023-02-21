@@ -17,18 +17,13 @@ export const getAllHistory = async (userId: User['id'], interval: Date[]) => {
 }
 
 export const getAllHistoryByHabit = async (userId: User['id'], habitId: Habit['id'], interval: Date[]) => {
-  const history = await prisma.history.findMany({
+  return await prisma.history.findMany({
     where: {
       habit: {userId},
       date: {gte: min(interval), lte: max(interval)},
       habitId,
     },
   });
-
-  if (history.length === 0)
-    throw NotFoundException('Habit history not found');
-
-  return history;
 }
 
 export const updateHistory = async (userId: User['id'], id: History['id'], history: UpdateHistoryRequestType) => {
