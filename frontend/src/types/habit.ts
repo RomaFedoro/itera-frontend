@@ -10,17 +10,35 @@ export type THabit = {
 
 export type THabitValues = Omit<THabit, 'id'>;
 
-export type THistoryHabit = {
-  date: string;
-  completedSteps: number;
-  totalSteps: number;
+export type TListHabitsProps =
+  | {
+      habits: THabitItemReadOnly[];
+      onlyRead?: true;
+    }
+  | {
+      habits: THabitItem[];
+      onlyRead?: false;
+    };
+
+export type THabitItemProps =
+  | ({ onlyRead: false } & THabitItem)
+  | ({ onlyRead: boolean } & THabitItemReadOnly);
+
+export type THabitItemReadOnly = {
+  id: number | string;
+  name: string;
 };
 
-export type THabitItem = {
+export type THabitItem = THabitItemReadOnly & {
+  totalSteps: number;
   completedSteps: number;
-} & Omit<THabit, 'days'>;
+  onChange: ({ completedSteps, habitId }: TUpdateCompletedSteps) => void;
+};
 
-export type THabitList = THabitItem[];
+export type TUpdateCompletedSteps = {
+  completedSteps: number;
+  habitId: number | string;
+};
 
 export type THabitResponse = { data: THabit };
 export type THabitsResponse = { data: THabit[] };

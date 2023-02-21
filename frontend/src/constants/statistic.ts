@@ -1,9 +1,9 @@
-import { THistoryHabit } from '@/types/habit';
+import { THistoryRecord } from '@/types/history';
 import { pluralWithNum } from '../utils/plural';
 
 type TStatisticProps = {
   label: string;
-  getValue: (history: THistoryHabit[]) => string;
+  getValue: (history: THistoryRecord[]) => string;
 };
 
 const STATISTIC_BLOCKS: TStatisticProps[] = [
@@ -17,6 +17,8 @@ const STATISTIC_BLOCKS: TStatisticProps[] = [
         totalCompletedSteps += day.completedSteps;
         totalSteps += day.totalSteps;
       }
+
+      if (totalSteps === 0) return '—%';
 
       return `${Math.round((totalCompletedSteps / totalSteps) * 100)}%`;
     },

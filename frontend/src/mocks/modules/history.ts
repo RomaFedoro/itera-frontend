@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker/locale/ru';
 import { THabit } from './habits';
 
-export type THistoryHabit = {
+export type THistoryRecord = {
   id: number;
   date: Date;
   habitId: number;
@@ -13,7 +13,7 @@ const createHistoryHabit = (
   id: number,
   habit: THabit,
   date: Date
-): THistoryHabit => {
+): THistoryRecord => {
   const { id: habitId, totalSteps } = habit;
 
   return {
@@ -25,8 +25,8 @@ const createHistoryHabit = (
   };
 };
 
-const createHistory = (habits: THabit[]): THistoryHabit[] => {
-  const history: THistoryHabit[] = [];
+const createHistory = (habits: THabit[]): THistoryRecord[] => {
+  const history: THistoryRecord[] = [];
 
   for (const habit of habits) {
     const { days, createdAt } = habit;

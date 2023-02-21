@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { allHabitsFetch } from '@/services/habits';
 import AllHabitsPlug from '@/components/plugs/AllHabitsPlug';
 import ErrorPlug from '@/components/plugs/ErrorPlug';
+import ListHabitsSkeleton from '@/components/ListHabits/skeleton';
 
 const AllHabitList = () => {
   const {
@@ -18,7 +19,7 @@ const AllHabitList = () => {
   });
 
   if (isError) return <ErrorPlug />;
-  if (!habits || isLoading) return <ListHabits loading />;
+  if (!habits || isLoading) return <ListHabitsSkeleton />;
   if (habits.data.length === 0) return <AllHabitsPlug />;
 
   return <ListHabits habits={habits.data} onlyRead />;

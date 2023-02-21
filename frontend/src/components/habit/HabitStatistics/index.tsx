@@ -3,12 +3,22 @@ import cn from 'classnames';
 import styles from './styles.module.scss';
 import HabitStatisticBlock from '@/components/habit/HabitStatisticBlock';
 import STATISTIC_BLOCKS from '@/constants/statistic';
-import { createMockHistory } from '@/mocks/history';
 import HabitProgessBlock from '@/container/HabitProgressBlock';
 import { THabit } from '@/types/habit';
+import { useQuery } from '@tanstack/react-query';
+import { historyHabitsFetch } from '@/services/habits';
+import LoadingPage from '@/container/LoadingPage';
 
-const HabitStatistics = ({ totalSteps, days }: THabit) => {
-  const historyData = createMockHistory();
+const HabitStatistics = ({ id, totalSteps, days }: THabit) => {
+  const {
+    isLoading,
+    data: historyData,
+  } = useQuery({
+    queryKey: ['history', String(id)],
+    queryFn: () => historyHabitsFetch(id),
+  });
+
+  if (!historyData || isLoading) return <LoadingPage dark />;
 
   return (
     <div className={cn('content', ' content_fill', styles.statistics)}>
@@ -16,13 +26,13 @@ const HabitStatistics = ({ totalSteps, days }: THabit) => {
         <HabitStatisticBlock
           key={label}
           label={label}
-          value={getValue(historyData)}
+          value={getValue(historyData.data)}
         />
       ))}
       <HabitProgessBlock
         totalSteps={totalSteps}
         days={days}
-        history={historyData}
+        history={historyData.data}
       />
     </div>
   );
