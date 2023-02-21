@@ -1,4 +1,4 @@
-import { THistoryHabit } from '@/types/habit';
+import { THistoryRecord } from '@/types/history';
 
 export type TProgressData = Record<string, TProgressRecord>;
 
@@ -9,7 +9,7 @@ export type TProgressRecord = {
 };
 
 export type THabitProgressProps = {
-  history: THistoryHabit[];
+  history: THistoryRecord[];
   totalSteps: number;
   days: Day[];
 };

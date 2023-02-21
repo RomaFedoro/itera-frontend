@@ -1,5 +1,6 @@
 import { THabit, THabitResponse, THabitValues } from '@/types/habit';
 import getHeaders from '@/utils/getHeaders';
+import { THistoryRecordResponse, TTodayHabitResponse } from '@/types/history';
 
 const baseUrl = `${process.env.apiPath}/habits`;
 
@@ -55,4 +56,15 @@ export const deleteHabitFetch = async (id: number | string): Promise<null> => {
   });
 
   return null;
+};
+
+export const historyHabitsFetch = async (
+  id: number | string
+): Promise<THistoryRecordResponse> => {
+  const response = await fetch(`${baseUrl}/${id}/history`, {
+    method: 'GET',
+    headers: getHeaders(),
+  });
+
+  return response.json();
 };

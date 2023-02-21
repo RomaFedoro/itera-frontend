@@ -1,7 +1,6 @@
 'use client';
 
 import React, { memo } from 'react';
-import IteraButton from '@/components/ui/IteraButton';
 import { MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
 import styles from './styles.module.scss';
 
@@ -25,23 +24,23 @@ const IteraCounter = ({ value, min, max, onChange }: TCounterProps) => {
 
   return (
     <div className="list-row">
-      <IteraButton
-        small
+      <button
+        type="button"
         className={styles.button}
         disabled={min !== undefined && min >= value}
         onClick={decrement}
       >
         <MinusIcon className={styles.icon} />
-      </IteraButton>
+      </button>
       <div className={styles.value}>{value}</div>
-      <IteraButton
-        small
+      <button
+        type="button"
         className={styles.button}
         disabled={max !== undefined && max <= value}
         onClick={increment}
       >
         <PlusIcon className={styles.icon} />
-      </IteraButton>
+      </button>
     </div>
   );
 };

@@ -4,21 +4,29 @@
   padding: 0;
   background-color: var(--color-secondary-hover);
   color: var(--background-color-item);
+  border-radius: 100%;
+  transition: scale var(--animation), background-color var(--animation),
+    color var(--animation), opacity var(--animation);
 
   .icon {
     margin: auto;
-    width: 1.2em;
-    height: 1.2em;
+    width: 0.8em;
+    height: 0.8em;
   }
 
   &:hover {
     background-color: var(--color-secondary-hover);
   }
 
+  &:active {
+    scale: 0.9;
+  }
+
   &:disabled {
-    opacity: 0.6;
-    background-color: var(--color-secondary);
-    color: var(--background-color-item);
+    opacity: var(--opacity);
+    background-color: var(--color-secondary-hover);
+    color: var(--background-color-field);
+    scale: 1;
   }
 }
 
