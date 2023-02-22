@@ -1,6 +1,7 @@
 import { THabit, THabitResponse, THabitValues } from '@/types/habit';
 import getHeaders from '@/utils/getHeaders';
-import { THistoryRecordResponse, TTodayHabitResponse } from '@/types/history';
+import { THistoryRecordResponse } from '@/types/history';
+import responseHandle from '@/utils/responseHandle';
 
 const baseUrl = `${process.env.apiPath}/habits`;
 
@@ -10,7 +11,7 @@ export const allHabitsFetch = async (): Promise<{ data: THabit[] }> => {
     headers: getHeaders(),
   });
 
-  return response.json();
+  return responseHandle(response);
 };
 
 export const getHabitFetch = async (
@@ -21,7 +22,7 @@ export const getHabitFetch = async (
     headers: getHeaders(),
   });
 
-  return response.json();
+  return responseHandle(response);
 };
 
 export const createHabitsFetch = async (
@@ -33,7 +34,7 @@ export const createHabitsFetch = async (
     body: JSON.stringify(body),
   });
 
-  return response.json();
+  return responseHandle(response);
 };
 
 export const updateHabitsFetch = async (
@@ -46,7 +47,7 @@ export const updateHabitsFetch = async (
     body: JSON.stringify(body),
   });
 
-  return response.json();
+  return responseHandle(response);
 };
 
 export const deleteHabitFetch = async (id: number | string): Promise<null> => {
@@ -66,5 +67,5 @@ export const historyHabitsFetch = async (
     headers: getHeaders(),
   });
 
-  return response.json();
+  return responseHandle(response);
 };

@@ -37,3 +37,11 @@ export const registerFields: TField<TRegisterValues>[] = [
   },
   ...(loginFields as unknown as TField<TRegisterValues>[]),
 ];
+
+export const registerErrors = {
+  '422': 'Пользователь с такой почтой уже существует',
+};
+
+export const loginErrors = {
+  '422': 'Некорректная почта или пароль',
+};
