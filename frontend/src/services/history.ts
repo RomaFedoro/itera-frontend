@@ -4,6 +4,7 @@ import {
   TCompletedStepsRequest,
   TTodayHabitResponse,
 } from '@/types/history';
+import responseHandle from '@/utils/responseHandle';
 
 const baseUrl = `${process.env.apiPath}/history`;
 
@@ -13,7 +14,7 @@ export const todayHabitFetch = async (): Promise<TTodayHabitResponse> => {
     headers: getHeaders(),
   });
 
-  return response.json();
+  return responseHandle(response);
 };
 
 export const updateCompletedStepsFetch = async ({
@@ -28,5 +29,5 @@ export const updateCompletedStepsFetch = async ({
     body: JSON.stringify({ completedSteps }),
   });
 
-  return response.json();
+  return responseHandle(response);
 };

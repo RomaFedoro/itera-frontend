@@ -6,10 +6,19 @@ import IteraButton from '@/components/ui/IteraButton';
 import IteraLink from '@/components/ui/IteraLink';
 import { loginFields } from '../constants';
 import { useLogin } from '../hooks/useLogin';
+import IteraError from '@/components/ui/IteraError';
 
 const Login = () => {
-  const { register, hasMounted, isValidForm, errors, onSubmit, isLoading } =
-    useLogin();
+  const {
+    register,
+    hasMounted,
+    isValidForm,
+    isTouched,
+    errors,
+    onSubmit,
+    isLoading,
+    responseError,
+  } = useLogin();
 
   if (!hasMounted) return null;
 
@@ -23,6 +32,7 @@ const Login = () => {
           {...field}
         />
       ))}
+      {responseError && !isTouched && <IteraError>{responseError}</IteraError>}
       <IteraButton type="submit" disabled={!isValidForm} loading={isLoading}>
         Войти
       </IteraButton>

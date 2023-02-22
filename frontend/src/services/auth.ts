@@ -1,6 +1,7 @@
 import { TAuth, TLoginValues, TRegisterValues } from '@/types/auth';
-import { getCookie } from 'cookies-next';
 import { TUser } from '@/types/user';
+import responseHandle from '@/utils/responseHandle';
+import getHeaders from '@/utils/getHeaders';
 
 const baseUrl = `${process.env.apiPath}/auth`;
 
@@ -10,12 +11,10 @@ const authFetch =
     const response = await fetch(`${baseUrl}/${url}`, {
       method: 'POST',
       body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getHeaders({ includeJWT: false }),
     });
 
-    return response.json();
+    return responseHandle(response);
   };
 
 export const registerUser = authFetch<TRegisterValues>('register');
@@ -24,11 +23,8 @@ export const loginUser = authFetch<TLoginValues>('login');
 export const currentUserFetch = async (): Promise<{ data: TUser }> => {
   const response = await fetch(`${baseUrl}/me`, {
     method: 'GET',
-    headers: {
-      Authorization: String(getCookie('jwt')),
-      'Content-Type': 'application/json',
-    },
+    headers: getHeaders(),
   });
 
-  return response.json();
+  return responseHandle(response);
 };
