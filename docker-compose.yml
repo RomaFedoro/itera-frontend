@@ -2,31 +2,58 @@ version: "3"
 
 services:
 
+  init:
+    build:
+      context: init
+      dockerfile: ./Dockerfile
+    environment:
+      DB_URL: "${DB_URL}"
+    networks:
+      - itera_net
+    volumes:
+      - "./backend/prisma:/app/prisma:ro"
+    command:
+      - npx --yes prisma migrate deploy
+    depends_on:
+      database:
+        condition: service_healthy
+
+  proxy:
+    image: nginx:latest
+    ports:
+      - "${PROXY_PORT:-80}:80"
+    volumes:
+      - "./nginx.conf:/etc/nginx/conf.d/default.conf:ro"
+    networks:
+      - itera_net
+    depends_on:
+      - init
+
+
   frontend:
     build:
       context: frontend
       dockerfile: ./build/Dockerfile
-    ports:
-      - "${FORWARD_FRONTEND_PORT:-8000}:3000"
+#    ports:
+#      - "${FORWARD_FRONTEND_PORT:-8000}:3000"
     networks:
       - itera_net
     depends_on:
-      - api
+      - proxy
 
   api:
     build:
       context: backend
       dockerfile: ./build/api/Dockerfile
-    ports:
-      - "${FORWARD_API_PORT:-3000}:3000"
+#    ports:
+#      - "${FORWARD_API_PORT:-3000}:3000"
     environment:
       DB_URL: "${DB_URL}"
       TZ: "${TZ:-UTC}"
     networks:
       - itera_net
     depends_on:
-      database:
-        condition: service_healthy
+      - proxy
 
   worker:
     build:
@@ -38,11 +65,10 @@ services:
     networks:
       - itera_net
     depends_on:
-      database:
-        condition: service_healthy
+      - init
 
   database:
-    image: postgres:latest
+    image: postgres:15
     environment:
       PGPASSWORD: "${DB_PASSWORD:-secret}"
       POSTGRES_DB: "${DB_DATABASE}"
