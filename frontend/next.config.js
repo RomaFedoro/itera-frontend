@@ -5,7 +5,7 @@ const nextConfig = {
     appDir: true,
   },
   env: {
-    apiPath: 'https://forma-web.ru/api',
+    apiPath: 'http://localhost/api',
   },
   
   async redirects() {
